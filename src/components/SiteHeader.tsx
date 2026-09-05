@@ -46,7 +46,7 @@ export default function SiteHeader({ active }: Props) {
           textTransform: "uppercase",
         }}
       >
-        NEXON
+        NE<span style={{ color: "var(--deep-red)" }}>X</span>ON
       </span>
       <span
         style={{

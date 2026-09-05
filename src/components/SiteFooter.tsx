@@ -222,7 +222,9 @@ function Wordmark({ big = false }: { big?: boolean }) {
     >
       <div className="wordmark-row" style={{ fontSize: big ? "clamp(72px, 16.4vw, 236px)" : 84 }}>
         {WORDMARK.map((c, i) => (
-          <span key={i}>{c}</span>
+          <span key={i} style={c === "X" ? { color: "var(--deep-red-on-ink)" } : undefined}>
+            {c}
+          </span>
         ))}
       </div>
       <div

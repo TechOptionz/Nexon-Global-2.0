@@ -23,6 +23,10 @@
   --mint-hover: #e3ece0;
   --stone: #dfdfd7;
   --link-blue: #3898ec;
+  /* Deep red used for the X in the NEXON wordmark. --deep-red-on-ink is the
+     lightened pairing for dark grounds (the footer wordmark). */
+  --deep-red: #8b1a1a;
+  --deep-red-on-ink: #c9353a;
   --muted: #333333;
   --muted-slot: #6f6a63;
   --on-forest: #c9dad6;

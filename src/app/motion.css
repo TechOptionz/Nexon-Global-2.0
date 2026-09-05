@@ -1,0 +1,764 @@
+/* ------------------------------------------------------------------
+   NEXON Global Immigration — motion layer
+
+   Loaded after globals.css. This file adds nothing to the design: no
+   colours, no type, no spacing, no layout. It only describes how the
+   pieces already defined in globals.css arrive, respond and settle.
+
+   Everything here animates transform, opacity or box-shadow only, so
+   nothing reflows and nothing shifts.
+   ------------------------------------------------------------------ */
+
+:root {
+  /* One easing family, used everywhere, so the whole page shares a
+     single sense of weight. */
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --dur-micro: 200ms;
+  --dur-hover: 280ms;
+  --dur-reveal: 680ms;
+  --dur-hero: 900ms;
+
+  /* Travel distances. Mobile steps these down rather than reusing the
+     desktop values at a smaller scale. */
+  --anim-rise: 22px;
+  --anim-shift: 20px;
+  --lift: -3px;
+  --lift-card: -6px;
+
+  scroll-padding-top: calc(var(--header-h) + 24px);
+}
+
+@media (max-width: 900px) {
+  :root {
+    --anim-rise: 14px;
+    --anim-shift: 12px;
+    --lift: -2px;
+    --lift-card: -3px;
+    --dur-reveal: 560ms;
+  }
+}
+
+/* Anchor jumps stay smooth even when Lenis is not driving the page
+   (reduced motion, or before hydration). Lenis needs `auto`. */
+html:not(.lenis) {
+  scroll-behavior: smooth;
+}
+
+/* ------------------------------------------------------------------
+   Lenis
+   ------------------------------------------------------------------ */
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent],
+.lenis [data-lenis-prevent-wheel],
+.lenis [data-lenis-prevent-touch] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------------
+   Scroll reveal
+
+   `data-anim` is applied by the orchestrator (and by Reveal) only to
+   elements still below the fold, so nothing already painted is hidden
+   again — there is no flash of disappearing content.
+   ------------------------------------------------------------------ */
+
+/* The doubled attribute lifts these above the component rules in this
+   same file (.btn, .photo-card and friends), which would otherwise win
+   on source order and swallow the transition. */
+[data-anim][data-anim] {
+  opacity: 0;
+  transition:
+    opacity var(--dur-reveal) var(--ease-premium),
+    transform var(--dur-reveal) var(--ease-premium);
+  transition-delay: var(--anim-delay, 0ms);
+}
+
+/* Variants — different sections arrive differently on purpose. */
+[data-anim="fade"][data-anim] {
+  transform: translate3d(0, 8px, 0);
+}
+[data-anim="up"][data-anim] {
+  transform: translate3d(0, var(--anim-rise), 0);
+}
+[data-anim="rise"][data-anim] {
+  transform: translate3d(0, calc(var(--anim-rise) * 1.35), 0);
+  transition-duration: calc(var(--dur-reveal) + 120ms);
+}
+[data-anim="card"][data-anim] {
+  transform: translate3d(0, calc(var(--anim-rise) * 1.25), 0) scale(0.985);
+  transition-duration: calc(var(--dur-reveal) + 60ms);
+}
+[data-anim="scale"][data-anim] {
+  transform: scale(0.972);
+  transition-duration: calc(var(--dur-reveal) + 140ms);
+}
+[data-anim="start"][data-anim] {
+  transform: translate3d(calc(var(--anim-shift) * -1), 0, 0);
+}
+[data-anim="end"][data-anim] {
+  transform: translate3d(var(--anim-shift), 0, 0);
+}
+
+/* Horizontal variants follow the reading direction. */
+[dir="rtl"] [data-anim="start"][data-anim] {
+  transform: translate3d(var(--anim-shift), 0, 0);
+}
+[dir="rtl"] [data-anim="end"][data-anim] {
+  transform: translate3d(calc(var(--anim-shift) * -1), 0, 0);
+}
+
+[data-anim][data-anim][data-in] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Sticky media must not be translated — a transform on a sticky box
+   fights its own offset. It fades instead. */
+.sticky-media[data-anim] {
+  transform: none !important;
+}
+
+/* ------------------------------------------------------------------
+   Hero entrance
+
+   A CSS animation rather than a JS-triggered class: it starts on first
+   paint, so it never waits for hydration, never flashes, and replays
+   correctly on client-side navigation.
+   ------------------------------------------------------------------ */
+
+@keyframes heroIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes heroMediaIn {
+  from {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+[data-hero] {
+  animation: heroIn var(--dur-hero) var(--ease-premium) both;
+  animation-delay: var(--hero-delay, 0ms);
+}
+
+[data-hero-media] {
+  animation: heroMediaIn 1200ms var(--ease-premium) both;
+}
+
+/* ------------------------------------------------------------------
+   Split text
+
+   Words are real React children, never spliced into the DOM, so a
+   language switch re-renders them safely.
+   ------------------------------------------------------------------ */
+
+.split-word {
+  display: inline-block;
+}
+
+.split[data-split-trigger="load"] .split-word {
+  animation: heroIn 820ms var(--ease-premium) both;
+  animation-delay: var(--word-delay, 0ms);
+}
+
+.split[data-split-trigger="scroll"] .split-word {
+  opacity: 0;
+  transform: translate3d(0, 0.34em, 0);
+  transition:
+    opacity 700ms var(--ease-premium),
+    transform 700ms var(--ease-premium);
+  transition-delay: var(--word-delay, 0ms);
+}
+
+.split[data-split-trigger="scroll"][data-in] .split-word {
+  opacity: 1;
+  transform: none;
+}
+
+.split[data-done] .split-word {
+  transition: none;
+}
+
+/* ------------------------------------------------------------------
+   Buttons
+   ------------------------------------------------------------------ */
+
+.btn {
+  transition:
+    background var(--dur-hover) var(--ease-soft),
+    border-color var(--dur-hover) var(--ease-soft),
+    color var(--dur-hover) var(--ease-soft),
+    box-shadow var(--dur-hover) var(--ease-premium),
+    transform var(--dur-hover) var(--ease-premium);
+}
+
+@media (hover: hover) {
+  .btn:hover {
+    transform: translate3d(0, var(--lift), 0);
+    box-shadow: 0 10px 24px -12px rgba(25, 31, 29, 0.45);
+  }
+}
+
+.btn:active {
+  transform: translate3d(0, 0, 0) scale(0.985);
+  transition-duration: 90ms;
+}
+
+.btn:focus-visible,
+.arrow-btn:focus-visible,
+.icon-btn-round:focus-visible,
+.choice-btn:focus-visible,
+.faq-trigger:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Arrows lean toward where they are taking you. */
+.btn svg,
+.mega-tile-all span {
+  transition: transform var(--dur-hover) var(--ease-premium);
+}
+
+@media (hover: hover) {
+  .btn:hover svg,
+  .mega-tile-all:hover span {
+    transform: translateX(3px);
+  }
+  [dir="rtl"] .btn:hover svg,
+  [dir="rtl"] .mega-tile-all:hover span {
+    transform: translateX(-3px);
+  }
+}
+
+/* Circular carousel arrows */
+.arrow-btn {
+  transition:
+    background var(--dur-hover) var(--ease-soft),
+    transform var(--dur-hover) var(--ease-premium),
+    box-shadow var(--dur-hover) var(--ease-premium);
+}
+
+.arrow-btn svg {
+  transition: transform var(--dur-hover) var(--ease-premium);
+}
+
+@media (hover: hover) {
+  .arrow-btn:hover {
+    transform: translate3d(0, var(--lift), 0);
+    box-shadow: 0 8px 18px -10px rgba(25, 31, 29, 0.5);
+  }
+  .arrow-btn[aria-label="Next"]:hover svg {
+    transform: translateX(2px);
+  }
+  .arrow-btn[aria-label="Previous"]:hover svg {
+    transform: translateX(-2px);
+  }
+}
+
+.arrow-btn:active {
+  transform: scale(0.94);
+  transition-duration: 90ms;
+}
+
+.icon-btn-round {
+  transition:
+    border-color var(--dur-hover) var(--ease-soft),
+    transform var(--dur-hover) var(--ease-premium);
+}
+
+@media (hover: hover) {
+  .icon-btn-round:hover {
+    transform: scale(1.05);
+  }
+}
+
+.icon-btn-round:active {
+  transform: scale(0.94);
+  transition-duration: 90ms;
+}
+
+.lang-switch button {
+  transition:
+    background var(--dur-micro) var(--ease-soft),
+    color var(--dur-micro) var(--ease-soft);
+}
+
+.choice-btn {
+  transition:
+    border-color var(--dur-hover) var(--ease-soft),
+    background var(--dur-hover) var(--ease-soft),
+    transform var(--dur-hover) var(--ease-premium);
+}
+
+@media (hover: hover) {
+  .choice-btn:hover {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
+.choice-btn:active {
+  transform: scale(0.99);
+  transition-duration: 90ms;
+}
+
+/* ------------------------------------------------------------------
+   Cards
+   ------------------------------------------------------------------ */
+
+.photo-card {
+  transition:
+    transform var(--dur-hover) var(--ease-premium),
+    box-shadow var(--dur-hover) var(--ease-premium);
+}
+
+.photo-card__media {
+  transition: transform 700ms var(--ease-premium);
+}
+
+.card-scrim {
+  transition: opacity var(--dur-hover) var(--ease-soft);
+}
+
+@media (hover: hover) {
+  .photo-card:hover {
+    transform: translate3d(0, var(--lift-card), 0);
+    box-shadow: 0 24px 48px -28px rgba(25, 31, 29, 0.55);
+  }
+  .photo-card:hover .card-scrim {
+    opacity: 0.92;
+  }
+}
+
+.photo-card:active {
+  transform: translate3d(0, -2px, 0) scale(0.995);
+  transition-duration: 120ms;
+}
+
+.sand-card,
+.white-card {
+  transition:
+    background var(--dur-hover) var(--ease-soft),
+    transform var(--dur-hover) var(--ease-premium),
+    box-shadow var(--dur-hover) var(--ease-premium);
+}
+
+.sand-card svg,
+.white-card svg {
+  transition: transform var(--dur-hover) var(--ease-premium);
+}
+
+@media (hover: hover) {
+  .sand-card:hover,
+  .white-card:hover {
+    transform: translate3d(0, var(--lift-card), 0);
+    box-shadow: 0 20px 40px -26px rgba(25, 31, 29, 0.4);
+  }
+  /* The corner arrow on the practice cards leads the eye out. */
+  .sand-card:hover svg:last-of-type,
+  .white-card:hover svg:last-of-type {
+    transform: translateX(3px);
+  }
+  [dir="rtl"] .sand-card:hover svg:last-of-type,
+  [dir="rtl"] .white-card:hover svg:last-of-type {
+    transform: translateX(-3px);
+  }
+}
+
+.sand-card:active,
+.white-card:active {
+  transform: translate3d(0, -2px, 0);
+  transition-duration: 120ms;
+}
+
+.mega-tile {
+  transition:
+    background var(--dur-hover) var(--ease-soft),
+    transform var(--dur-hover) var(--ease-premium);
+}
+
+@media (hover: hover) {
+  .mega-tile:hover {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
+/* ------------------------------------------------------------------
+   Links and list rules
+   ------------------------------------------------------------------ */
+
+.link-list a {
+  transition:
+    border-color var(--dur-hover) var(--ease-soft),
+    color var(--dur-hover) var(--ease-soft),
+    transform var(--dur-hover) var(--ease-premium);
+}
+
+@media (hover: hover) {
+  .link-list a:hover {
+    transform: translateX(3px);
+  }
+  [dir="rtl"] .link-list a:hover {
+    transform: translateX(-3px);
+  }
+}
+
+/* Underline that draws in from the leading edge. */
+.inline-link,
+.footer-col-links a,
+.footer-legal a,
+.mega-col-links a,
+.mega-tile-items a {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0 1px;
+  transition:
+    background-size var(--dur-hover) var(--ease-premium),
+    color var(--dur-hover) var(--ease-soft);
+}
+
+[dir="rtl"] .inline-link,
+[dir="rtl"] .footer-col-links a,
+[dir="rtl"] .footer-legal a,
+[dir="rtl"] .mega-col-links a,
+[dir="rtl"] .mega-tile-items a {
+  background-position: 100% 100%;
+}
+
+@media (hover: hover) {
+  .inline-link:hover,
+  .footer-col-links a:hover,
+  .footer-legal a:hover,
+  .mega-col-links a:hover,
+  .mega-tile-items a:hover {
+    background-size: 100% 1px;
+  }
+}
+
+.mega-tile-all:hover {
+  text-decoration: none;
+}
+
+/* ------------------------------------------------------------------
+   Header
+   ------------------------------------------------------------------ */
+
+.site-header {
+  transition:
+    border-color var(--dur-hover) var(--ease-soft),
+    box-shadow var(--dur-hover) var(--ease-soft);
+}
+
+.site-header.is-scrolled {
+  box-shadow: 0 10px 30px -24px rgba(25, 31, 29, 0.55);
+}
+
+/* Hover rule under the nav items, drawn from the leading edge. */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0 18px;
+  bottom: 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-hover) var(--ease-premium);
+}
+
+[dir="rtl"] .nav-link::after {
+  transform-origin: right center;
+}
+
+@media (hover: hover) {
+  .nav-link:hover::after,
+  .nav-link:focus-visible::after {
+    transform: scaleX(1);
+  }
+}
+
+/* An active item already carries its rule — no second one on hover. */
+.nav-link:has(.nav-link__active)::after {
+  display: none;
+}
+
+/* The active indicator draws itself in on arrival, then holds. */
+.nav-link__active {
+  animation: navUnderline 420ms var(--ease-premium) both;
+  transform-origin: left center;
+}
+
+[dir="rtl"] .nav-link__active {
+  transform-origin: right center;
+}
+
+@keyframes navUnderline {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.nav-link svg {
+  transition: transform var(--dur-micro) var(--ease-premium);
+}
+
+@media (hover: hover) {
+  .nav-link:hover svg {
+    transform: translateY(1px);
+  }
+}
+
+/* Mega panel */
+@keyframes megaIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.mega-panel {
+  animation: megaIn 300ms var(--ease-premium) both;
+  transform-origin: top center;
+}
+
+.mega-scrim {
+  animation: fadeIn 260ms var(--ease-soft) both;
+}
+
+/* Mobile drawer */
+@keyframes drawerIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.mobile-drawer {
+  animation: drawerIn 320ms var(--ease-premium) both;
+}
+
+.mobile-drawer .drawer-row {
+  animation: heroIn 420ms var(--ease-premium) both;
+  animation-delay: var(--row-delay, 0ms);
+}
+
+/* ------------------------------------------------------------------
+   Accordions — height animates instead of snapping open
+   ------------------------------------------------------------------ */
+
+.acc-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 360ms var(--ease-premium);
+}
+
+.acc-panel.is-open {
+  grid-template-rows: 1fr;
+}
+
+.acc-panel > .acc-inner {
+  overflow: hidden;
+  min-height: 0;
+  opacity: 0;
+  transform: translate3d(0, -4px, 0);
+  transition:
+    opacity 260ms var(--ease-soft),
+    transform 320ms var(--ease-premium);
+}
+
+.acc-panel.is-open > .acc-inner {
+  opacity: 1;
+  transform: none;
+  transition-delay: 60ms;
+}
+
+.faq-row {
+  transition: background var(--dur-hover) var(--ease-soft);
+}
+
+@media (hover: hover) {
+  .faq-row:hover {
+    background: var(--sky-mid);
+  }
+}
+
+.faq-icon {
+  transition: transform 320ms var(--ease-premium);
+}
+
+/* ------------------------------------------------------------------
+   Forms
+   ------------------------------------------------------------------ */
+
+.field {
+  transition:
+    box-shadow var(--dur-micro) var(--ease-soft),
+    background var(--dur-micro) var(--ease-soft),
+    transform var(--dur-micro) var(--ease-premium);
+}
+
+.field:hover:not(:focus) {
+  background: var(--sky-mid);
+}
+
+.field:focus {
+  transform: translate3d(0, -1px, 0);
+}
+
+.field-label {
+  transition: color var(--dur-micro) var(--ease-soft);
+}
+
+.field-label:focus-within {
+  color: var(--forest);
+}
+
+/* ------------------------------------------------------------------
+   Images
+   ------------------------------------------------------------------ */
+
+.image-slot img {
+  transition: transform 700ms var(--ease-premium);
+  backface-visibility: hidden;
+}
+
+/* A hair of parallax on the hero photographs only, where it reads as
+   depth rather than as an effect. Scroll-driven, so it costs no scroll
+   handler; browsers without support simply get a still image. */
+@keyframes parallaxDrift {
+  from {
+    transform: scale(1.08) translate3d(0, -2.5%, 0);
+  }
+  to {
+    transform: scale(1.08) translate3d(0, 2.5%, 0);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 901px) {
+    [data-parallax] img {
+      animation: parallaxDrift linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------
+   Micro-interactions
+   ------------------------------------------------------------------ */
+
+/* The logo strip pauses so a name can actually be read. */
+@media (hover: hover) {
+  .marquee:hover .marquee__inner {
+    animation-play-state: paused;
+  }
+}
+
+.eyebrow,
+.pill-frosted {
+  transition:
+    border-color var(--dur-micro) var(--ease-soft),
+    background var(--dur-micro) var(--ease-soft);
+}
+
+.wordmark-row span {
+  transition: transform 420ms var(--ease-premium);
+}
+
+@media (hover: hover) {
+  .wordmark-row:hover span {
+    transform: translateY(-4px);
+  }
+}
+
+.stat-num,
+.stat-value {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------------
+   Reduced motion — everything non-essential is switched off, and
+   nothing is left hidden.
+   ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-anim],
+  [data-hero],
+  [data-hero-media],
+  .split[data-split-trigger="scroll"] .split-word,
+  .split[data-split-trigger="load"] .split-word {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .acc-panel {
+    transition: none;
+  }
+
+  .marquee__inner {
+    animation: none !important;
+  }
+
+  [data-parallax] img {
+    animation: none !important;
+  }
+}
