@@ -168,7 +168,7 @@ export default function SuccessStoriesPage() {
         </div>
       </section>
 
-      <CtaBand tone="yellow" title="Your story could be next." button="Book a Consultation" />
+      <CtaBand title="Your story could be next." button="Book a Consultation" />
       <SiteFooter />
     </div>
   );

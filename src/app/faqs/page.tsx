@@ -84,7 +84,7 @@ export default function FaqsPage() {
         </div>
       </section>
 
-      <CtaBand tone="yellow" title="Still have a question?" button="Book a Consultation" />
+      <CtaBand title="Still have a question?" button="Book a Consultation" />
       <SiteFooter />
     </div>
   );

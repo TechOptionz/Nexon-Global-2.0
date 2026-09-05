@@ -7,7 +7,6 @@ type Props = {
   title?: string;
   button?: string;
   href?: string;
-  tone?: "yellow" | "sky";
 };
 
 /** The full-width call-to-action rule that closes most sections. */
@@ -15,16 +14,14 @@ export default function CtaBand({
   title = "Ready to take the first step?",
   button = "Book a Consultation",
   href = "/contact",
-  tone = "yellow",
 }: Props) {
   const { t } = useLang();
-  const isSky = tone === "sky";
 
   return (
     <section
       className="cq"
       style={{
-        background: isSky ? "var(--sky)" : "var(--accent)",
+        background: "var(--sky)",
         color: "var(--ink)",
         padding: "clamp(48px,4.4cqw,64px) 0",
       }}
@@ -49,7 +46,7 @@ export default function CtaBand({
         <div style={{ flex: "1 1 80px", minWidth: 80, height: 1, background: "var(--ink)" }} />
         <Link
           href={href}
-          className={`btn btn--outline-ink${isSky ? " on-sky" : ""}`}
+          className="btn btn--outline-ink"
           style={{ flex: "none" }}
         >
           {t(button)}

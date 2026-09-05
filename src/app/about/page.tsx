@@ -316,7 +316,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <CtaBand tone="yellow" title="Meet us before you decide anything." button="Book a Consultation" />
+      <CtaBand title="Meet us before you decide anything." button="Book a Consultation" />
       <InsightsRow />
       <SiteFooter />
     </div>

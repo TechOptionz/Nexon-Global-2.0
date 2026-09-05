@@ -174,7 +174,7 @@ export default function HowItWorksPage() {
 
       <EligibilityCheck />
       <FaqBlock set="business" />
-      <CtaBand tone="yellow" title="Start with stage one — it's free." button="Book a Consultation" />
+      <CtaBand title="Start with stage one — it's free." button="Book a Consultation" />
       <SiteFooter />
     </div>
   );

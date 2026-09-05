@@ -501,7 +501,7 @@ export default function HomePage() {
       </section>
 
       <TestimonialBand variant="business" tone="forest" />
-      <CtaBand tone="sky" title="Not sure which practice fits your case?" button="Book a Consultation" />
+      <CtaBand title="Not sure which practice fits your case?" button="Book a Consultation" />
 
       {/* ---- For families & individuals (sticky photo right) ---- */}
       <section className="section-pad" style={{ padding: "160px 0" }}>
@@ -615,7 +615,7 @@ export default function HomePage() {
 
       <EligibilityCheck />
       <TestimonialBand variant="individual" tone="mint" />
-      <CtaBand tone="yellow" title="Ready to take the first step?" button="Book a Consultation" />
+      <CtaBand title="Ready to take the first step?" button="Book a Consultation" />
       <FaqBlock set="home" />
 
       {/* ---- Process ---- */}

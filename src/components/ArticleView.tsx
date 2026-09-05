@@ -331,7 +331,7 @@ export default function ArticleView({ slug }: { slug: string }) {
         </div>
       </section>
 
-      <CtaBand tone="yellow" title="Prefer answers specific to your case?" button="Book a Consultation" />
+      <CtaBand title="Prefer answers specific to your case?" button="Book a Consultation" />
       <SiteFooter />
     </div>
   );

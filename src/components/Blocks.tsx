@@ -180,7 +180,7 @@ const CRED_ICONS = {
 export function CredentialsBand() {
   const { t } = useLang();
   return (
-    <section style={{ background: "var(--accent)", color: "var(--ink)", padding: "96px 0" }}>
+    <section style={{ background: "var(--sky)", color: "var(--ink)", padding: "96px 0" }}>
       <div
         className="container credentials-grid"
         style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)" }}

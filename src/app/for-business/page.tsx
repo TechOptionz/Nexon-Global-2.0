@@ -165,7 +165,7 @@ export default function ForBusinessPage() {
       <TestimonialBand variant="business" tone="forest" />
       <FaqBlock set="business" />
       <InsightsRow />
-      <CtaBand tone="yellow" title="Not sure which practice fits your case?" button="Book a Consultation" />
+      <CtaBand title="Not sure which practice fits your case?" button="Book a Consultation" />
       <SiteFooter />
     </div>
   );

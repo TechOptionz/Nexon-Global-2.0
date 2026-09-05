@@ -324,7 +324,7 @@ img {
   color: var(--ink);
 }
 
-/* Outlined button used on the yellow / sky CTA bands */
+/* Outlined button used on the sky CTA bands */
 .btn--outline-ink {
   background: transparent;
   border: 1px solid var(--ink);
@@ -333,9 +333,6 @@ img {
 .btn--outline-ink:hover {
   background: var(--ink);
   color: var(--white);
-}
-.btn--outline-ink.on-sky:hover {
-  color: var(--sky);
 }
 
 .btn--sm {

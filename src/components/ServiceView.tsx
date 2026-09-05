@@ -236,7 +236,7 @@ export default function ServiceView({ slug }: { slug: string }) {
       <TestimonialBand variant={sv.testimonial} tone="forest" />
       <FaqBlock set={sv.faq} />
       <InsightsRow />
-      <CtaBand tone="yellow" title="Not sure which program fits your case?" button="Book a Consultation" />
+      <CtaBand title="Not sure which program fits your case?" button="Book a Consultation" />
       <SiteFooter />
     </div>
   );

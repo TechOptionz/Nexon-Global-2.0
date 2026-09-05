@@ -298,7 +298,7 @@ export default function DestinationView({ slug }: { slug: string }) {
         </div>
       </section>
 
-      <CtaBand tone="yellow" title="Can't decide between two programs?" button="Book a Consultation" />
+      <CtaBand title="Can't decide between two programs?" button="Book a Consultation" />
       <SiteFooter />
     </div>
   );

@@ -171,7 +171,7 @@ export default function ServicesPage() {
       </section>
 
       <TestimonialBand variant="individual" tone="mint" />
-      <CtaBand tone="yellow" title="Not sure which practice fits your case?" button="Book a Consultation" />
+      <CtaBand title="Not sure which practice fits your case?" button="Book a Consultation" />
       <SiteFooter />
     </div>
   );
