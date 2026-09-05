@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { getSlotImage } from "@/lib/slot-images";
 
 type Props = {
   /** Caption shown while the slot is empty — the art direction note. */
@@ -14,10 +15,10 @@ type Props = {
 };
 
 /**
- * Stand-in for the design source's <image-slot> custom element. Empty
- * slots render the sand placeholder with its art-direction caption, so
- * the composition reads exactly as it does on the artboards; passing
- * `src` swaps in the real photograph.
+ * Stand-in for the design source's <image-slot> custom element.
+ * Checks for a mapped image in `SLOT_IMAGES` or an explicitly provided `src`.
+ * If found, renders the photograph. If absent, renders the elegant sand
+ * placeholder with its art-direction caption.
  */
 export default function ImageSlot({
   placeholder,
@@ -28,6 +29,8 @@ export default function ImageSlot({
   className = "",
   style,
 }: Props) {
+  const activeSrc = getSlotImage(placeholder, src);
+
   const radiusStyle: CSSProperties =
     shape === "circle"
       ? { borderRadius: "50%" }
@@ -42,11 +45,11 @@ export default function ImageSlot({
       className={`image-slot${inFlow ? " image-slot--static" : ""} ${className}`.trim()}
       style={{ ...radiusStyle, ...style }}
     >
-      {src ? (
+      {activeSrc ? (
         /* Slots are decorative art direction sized entirely by their
            container, so a plain <img> is the right primitive here. */
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={src} alt={placeholder} loading="lazy" />
+        <img src={activeSrc} alt={placeholder} loading="lazy" />
       ) : (
         <span className="image-slot__caption">{placeholder}</span>
       )}

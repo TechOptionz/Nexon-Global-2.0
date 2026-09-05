@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLang } from "@/lib/i18n";
 import { useSmoothScroll } from "./motion/SmoothScroll";
 import { MENUS, TILE_BG, type NavKey } from "@/data/site";
@@ -9,6 +9,11 @@ import ImageSlot from "./ImageSlot";
 import { ChevronDown, Close, Menu, Search } from "./Icons";
 
 const WORDMARK = "NEXON".split("");
+
+/* Grace period before an open mega-menu closes on mouse-out. Long
+   enough that a fast diagonal from a nav link to the far side of the
+   panel doesn't dismiss it mid-travel, short enough to feel immediate. */
+const CLOSE_DELAY = 140;
 
 type Props = { active?: NavKey };
 
@@ -39,6 +44,32 @@ export default function SiteHeader({ active }: Props) {
       document.body.style.overflow = "";
     };
   }, [menuOpen, smooth]);
+
+  /* The scrim is fixed to the whole viewport and lives *inside* this
+     subtree, so the wrapper's mouseleave only fires when the pointer
+     leaves the window. Entering the scrim is the real "left the menu"
+     signal: it sits under the header and the panel, so any pointer
+     that isn't over one of those is over it. */
+  const closeTimer = useRef(0);
+
+  const cancelClose = () => {
+    if (closeTimer.current) {
+      window.clearTimeout(closeTimer.current);
+      closeTimer.current = 0;
+    }
+  };
+
+  const scheduleClose = () => {
+    cancelClose();
+    closeTimer.current = window.setTimeout(() => setOpen(null), CLOSE_DELAY);
+  };
+
+  const closeNow = () => {
+    cancelClose();
+    setOpen(null);
+  };
+
+  useEffect(() => cancelClose, []);
 
   const menu = MENUS.find((m) => m.key === open) ?? null;
   const hairline = scrolled ? "var(--stone)" : "transparent";
@@ -93,13 +124,15 @@ export default function SiteHeader({ active }: Props) {
     <div
       dir={dir}
       style={{ position: "sticky", top: 0, zIndex: 50 }}
-      onMouseLeave={() => setOpen(null)}
+      onMouseLeave={closeNow}
     >
       {/* Scrim behind the open mega-menu */}
       {menu && (
         <div
           className="mega-scrim"
-          onClick={() => setOpen(null)}
+          onClick={closeNow}
+          onMouseEnter={scheduleClose}
+          onMouseLeave={cancelClose}
           style={{ position: "fixed", inset: 0, background: "rgba(25,31,29,0.22)", zIndex: 0 }}
         />
       )}
