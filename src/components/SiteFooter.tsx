@@ -1,13 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { inView, prefersReducedMotion, settle, watch } from "@/lib/reveal";
 import { useLang } from "@/lib/i18n";
 import { FOOTER_COLUMNS, SITE } from "@/data/site";
 import { ChevronDown } from "./Icons";
 
 const WORDMARK = "NEXON".split("");
 const SUBMARK = "GLOBAL IMMIGRATION".split("");
+
+/* Letter-by-letter timings for the footer wordmark. The sub-line steps
+   faster and starts before NEXON has finished landing, so the two
+   lines read as one gesture rather than two separate ones. The last
+   letter must settle inside reveal.ts's SETTLE_MS (1700ms), after
+   which the transition is torn down: 220 + 16 * 28 + 820 = 1488ms. */
+const LETTER_STEP = 74;
+const SUB_STEP = 28;
+const SUB_LEAD = 220;
 
 export default function SiteFooter() {
   const { t } = useLang();
@@ -209,10 +219,33 @@ export default function SiteFooter() {
   );
 }
 
-/** The letter-spread wordmark that anchors the footer. */
+/**
+ * The letter-spread wordmark that anchors the footer.
+ *
+ * Each letter sits in its own mask and drops in from above, one after
+ * the next, so the mark assembles itself as the footer arrives. The
+ * spacer between the two sub-line words is left outside the masks — it
+ * carries no glyph, so animating it would only cost a beat.
+ */
 function Wordmark({ big = false }: { big?: boolean }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (prefersReducedMotion() || inView(el)) {
+      settle(el);
+      return;
+    }
+    return watch(el);
+  }, []);
+
+  let sub = 0;
+
   return (
     <div
+      ref={ref}
+      className="wordmark"
       aria-hidden="true"
       style={{
         display: "flex",
@@ -225,8 +258,15 @@ function Wordmark({ big = false }: { big?: boolean }) {
     >
       <div className="wordmark-row" style={{ fontSize: big ? "clamp(72px, 16.4vw, 236px)" : 84 }}>
         {WORDMARK.map((c, i) => (
-          <span key={i} style={c === "X" ? { color: "var(--deep-red-on-ink)" } : undefined}>
-            {c}
+          <span
+            key={i}
+            className="wordmark-letter"
+            style={{
+              ["--letter-delay" as string]: `${i * LETTER_STEP}ms`,
+              ...(c === "X" ? { color: "var(--deep-red-on-ink)" } : null),
+            }}
+          >
+            <span>{c}</span>
           </span>
         ))}
       </div>
@@ -234,11 +274,19 @@ function Wordmark({ big = false }: { big?: boolean }) {
         className="wordmark-row"
         style={{ fontSize: big ? "clamp(13px, 2.64vw, 38px)" : 15, marginTop: big ? 24 : 12 }}
       >
-        {SUBMARK.map((c, i) => (
-          <span key={i} style={c === " " ? { width: "0.5em" } : undefined}>
-            {c === " " ? "" : c}
-          </span>
-        ))}
+        {SUBMARK.map((c, i) =>
+          c === " " ? (
+            <span key={i} style={{ width: "0.5em" }} />
+          ) : (
+            <span
+              key={i}
+              className="wordmark-letter"
+              style={{ ["--letter-delay" as string]: `${SUB_LEAD + sub++ * SUB_STEP}ms` }}
+            >
+              <span>{c}</span>
+            </span>
+          ),
+        )}
       </div>
     </div>
   );

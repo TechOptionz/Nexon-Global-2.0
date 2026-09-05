@@ -254,6 +254,42 @@ html.lenis body {
 }
 
 /* ------------------------------------------------------------------
+   Footer wordmark
+
+   Each letter rides inside its own mask and drops into place from
+   above, one after the next, so the mark assembles itself instead of
+   fading in as a block. The padding / negative-margin pair opens the
+   mask past the glyph box on all four sides — the two cancel out, so
+   the letter keeps its original margin box and `space-between` still
+   spreads the row exactly as before.
+   ------------------------------------------------------------------ */
+
+.wordmark-letter {
+  display: inline-block;
+  overflow: hidden;
+  padding: 0.16em 0.06em 0.1em;
+  margin: -0.16em -0.06em -0.1em;
+}
+
+.wordmark-letter > span {
+  display: block;
+}
+
+/* -140% clears the mask completely: the letter waits above the top
+   edge until its turn. `data-done` is the settled state, where the
+   reveal has handed the element back and the transition comes off so
+   it can never replay. */
+.wordmark:not([data-done]) .wordmark-letter > span {
+  transform: translate3d(0, -140%, 0);
+  transition: transform 820ms var(--ease-premium);
+  transition-delay: var(--letter-delay, 0ms);
+}
+
+.wordmark[data-in] .wordmark-letter > span {
+  transform: none;
+}
+
+/* ------------------------------------------------------------------
    Buttons
    ------------------------------------------------------------------ */
 
@@ -744,12 +780,15 @@ html.lenis body {
     background var(--dur-micro) var(--ease-soft);
 }
 
-.wordmark-row span {
+/* Direct children only: the row's letters are masks now, and the
+   glyph inside each one is driven by the entrance above. Lifting the
+   mask carries its letter with it, so the hover reads the same. */
+.wordmark-row > span {
   transition: transform 420ms var(--ease-premium);
 }
 
 @media (hover: hover) {
-  .wordmark-row:hover span {
+  .wordmark-row:hover > span {
     transform: translateY(-4px);
   }
 }
@@ -778,7 +817,8 @@ html.lenis body {
   [data-hero],
   [data-hero-media],
   .split[data-split-trigger="scroll"] .split-word,
-  .split[data-split-trigger="load"] .split-word {
+  .split[data-split-trigger="load"] .split-word,
+  .wordmark .wordmark-letter > span {
     opacity: 1 !important;
     transform: none !important;
     animation: none !important;

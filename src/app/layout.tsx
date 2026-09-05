@@ -63,4 +63,4 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 /* Entrance animations are progressive enhancement: with scripting off,
    every element that would have been revealed is simply already there. */
-const NO_JS_CSS = `[data-anim],[data-hero],[data-hero-media],.split-word{opacity:1!important;transform:none!important;animation:none!important}.acc-panel{grid-template-rows:1fr!important}`;
+const NO_JS_CSS = `[data-anim],[data-hero],[data-hero-media],.split-word,.wordmark-letter>span{opacity:1!important;transform:none!important;animation:none!important}.acc-panel{grid-template-rows:1fr!important}`;
