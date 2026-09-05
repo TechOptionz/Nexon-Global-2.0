@@ -146,28 +146,74 @@ export default function SiteHeader({ active }: Props) {
       {menu && (
         <div className="mega-panel">
           <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-              {menu.tiles.map((tile, i) => (
-                <Link
-                  key={tile.title}
-                  href={tile.href}
-                  className="mega-tile"
-                  style={{ background: TILE_BG[i][0] }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = TILE_BG[i][1];
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = TILE_BG[i][0];
-                  }}
-                >
-                  <div className="serif" style={{ fontSize: 28, lineHeight: 1.05, marginBottom: 8 }}>
-                    {t(tile.title)}
-                  </div>
-                  <div style={{ fontSize: 13, lineHeight: 1.5, color: "var(--muted)" }}>
-                    {t(tile.desc)}
-                  </div>
-                </Link>
-              ))}
+            <div className="mega-tiles">
+              {menu.tiles.map((tile, i) => {
+                const body = (
+                  <>
+                    <div className="serif" style={{ fontSize: 28, lineHeight: 1.05, marginBottom: 8 }}>
+                      {t(tile.title)}
+                    </div>
+                    <div style={{ fontSize: 13, lineHeight: 1.5, color: "var(--muted)" }}>
+                      {t(tile.desc)}
+                    </div>
+                  </>
+                );
+
+                /* Tiles carrying related links can't be one big anchor —
+                   nested links are invalid — so the heading links instead. */
+                if (tile.items?.length) {
+                  return (
+                    <div
+                      key={tile.title}
+                      className="mega-tile mega-tile--rich"
+                      style={{ background: TILE_BG[i][0] }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = TILE_BG[i][1];
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = TILE_BG[i][0];
+                      }}
+                    >
+                      <Link href={tile.href} className="mega-tile-head">
+                        {body}
+                      </Link>
+                      <div className="mega-tile-items">
+                        {tile.itemsEyebrow && (
+                          <div className="kicker" style={{ marginBottom: 10 }}>
+                            {t(tile.itemsEyebrow)}
+                          </div>
+                        )}
+                        {tile.items.map((l) => (
+                          <Link key={l.label} href={l.href}>
+                            {t(l.label)}
+                          </Link>
+                        ))}
+                      </div>
+                      <Link href={tile.href} className="mega-tile-all">
+                        {t(tile.title === "FAQs" ? "All questions" : "All articles")}
+                        <span aria-hidden>{ar ? "←" : "→"}</span>
+                      </Link>
+                    </div>
+                  );
+                }
+
+                return (
+                  <Link
+                    key={tile.title}
+                    href={tile.href}
+                    className="mega-tile"
+                    style={{ background: TILE_BG[i][0] }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = TILE_BG[i][1];
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = TILE_BG[i][0];
+                    }}
+                  >
+                    {body}
+                  </Link>
+                );
+              })}
             </div>
 
             {menu.columns.length > 0 && (
@@ -262,7 +308,10 @@ export default function SiteHeader({ active }: Props) {
             {MENUS.map((m) => {
               const isOpen = group === m.key;
               const links = [
-                ...m.tiles.map((x) => ({ label: x.title, href: x.href })),
+                ...m.tiles.flatMap((x) => [
+                  { label: x.title, href: x.href },
+                  ...(x.items ?? []),
+                ]),
                 ...m.columns.flatMap((c) => c.links),
               ];
               return (

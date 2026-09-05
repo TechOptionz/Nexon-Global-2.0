@@ -38,7 +38,14 @@ export type MegaMenu = {
   label: string;
   href: string;
   photo: string;
-  tiles: { title: string; desc: string; href: string }[];
+  tiles: {
+    title: string;
+    desc: string;
+    href: string;
+    /** Optional related links rendered inside the tile (Resources menu). */
+    itemsEyebrow?: string;
+    items?: MegaLink[];
+  }[];
   columns: { eyebrow: string; links: MegaLink[] }[];
   card: { title: string; desc: string; button: string; href: string };
 };
@@ -177,17 +184,8 @@ export const MENUS: MegaMenu[] = [
         title: "Insights",
         desc: "Program changes, comparisons and practical guides from our consultants.",
         href: "/insights",
-      },
-      {
-        title: "FAQs",
-        desc: "If your question isn't here, a consultant will answer it on a free call — in English or Arabic.",
-        href: "/faqs",
-      },
-    ],
-    columns: [
-      {
-        eyebrow: "Latest",
-        links: [
+        itemsEyebrow: "Latest reading",
+        items: [
           {
             label: "Portugal's Golden Visa in 2026: what changed and who still qualifies",
             href: "/insights/portugal",
@@ -196,27 +194,25 @@ export const MENUS: MegaMenu[] = [
             label: "Comparing the five Caribbean citizenship programs, side by side",
             href: "/insights/caribbean",
           },
-          { label: "Every UAE Golden Visa category explained", href: "/insights/uae" },
-        ],
-      },
-      {
-        eyebrow: "Guides",
-        links: [
           {
             label: "Due diligence: what citizenship units actually check",
             href: "/insights/diligence",
           },
-          {
-            label: "Adding parents and adult children to your application",
-            href: "/insights/family",
-          },
-          {
-            label: "Greece Golden Visa: the zones and thresholds in force now",
-            href: "/insights/greece",
-          },
+        ],
+      },
+      {
+        title: "FAQs",
+        desc: "If your question isn't here, a consultant will answer it on a free call — in English or Arabic.",
+        href: "/faqs",
+        itemsEyebrow: "Asked most often",
+        items: [
+          { label: "How do I know which program is right for me?", href: "/faqs#faq-g0-0" },
+          { label: "Are your fees fixed and transparent?", href: "/faqs#faq-g1-0" },
+          { label: "Can my family be included in one application?", href: "/faqs#faq-g2-0" },
         ],
       },
     ],
+    columns: [],
     card: {
       title: "Families who made the move.",
       desc: "Names abbreviated for privacy. Programs, timelines and outcomes as delivered.",

@@ -699,12 +699,61 @@ select.field {
   box-shadow: 0 24px 64px rgba(25, 31, 29, 0.12);
 }
 
+.mega-tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  flex: 1;
+}
+
 .mega-tile {
   display: block;
   border-radius: 12px;
   padding: 24px;
   color: var(--ink);
   transition: background 0.2s ease;
+}
+
+/* Tiles that carry related links: heading on top, list beneath, "all" pinned. */
+.mega-tile--rich {
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
+}
+.mega-tile-head {
+  color: var(--ink);
+  display: block;
+}
+.mega-tile-items {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(25, 31, 29, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.mega-tile-items a {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--ink);
+  transition: color 0.2s ease;
+}
+.mega-tile-items a:hover {
+  color: var(--forest);
+}
+.mega-tile-all {
+  margin-top: auto;
+  padding-top: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--forest);
+}
+.mega-tile-all:hover {
+  text-decoration: underline;
 }
 
 .mega-col-links {

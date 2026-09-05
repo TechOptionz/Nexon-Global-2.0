@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLang } from "@/lib/i18n";
 import { FAQ_GROUPS } from "@/data/faqs";
 import SiteHeader from "@/components/SiteHeader";
@@ -11,6 +11,15 @@ import { Plus } from "@/components/Icons";
 export default function FaqsPage() {
   const { t } = useLang();
   const [open, setOpen] = useState<string | null>("g0-0");
+
+  /* Deep links from the header menu (/faqs#faq-g1-0) open and scroll to
+     the question they name. */
+  useEffect(() => {
+    const id = window.location.hash.replace(/^#/, "");
+    if (!id.startsWith("faq-")) return;
+    setOpen(id.slice(4));
+    document.getElementById(id)?.scrollIntoView({ block: "center" });
+  }, []);
 
   return (
     <div className="artboard">
@@ -50,7 +59,7 @@ export default function FaqsPage() {
                   const key = `g${gi}-${i}`;
                   const isOpen = open === key;
                   return (
-                    <div key={key} className="faq-row">
+                    <div key={key} id={`faq-${key}`} className="faq-row" style={{ scrollMarginTop: 120 }}>
                       <button
                         type="button"
                         className="faq-trigger"
