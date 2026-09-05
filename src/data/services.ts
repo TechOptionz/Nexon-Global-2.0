@@ -90,7 +90,7 @@ export const SERVICES: Record<string, Service> = {
     intro:
       "Golden visas and investor residency across Europe and the UAE, matched to your budget, timeline and long-term mobility goals — including paths to citizenship.",
     clients: "Investors, retirees, families seeking EU access",
-    photoHero: "family on a Lisbon street",
+    photoHero: "Pena Palace at Sintra",
     photoProcess: "consultant and client reviewing a fund prospectus",
     stats: [
       ["Programs", "6 destinations"],

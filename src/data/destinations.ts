@@ -98,7 +98,7 @@ export const DESTINATIONS: Record<string, Destination> = {
     intro:
       "European residency with one week a year in-country, and one of the clearest paths to an EU passport.",
     photoHero: "Lisbon / Porto skyline",
-    photoSmall: "family on a Lisbon street",
+    photoSmall: "Pena Palace at Sintra",
     photoWhy: "Porto riverside at golden hour",
     stats: [
       ["Minimum investment", "€250,000"],
@@ -174,7 +174,7 @@ export const DESTINATIONS: Record<string, Destination> = {
     intro:
       "A five-year renewable residence permit through property, with no minimum stay and Schengen travel for the whole family.",
     photoHero: "Athens rooftops and the Acropolis",
-    photoSmall: "family on a Greek island street",
+    photoSmall: "whitewashed alley on a Greek island",
     photoWhy: "Santorini at golden hour",
     stats: [
       ["Minimum investment", "€250,000"],
@@ -251,7 +251,7 @@ export const DESTINATIONS: Record<string, Destination> = {
     intro:
       "Permanent residence in an EU member state within months, through a €300,000 property or business investment.",
     photoHero: "Limassol seafront at dusk",
-    photoSmall: "couple in Paphos old town",
+    photoSmall: "Paphos harbour and castle",
     photoWhy: "Cyprus coastline near Ayia Napa",
     stats: [
       ["Minimum investment", "€300,000"],
@@ -328,7 +328,7 @@ export const DESTINATIONS: Record<string, Destination> = {
     intro:
       "EU permanent residence for up to four generations of your family, with no minimum stay and a fixed, published cost structure.",
     photoHero: "Valletta harbour and city walls",
-    photoSmall: "family on a Valletta street",
+    photoSmall: "Valletta street with wooden balconies",
     photoWhy: "Gozo coastline",
     stats: [
       ["Indicative total cost", "From €150,000"],
@@ -406,7 +406,7 @@ export const DESTINATIONS: Record<string, Destination> = {
     intro:
       "A ten-year, self-sponsored UAE residence for investors, entrepreneurs and specialists — usually approved within weeks.",
     photoHero: "Dubai skyline at dusk",
-    photoSmall: "family at Dubai Marina",
+    photoSmall: "Dubai Marina at dusk",
     photoWhy: "Abu Dhabi corniche",
     stats: [
       ["Minimum investment", "AED 2,000,000"],
@@ -489,7 +489,7 @@ export const DESTINATIONS: Record<string, Destination> = {
     intro:
       "A US green card for the investor, spouse and children through a job-creating investment.",
     photoHero: "New York street at dusk",
-    photoSmall: "family in a US suburb",
+    photoSmall: "American suburban street",
     photoWhy: "San Francisco bay",
     stats: [
       ["Minimum investment", "$800,000"],
@@ -725,7 +725,7 @@ export const DESTINATIONS: Record<string, Destination> = {
     intro:
       "The most cost-effective Caribbean citizenship for larger families, with a fund built for families of six.",
     photoHero: "Antigua beach and turquoise water",
-    photoSmall: "family at Nelson’s Dockyard",
+    photoSmall: "Nelson’s Dockyard",
     photoWhy: "Shirley Heights lookout",
     stats: [
       ["Minimum contribution", "$230,000"],
@@ -802,7 +802,7 @@ export const DESTINATIONS: Record<string, Destination> = {
     intro:
       "Direct citizenship in a G20 economy through property or a bank deposit, with no residence requirement.",
     photoHero: "Istanbul skyline over the Bosphorus",
-    photoSmall: "family in Istanbul’s old city",
+    photoSmall: "a street in Istanbul’s old city",
     photoWhy: "Bodrum coastline",
     stats: [
       ["Minimum investment", "$400,000"],
