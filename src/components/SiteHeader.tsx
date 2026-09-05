@@ -112,7 +112,7 @@ export default function SiteHeader({ active }: Props) {
               type="button"
               onClick={() => setLang("en")}
               aria-pressed={!ar}
-              style={{ background: ar ? "var(--white)" : "var(--accent)" }}
+              style={{ background: ar ? "var(--white)" : "var(--ink)", color: ar ? "var(--ink)" : "var(--white)" }}
             >
               EN
             </button>
@@ -120,7 +120,7 @@ export default function SiteHeader({ active }: Props) {
               type="button"
               onClick={() => setLang("ar")}
               aria-pressed={ar}
-              style={{ background: ar ? "var(--accent)" : "var(--white)" }}
+              style={{ background: ar ? "var(--ink)" : "var(--white)", color: ar ? "var(--white)" : "var(--ink)" }}
             >
               العربية
             </button>
@@ -382,14 +382,14 @@ export default function SiteHeader({ active }: Props) {
             <button
               type="button"
               onClick={() => setLang("en")}
-              style={{ flex: 1, background: ar ? "var(--white)" : "var(--accent)", fontSize: 14 }}
+              style={{ flex: 1, background: ar ? "var(--white)" : "var(--ink)", color: ar ? "var(--ink)" : "var(--white)", fontSize: 14 }}
             >
               English
             </button>
             <button
               type="button"
               onClick={() => setLang("ar")}
-              style={{ flex: 1, background: ar ? "var(--accent)" : "var(--white)", fontSize: 14 }}
+              style={{ flex: 1, background: ar ? "var(--ink)" : "var(--white)", color: ar ? "var(--white)" : "var(--ink)", fontSize: 14 }}
             >
               العربية
             </button>

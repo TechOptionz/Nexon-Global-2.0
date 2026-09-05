@@ -297,12 +297,12 @@ img {
 }
 
 .btn--primary {
-  background: var(--accent);
-  color: var(--ink);
+  background: var(--ink);
+  color: var(--white);
 }
 .btn--primary:hover {
-  background: var(--accent-hover);
-  color: var(--ink);
+  background: var(--black);
+  color: var(--white);
 }
 
 .btn--secondary {
@@ -332,7 +332,7 @@ img {
 }
 .btn--outline-ink:hover {
   background: var(--ink);
-  color: var(--accent);
+  color: var(--white);
 }
 .btn--outline-ink.on-sky:hover {
   color: var(--sky);
