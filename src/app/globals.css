@@ -1,26 +1,1277 @@
-@import "tailwindcss";
+/* ------------------------------------------------------------------
+   NEXON Global Immigration — design system
+   Tokens and component styles transcribed from the Claude Design
+   artboards (*.dc.html). Values are intentionally literal so the
+   rendered site matches the source artboards.
+   ------------------------------------------------------------------ */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Colour tokens */
+  --ink: #191f1d;
+  --black: #141413;
+  --white: #ffffff;
+  --accent: #fdb72a;
+  --accent-hover: #eeac27;
+  --forest: #10413b;
+  --sky: #e5f1f9;
+  --sky-mid: #c2dff2;
+  --sky-mid-hover: #afd3ec;
+  --sand: #f6f3ef;
+  --sand-hover: #efeae2;
+  --sand-mid: #d3c7b9;
+  --mint: #eef4ec;
+  --mint-hover: #e3ece0;
+  --stone: #dfdfd7;
+  --link-blue: #3898ec;
+  --muted: #333333;
+  --muted-slot: #6f6a63;
+  --on-forest: #c9dad6;
+  --on-ink: #b7c2bf;
+
+  /* Layout */
+  --container: 1280px;
+  --artboard: 1440px;
+  --header-h: 72px;
+
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--white);
+  color: var(--ink);
+  font-family: var(--font-inter), Inter, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--muted-slot);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ------------------------------------------------------------------
+   Layout primitives
+   ------------------------------------------------------------------ */
+
+/* The artboards are drawn at 1440px with a 1280px content column.
+   On narrower viewports the page scales down rather than reflowing,
+   preserving the composition exactly as designed. */
+.artboard {
+  width: 100%;
+  max-width: var(--artboard);
+  margin: 0 auto;
+  background: var(--white);
+  color: var(--ink);
+}
+
+.container {
+  width: min(var(--container), 100% - 80px);
+  margin: 0 auto;
+}
+
+.container-wide {
+  max-width: var(--artboard);
+  margin: 0 auto;
+  padding-inline: clamp(24px, 5.6cqw, 80px);
+}
+
+.cq {
+  container-type: inline-size;
+}
+
+/* Full-bleed strip that escapes the artboard column */
+.bleed {
+  width: 100vw;
+  margin-inline-start: calc(50% - 50vw);
+}
+
+/* ------------------------------------------------------------------
+   Typography
+   ------------------------------------------------------------------ */
+
+.serif {
+  font-family: var(--font-instrument-serif), "Instrument Serif", Georgia, serif;
+  font-weight: 400;
+}
+
+.h1-hero {
+  font-family: var(--font-instrument-serif), "Instrument Serif", Georgia, serif;
+  font-weight: 400;
+  font-size: 96px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin: 24px 0;
+  text-wrap: balance;
+}
+
+.h1-page {
+  font-family: var(--font-instrument-serif), "Instrument Serif", Georgia, serif;
+  font-weight: 400;
+  font-size: 104px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin: 24px 0;
+  text-wrap: balance;
+}
+
+.h1-96 {
+  font-family: var(--font-instrument-serif), "Instrument Serif", Georgia, serif;
+  font-weight: 400;
+  font-size: 96px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin: 24px 0;
+  text-wrap: balance;
+}
+
+.h2-64 {
+  font-family: var(--font-instrument-serif), "Instrument Serif", Georgia, serif;
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.h2-48 {
+  font-family: var(--font-instrument-serif), "Instrument Serif", Georgia, serif;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.h2-40 {
+  font-family: var(--font-instrument-serif), "Instrument Serif", Georgia, serif;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.lede {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.body-15 {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.body-14 {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
+  margin: 0;
+}
+
+.feature-title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.stat-num {
+  font-family: var(--font-instrument-serif), "Instrument Serif", Georgia, serif;
+  font-weight: 400;
+  font-size: 96px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.stat-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+/* ------------------------------------------------------------------
+   Eyebrow pills
+   ------------------------------------------------------------------ */
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border: 1px solid var(--ink);
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.eyebrow--light {
+  border-color: var(--white);
+  color: var(--white);
+}
+
+.pill-frosted {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 8px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.kicker {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ------------------------------------------------------------------
+   Buttons
+   ------------------------------------------------------------------ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: var(--ink);
+}
+.btn--primary:hover {
+  background: var(--accent-hover);
+  color: var(--ink);
+}
+
+.btn--secondary {
+  background: var(--white);
+  border: 1px solid var(--stone);
+  color: var(--ink);
+}
+.btn--secondary:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.btn--white {
+  background: var(--white);
+  color: var(--ink);
+}
+.btn--white:hover {
+  background: var(--sand);
+  color: var(--ink);
+}
+
+/* Outlined button used on the yellow / sky CTA bands */
+.btn--outline-ink {
+  background: transparent;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+}
+.btn--outline-ink:hover {
+  background: var(--ink);
+  color: var(--accent);
+}
+.btn--outline-ink.on-sky:hover {
+  color: var(--sky);
+}
+
+.btn--sm {
+  height: 40px;
+  padding: 0 20px;
+  font-size: 14px;
+}
+
+/* Circular carousel arrows */
+.arrow-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 0;
+  background: var(--sky-mid);
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.arrow-btn:hover {
+  background: var(--sky-mid-hover);
+}
+
+.arrow-btn--onforest {
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--white);
+}
+.arrow-btn--onforest:hover {
+  background: rgba(255, 255, 255, 0.32);
+}
+
+/* ------------------------------------------------------------------
+   Photo cards — the signature component
+   ------------------------------------------------------------------ */
+
+.photo-card {
+  position: relative;
+  display: block;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--sand);
+  color: var(--muted-slot);
+}
+
+.photo-card__media {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.6s ease;
+}
+.photo-card:hover .photo-card__media {
+  transform: scale(1.03);
+}
+
+.card-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.7) 100%);
+  pointer-events: none;
+}
+
+.card-scrim--low {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.7) 100%);
+}
+
+.card-scrim--menu {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, 0.72) 100%);
+}
+
+.card-body {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  color: var(--white);
+  pointer-events: none;
+}
+
+.card-title-36 {
+  font-family: var(--font-instrument-serif), "Instrument Serif", Georgia, serif;
+  font-size: 36px;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.card-title-32 {
+  font-family: var(--font-instrument-serif), "Instrument Serif", Georgia, serif;
+  font-size: 32px;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+/* Sand info card (service catalogue) */
+.sand-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--sand);
+  border-radius: 16px;
+  padding: 32px;
+  color: var(--ink);
+  transition: background 0.2s ease;
+}
+.sand-card:hover {
+  background: var(--sand-hover);
+  color: var(--ink);
+}
+
+.white-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border-radius: 16px;
+  padding: 32px;
+  color: var(--ink);
+  transition: background 0.2s ease;
+}
+.white-card:hover {
+  background: var(--sand);
+  color: var(--ink);
+}
+
+/* Horizontal snap track shared by every carousel */
+.track {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.track::-webkit-scrollbar {
+  display: none;
+}
+.track > * {
+  scroll-snap-align: start;
+}
+
+/* ------------------------------------------------------------------
+   Link lists with the yellow hover rule
+   ------------------------------------------------------------------ */
+
+.link-list {
+  border-left: 1px solid var(--stone);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.link-list a {
+  display: block;
+  padding-left: 16px;
+  margin-left: -1px;
+  border-left: 1px solid transparent;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--ink);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.link-list a:hover {
+  border-left-color: var(--accent);
+  color: var(--forest);
+}
+
+/* ------------------------------------------------------------------
+   Accordions
+   ------------------------------------------------------------------ */
+
+.faq-row {
+  background: var(--sky);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.faq-trigger {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  background: none;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.faq-icon {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease;
+}
+
+.faq-answer {
+  margin: 16px 0 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 840px;
+  text-wrap: pretty;
+}
+
+/* ------------------------------------------------------------------
+   Forms
+   ------------------------------------------------------------------ */
+
+.field {
+  height: 48px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--sky);
+  font-size: 14px;
+  color: var(--ink);
+  outline: none;
+  width: 100%;
+}
+.field:focus {
+  box-shadow: 0 0 0 2px var(--ink);
+}
+
+textarea.field {
+  height: auto;
+  padding: 14px 16px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+select.field {
+  padding-inline-end: 40px;
+  appearance: none;
+}
+
+.field-label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.choice-btn {
+  text-align: start;
+  background: var(--white);
+  border: 1px solid var(--stone);
+  color: var(--ink);
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.3;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.choice-btn:hover {
+  border-color: var(--ink);
+  background: var(--sky);
+}
+
+/* ------------------------------------------------------------------
+   Header
+   ------------------------------------------------------------------ */
+
+.site-header {
+  position: relative;
+  z-index: 1;
+  background: var(--white);
+  width: 100%;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 0 80px;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: var(--header-h);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  transition: color 0.2s ease;
+}
+.nav-link:hover {
+  color: var(--forest);
+}
+
+.nav-link__active {
+  position: absolute;
+  left: 0;
+  right: 18px;
+  bottom: 0;
+  height: 2px;
+  background: var(--accent);
+}
+
+.icon-btn-round {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--stone);
+  background: var(--white);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+.icon-btn-round:hover {
+  border-color: var(--ink);
+}
+
+.lang-switch {
+  display: inline-flex;
+  height: 40px;
+  border: 1px solid var(--stone);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.lang-switch button {
+  height: 100%;
+  padding: 0 14px;
+  border: 0;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.lang-switch button + button {
+  border-inline-start: 1px solid var(--stone);
+}
+
+.mega-panel {
+  position: absolute;
+  top: var(--header-h);
+  left: 20px;
+  right: 20px;
+  z-index: 2;
+  background: var(--white);
+  border-radius: 16px;
+  padding: 32px;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 40px;
+  min-height: 380px;
+  box-shadow: 0 24px 64px rgba(25, 31, 29, 0.12);
+}
+
+.mega-tile {
+  display: block;
+  border-radius: 12px;
+  padding: 24px;
+  color: var(--ink);
+  transition: background 0.2s ease;
+}
+
+.mega-col-links {
+  border-left: 1px solid var(--stone);
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.mega-col-links a {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.4;
+  transition: color 0.2s ease;
+}
+.mega-col-links a:hover {
+  color: var(--forest);
+}
+
+/* ------------------------------------------------------------------
+   Footer
+   ------------------------------------------------------------------ */
+
+.site-footer {
+  background: var(--ink);
+  color: var(--white);
+}
+
+.site-footer a {
+  color: var(--white);
+  transition: color 0.2s ease;
+}
+.site-footer a:hover {
+  color: var(--accent);
+}
+
+.footer-col-links {
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.footer-col-links a {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.footer-legal a {
+  color: var(--on-ink);
+}
+.footer-legal a:hover {
+  color: var(--white);
+}
+
+.wordmark-row {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------------
+   Forest section with the engraved wave field
+   ------------------------------------------------------------------ */
+
+.forest-section {
+  position: relative;
+  overflow: hidden;
+  background: var(--forest);
+  color: var(--white);
+}
+
+.wave-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.06;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------------
+   Marquee logo strip
+   ------------------------------------------------------------------ */
+
+.marquee {
+  background: var(--sky-mid);
+  height: 140px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.marquee__inner {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+
+.marquee__item {
+  padding: 0 56px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+[dir="rtl"] .marquee__inner {
+  animation-name: marquee-rtl;
+}
+
+@keyframes marquee-rtl {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(50%);
+  }
+}
+
+/* ------------------------------------------------------------------
+   Image slots — the sand placeholders from the artboards
+   ------------------------------------------------------------------ */
+
+.image-slot {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sand);
+  color: var(--muted-slot);
+  overflow: hidden;
+}
+
+.image-slot--static {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.image-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-slot__caption {
+  padding: 16px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.45;
+  font-weight: 500;
+  max-width: 90%;
+}
+
+/* ------------------------------------------------------------------
+   Scroll reveal
+   ------------------------------------------------------------------ */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .marquee__inner {
+    animation: none;
+  }
+  .photo-card:hover .photo-card__media {
+    transform: none;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Prose links inside body copy
+   ------------------------------------------------------------------ */
+
+.inline-link {
+  color: var(--link-blue);
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+.inline-link:hover {
+  color: var(--forest);
+}
+
+/* ------------------------------------------------------------------
+   Arabic / RTL
+   ------------------------------------------------------------------ */
+
+[dir="rtl"] .link-list,
+[dir="rtl"] .mega-col-links,
+[dir="rtl"] .footer-col-links {
+  border-left: 0;
+  border-right: 1px solid var(--stone);
+  padding-left: 0;
+  padding-right: 16px;
+}
+
+[dir="rtl"] .footer-col-links {
+  border-right-color: rgba(255, 255, 255, 0.2);
+}
+
+[dir="rtl"] .link-list a {
+  padding-left: 0;
+  padding-right: 16px;
+  margin-left: 0;
+  margin-right: -1px;
+  border-left: 0;
+  border-right: 1px solid transparent;
+}
+[dir="rtl"] .link-list a:hover {
+  border-right-color: var(--accent);
+}
+
+[dir="rtl"] .nav-link__active {
+  left: 18px;
+  right: 0;
+}
+
+/* Arabic renders in the sans stack — Instrument Serif has no Arabic
+   coverage, so serif headings fall back to the UI font when RTL. */
+[dir="rtl"] .serif,
+[dir="rtl"] .h1-hero,
+[dir="rtl"] .h1-page,
+[dir="rtl"] .h1-96,
+[dir="rtl"] .h2-64,
+[dir="rtl"] .h2-48,
+[dir="rtl"] .h2-40,
+[dir="rtl"] .card-title-36,
+[dir="rtl"] .card-title-32,
+[dir="rtl"] .stat-num {
+  font-family: var(--font-inter), Inter, Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+/* ------------------------------------------------------------------
+   Responsive — the artboards are fixed-width compositions, so below
+   1440px the whole page scales rather than reflowing. Below 900px we
+   switch to the mobile artboard's single-column behaviour.
+   ------------------------------------------------------------------ */
+
+@media (max-width: 1360px) {
+  .container {
+    width: min(var(--container), 100% - 48px);
+  }
+  .site-header {
+    padding: 0 32px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .h1-hero,
+  .h1-96 {
+    font-size: 64px;
+  }
+  .h1-page {
+    font-size: 68px;
+  }
+  .h2-64 {
+    font-size: 44px;
+  }
+  .h2-48 {
+    font-size: 36px;
+  }
+  .stat-num {
+    font-size: 64px;
+  }
+}
+
+@media (max-width: 900px) {
+  .container {
+    width: min(var(--container), 100% - 48px);
+  }
+  .site-header {
+    padding: 0 24px;
+  }
+  .h1-hero,
+  .h1-96 {
+    font-size: 48px;
+  }
+  .h1-page {
+    font-size: 48px;
+  }
+  .h2-64 {
+    font-size: 36px;
+  }
+  .h2-48,
+  .h2-40 {
+    font-size: 30px;
+  }
+  .card-title-36 {
+    font-size: 28px;
+  }
+  .stat-num {
+    font-size: 56px;
+  }
+
+  /* Every multi-column grid collapses to one column */
+  .grid-collapse {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+  /* Must stay positioned: the image slot inside is absolutely
+     positioned and relies on this element as its containing block. */
+  .sticky-media {
+    position: relative !important;
+    top: auto !important;
+    height: 320px !important;
+  }
+  .section-pad {
+    padding-block: 64px !important;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Header / footer responsive switching
+   The desktop artboard drives >= 1024px; below that the mobile
+   artboard's drawer and stacked footer take over.
+   ------------------------------------------------------------------ */
+
+.header-burger {
+  display: none;
+}
+
+.footer-mobile {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .header-nav {
+    display: none !important;
+  }
+  .header-burger {
+    display: inline-flex;
+  }
+  .lang-switch,
+  .icon-btn-round[aria-label="Search"] {
+    display: none;
+  }
+  .header-burger.icon-btn-round {
+    display: inline-flex;
+  }
+  .mega-panel {
+    display: none;
+  }
+  .site-header {
+    height: 64px;
+  }
+  .footer-desktop {
+    display: none;
+  }
+  .footer-mobile {
+    display: block;
+  }
+}
+
+@media (max-width: 640px) {
+  .header-actions .btn--primary {
+    display: none;
+  }
+  .stats-row,
+  .credentials-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 32px 0;
+  }
+  .stats-row > *,
+  .credentials-grid > * {
+    padding: 0 16px !important;
+    border-inline-start: none !important;
+  }
+}
+
+@media (max-width: 1100px) {
+  .practice-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .steps-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 40px 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .practice-grid,
+  .steps-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .steps-grid > * {
+    border-inline-start: none !important;
+    padding: 0 !important;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Page-specific responsive adjustments
+   ------------------------------------------------------------------ */
+
+@media (max-width: 1200px) {
+  /* The article's left gutter collapses first; the TOC follows. */
+  .article-grid {
+    grid-template-columns: 0 minmax(0, 760px) 1fr !important;
+    gap: 32px !important;
+  }
+}
+
+@media (max-width: 1000px) {
+  .article-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .article-gutter,
+  .article-toc {
+    display: none;
+  }
+  .dest-hero {
+    height: 420px !important;
+  }
+  .dest-hero__inset {
+    display: none;
+  }
+  .service-hero {
+    margin-inline: 0 !important;
+  }
+  .featured-card__body {
+    padding: 40px !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .promises-grid,
+  .values-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 40px 0;
+  }
+  .promises-grid > *,
+  .values-grid > * {
+    padding: 0 20px !important;
+    border-inline-start: none !important;
+  }
+  .contact-form {
+    grid-template-columns: 1fr !important;
+  }
+  .program-flex > * {
+    flex: 1 1 100% !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .promises-grid,
+  .values-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .promises-grid > *,
+  .values-grid > * {
+    padding: 0 !important;
+  }
+  .featured-card__body {
+    padding: 28px !important;
+  }
+  .track > * {
+    flex: 0 0 86% !important;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Stat rows
+   The values run long ("AED 2,000,000", "Express Entry · points-based"),
+   so they must be allowed to shrink and wrap rather than force the page
+   wider — which they did in Arabic at small widths.
+   ------------------------------------------------------------------ */
+
+.stats-row > * {
+  min-width: 0;
+}
+
+.stat-value {
+  font-family: var(--font-instrument-serif), "Instrument Serif", Georgia, serif;
+  font-weight: 400;
+  font-size: 56px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-top: 16px;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+[dir="rtl"] .stat-value {
+  font-family: var(--font-inter), Inter, Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+@media (max-width: 1100px) {
+  .stat-value {
+    font-size: 40px;
+  }
+}
+
+@media (max-width: 900px) {
+  .stat-value {
+    font-size: 34px;
+  }
+}
+
+@media (max-width: 640px) {
+  .stat-value {
+    font-size: 28px;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Qualifying-route cards
+   ------------------------------------------------------------------ */
+
+.route-card {
+  padding: 40px;
+  min-width: 0;
+}
+
+.route-card__title {
+  font-size: 32px;
+  line-height: 1.05;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+.route-card__amount {
+  margin: 32px 0 8px;
+}
+
+@media (max-width: 900px) {
+  .route-card {
+    padding: 28px;
+  }
+  .route-card__title {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 640px) {
+  .route-card {
+    padding: 20px;
+  }
+  .route-card__title {
+    font-size: 22px;
+  }
 }
