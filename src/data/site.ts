@@ -155,18 +155,18 @@ export const MENUS: MegaMenu[] = [
         desc: "A clear process, from first call to approval.",
         href: "/how-it-works",
       },
-    ],
-    columns: [
       {
-        eyebrow: "Company",
-        links: [
-          { label: "About Us", href: "/about" },
-          { label: "How It Works", href: "/how-it-works" },
-          { label: "Success Stories", href: "/success-stories" },
-          { label: "Contact", href: "/contact" },
-        ],
+        title: "Success stories",
+        desc: "Real client files — the programs, the timelines, the outcomes.",
+        href: "/success-stories",
+      },
+      {
+        title: "Contact",
+        desc: "Speak to a named advisor in Dubai, in English or Arabic.",
+        href: "/contact",
       },
     ],
+    columns: [],
     card: {
       title: "The people behind every application",
       desc: "A named advisor owns your file from first meeting to approval. You always know who to call.",

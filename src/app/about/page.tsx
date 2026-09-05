@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useLang } from "@/lib/i18n";
 import SiteHeader from "@/components/SiteHeader";
+import SplitText from "@/components/motion/SplitText";
 import SiteFooter from "@/components/SiteFooter";
 import CtaBand from "@/components/CtaBand";
 import InsightsRow from "@/components/InsightsRow";
@@ -116,16 +117,23 @@ export default function AboutPage() {
 
       <section style={{ padding: "128px 0 0" }}>
         <div className="container">
-          <span className="eyebrow">{t("Why NEXON")}</span>
-          <h1 className="h1-96" style={{ maxWidth: 1100 }}>
-            {t("Built in Dubai on a simple promise: honest migration advice.")}
-          </h1>
-          <p className="lede" style={{ maxWidth: 560, margin: "0 0 32px" }}>
+          <span className="eyebrow hero-1" data-hero>
+            {t("Why NEXON")}
+          </span>
+          <SplitText
+            as="h1"
+            className="h1-96"
+            delay={170}
+            stagger={45}
+            style={{ maxWidth: 1100 }}
+            text={t("Built in Dubai on a simple promise: honest migration advice.")}
+          />
+          <p className="lede hero-4" data-hero style={{ maxWidth: 560, margin: "0 0 32px" }}>
             {t(
               "NEXON Global Immigration Services exists because too many families receive vague timelines, hidden fees and programs they were never going to qualify for. We set out to do the opposite.",
             )}
           </p>
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          <div className="hero-5" data-hero style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
             <Link href="/contact" className="btn btn--primary">
               {t("Book a Consultation")}
             </Link>
@@ -134,6 +142,7 @@ export default function AboutPage() {
             </Link>
           </div>
           <div
+            className="hover-media"
             style={{
               position: "relative",
               height: 360,
@@ -172,6 +181,7 @@ export default function AboutPage() {
             }}
           >
             <div
+              className="hover-media story-figure"
               style={{
                 position: "relative",
                 height: 520,
@@ -184,7 +194,7 @@ export default function AboutPage() {
             </div>
             <div>
               <div
-                className="serif"
+                className="serif story-num"
                 style={{
                   fontSize: "clamp(72px, 8.3vw, 120px)",
                   lineHeight: 1,
@@ -271,28 +281,27 @@ export default function AboutPage() {
       </section>
 
       {/* ---- What we hold ourselves to ---- */}
-      <section className="section-pad" style={{ padding: "0 0 128px" }}>
+      <section className="section-pad" style={{ padding: "24px 0 128px" }}>
         <div className="container">
-          <h2 className="h2-64" style={{ marginBottom: 64, maxWidth: 820 }}>
-            {t("What we hold ourselves to")}
-          </h2>
-          <div
-            className="values-grid"
-            style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)" }}
-          >
+          <div className="standards-head">
+            <div>
+              <span className="eyebrow">{t("Our standards")}</span>
+              <h2 className="h2-64" style={{ margin: "20px 0 0", maxWidth: 620 }}>
+                {t("What we hold ourselves to")}
+              </h2>
+            </div>
+          </div>
+
+          <div className="standards-grid">
             {VALUES.map((v, i) => (
-              <Reveal
-                key={v.title}
-                delay={i * 100}
-                style={{
-                  padding: i === 0 ? "0 32px 0 0" : i === VALUES.length - 1 ? "0 0 0 32px" : "0 32px",
-                  borderInlineStart: i === 0 ? "none" : "1px solid var(--stone)",
-                }}
-              >
-                <v.Icon />
-                <div className="feature-title" style={{ margin: "24px 0 12px" }}>
-                  {t(v.title)}
+              <Reveal key={v.title} delay={i * 100} className="standards-card">
+                <div className="standards-card__top">
+                  <span className="standards-card__badge">
+                    <v.Icon size={22} />
+                  </span>
+                  <span className="standards-card__num">{`0${i + 1}`}</span>
                 </div>
+                <h3 className="feature-title standards-card__title">{t(v.title)}</h3>
                 <p className="body-15">{t(v.desc)}</p>
               </Reveal>
             ))}

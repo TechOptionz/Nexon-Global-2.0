@@ -60,7 +60,12 @@ export default function FaqBlock({ set = "home" }: { set?: string }) {
                     <Plus />
                   </span>
                 </button>
-                {isOpen && <p className="faq-answer">{t(f.a)}</p>}
+                {/* Kept mounted so the row can grow rather than jump. */}
+                <div className={`acc-panel${isOpen ? " is-open" : ""}`} inert={!isOpen}>
+                  <div className="acc-inner">
+                    <p className="faq-answer">{t(f.a)}</p>
+                  </div>
+                </div>
               </div>
             );
           })}

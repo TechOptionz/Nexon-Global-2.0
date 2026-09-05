@@ -35,7 +35,8 @@ export default function TestimonialBand({ variant = "individual", tone }: Props)
 
       <div className="container-wide" style={{ position: "relative" }}>
         <blockquote
-          className="serif"
+          key={idx}
+          className="serif swap-in"
           style={{
             fontSize: "clamp(28px,3.6cqw,52px)",
             lineHeight: 1.1,
@@ -57,6 +58,8 @@ export default function TestimonialBand({ variant = "individual", tone }: Props)
           }}
         >
           <div
+            key={idx}
+            className="swap-in"
             style={{
               borderInlineStart: `1px solid ${isForest ? "rgba(255,255,255,0.25)" : "rgba(25,31,29,0.25)"}`,
               paddingInlineStart: 16,

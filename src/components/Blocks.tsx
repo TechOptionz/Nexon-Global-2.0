@@ -190,6 +190,7 @@ export function CredentialsBand() {
           return (
             <div
               key={c.label}
+              className="credential-item"
               style={{
                 padding:
                   i === 0 ? "0 32px 0 0" : i === CREDENTIALS.length - 1 ? "0 0 0 32px" : "0 32px",
@@ -294,6 +295,7 @@ export function TeamGrid({ height = 480, linked = true }: { height?: number; lin
         const inner = (
           <>
             <div
+              className="team-card__media"
               style={{
                 position: "relative",
                 height,
@@ -316,11 +318,18 @@ export function TeamGrid({ height = 480, linked = true }: { height?: number; lin
           </>
         );
         return linked ? (
-          <Link key={m.slot} href="/about" style={{ display: "block", color: "var(--ink)" }}>
+          <Link
+            key={m.slot}
+            href="/about"
+            className="team-card"
+            style={{ display: "block", color: "var(--ink)" }}
+          >
             {inner}
           </Link>
         ) : (
-          <div key={m.slot}>{inner}</div>
+          <div key={m.slot} className="team-card">
+            {inner}
+          </div>
         );
       })}
     </div>

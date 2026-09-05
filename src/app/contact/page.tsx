@@ -5,6 +5,7 @@ import { useLang } from "@/lib/i18n";
 import { SITE } from "@/data/site";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import SplitText from "@/components/motion/SplitText";
 import { ChatIcon, ChevronDown, ClockIcon, PinIcon } from "@/components/Icons";
 
 const PRACTICE_OPTIONS = [
@@ -39,10 +40,15 @@ export default function ContactPage() {
         >
           {/* ---- Details ---- */}
           <div>
-            <h1 className="h2-64" style={{ marginBottom: 24, maxWidth: 520 }}>
-              {t("Talk to a consultant this week.")}
-            </h1>
-            <p className="lede" style={{ margin: "0 0 24px", maxWidth: 480 }}>
+            <SplitText
+              as="h1"
+              className="h2-64"
+              delay={120}
+              stagger={45}
+              style={{ marginBottom: 24, maxWidth: 520 }}
+              text={t("Talk to a consultant this week.")}
+            />
+            <p className="lede hero-4" data-hero style={{ margin: "0 0 24px", maxWidth: 480 }}>
               {t(
                 "Thirty minutes, free of charge, in English or Arabic. We reply to every enquiry within one business day.",
               )}

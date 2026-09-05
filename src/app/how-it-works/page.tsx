@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useLang } from "@/lib/i18n";
 import { PROCESS_STAGES } from "@/data/site";
 import SiteHeader from "@/components/SiteHeader";
+import SplitText from "@/components/motion/SplitText";
 import SiteFooter from "@/components/SiteFooter";
 import CtaBand from "@/components/CtaBand";
 import FaqBlock from "@/components/FaqBlock";
@@ -38,16 +39,23 @@ export default function HowItWorksPage() {
 
       <section className="section-pad" style={{ background: "var(--sky)", padding: "128px 0" }}>
         <div className="container">
-          <span className="eyebrow">{t("How it works")}</span>
-          <h1 className="h1-96" style={{ maxWidth: 1100 }}>
-            {t("A clear process, from first call to approval.")}
-          </h1>
-          <p className="lede" style={{ maxWidth: 560, margin: "0 0 32px" }}>
+          <span className="eyebrow hero-1" data-hero>
+            {t("How it works")}
+          </span>
+          <SplitText
+            as="h1"
+            className="h1-96"
+            delay={170}
+            stagger={45}
+            style={{ maxWidth: 1100 }}
+            text={t("A clear process, from first call to approval.")}
+          />
+          <p className="lede hero-4" data-hero style={{ maxWidth: 560, margin: "0 0 32px" }}>
             {t(
               "Five stages. At each one you know exactly what we're doing, what it costs, and what you receive.",
             )}
           </p>
-          <Link href="/contact" className="btn btn--primary">
+          <Link href="/contact" className="btn btn--primary hero-5" data-hero>
             {t("Book a Consultation")}
           </Link>
         </div>

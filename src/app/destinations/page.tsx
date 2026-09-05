@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useLang } from "@/lib/i18n";
 import { DESTINATION_LIST, type DestinationType } from "@/data/destinations";
 import SiteHeader from "@/components/SiteHeader";
+import SplitText from "@/components/motion/SplitText";
 import SiteFooter from "@/components/SiteFooter";
 import CtaBand from "@/components/CtaBand";
 import { DestinationCard, RequirementsNote } from "@/components/Blocks";
@@ -39,11 +40,18 @@ export default function DestinationsPage() {
 
       <section className="section-pad" style={{ background: "var(--sky)", padding: "128px 0" }}>
         <div className="container">
-          <span className="eyebrow">{t("Destinations & programs")}</span>
-          <h1 className="h1-page" style={{ maxWidth: 1000 }}>
-            {t("Where would you like to belong?")}
-          </h1>
-          <p className="lede" style={{ maxWidth: 560 }}>
+          <span className="eyebrow hero-1" data-hero>
+            {t("Destinations & programs")}
+          </span>
+          <SplitText
+            as="h1"
+            className="h1-page"
+            delay={170}
+            stagger={45}
+            style={{ maxWidth: 1000 }}
+            text={t("Where would you like to belong?")}
+          />
+          <p className="lede hero-4" data-hero style={{ maxWidth: 560 }}>
             {t(
               "Twelve government-authorised routes across citizenship, residency and skilled migration. Every figure below is the official minimum — we confirm current requirements before you commit.",
             )}

@@ -5,6 +5,7 @@ import { useLang } from "@/lib/i18n";
 import { DESTINATIONS } from "@/data/destinations";
 import { SERVICES, type Service } from "@/data/services";
 import SiteHeader from "./SiteHeader";
+import SplitText from "@/components/motion/SplitText";
 import SiteFooter from "./SiteFooter";
 import CtaBand from "./CtaBand";
 import FaqBlock from "./FaqBlock";
@@ -35,14 +36,21 @@ export default function ServiceView({ slug }: { slug: string }) {
       {/* ---- Header, with the hero photo overlapping the tint ---- */}
       <section style={{ background: sv.tint, padding: "128px 0 0" }}>
         <div className="container">
-          <span className="eyebrow">{t(sv.tag)}</span>
-          <h1 className="h1-page" style={{ maxWidth: 1000 }}>
-            {t(sv.title)}
-          </h1>
-          <p className="lede" style={{ maxWidth: 560, margin: "0 0 32px" }}>
+          <span className="eyebrow hero-1" data-hero>
+            {t(sv.tag)}
+          </span>
+          <SplitText
+            as="h1"
+            className="h1-page"
+            delay={170}
+            stagger={45}
+            style={{ maxWidth: 1000 }}
+            text={t(sv.title)}
+          />
+          <p className="lede hero-4" data-hero style={{ maxWidth: 560, margin: "0 0 32px" }}>
             {t(sv.intro)}
           </p>
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          <div className="hero-5" data-hero style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
             <Link href="/contact" className="btn btn--primary">
               {t("Book a Consultation")}
             </Link>
@@ -52,6 +60,8 @@ export default function ServiceView({ slug }: { slug: string }) {
           </div>
           <div
             className="service-hero"
+            data-hero-media
+            data-parallax
             style={{
               position: "relative",
               height: 420,

@@ -757,6 +757,31 @@ select.field {
   text-decoration: underline;
 }
 
+/* One card holding every link column of a mega-menu, matched to the
+   tiles above it. --cols is set inline from the column count. */
+.mega-cols-card {
+  flex: 1;
+  display: grid;
+  gap: 24px 32px;
+  border-radius: 12px;
+  padding: 28px;
+}
+
+/* Each column fills the card so the divider rules all run to the same
+   depth, however many links a column holds. */
+.mega-cols-card > div {
+  display: flex;
+  flex-direction: column;
+}
+.mega-cols-card .mega-col-links {
+  flex: 1;
+}
+
+.mega-cols-card .kicker {
+  color: var(--ink);
+  opacity: 0.62;
+}
+
 .mega-col-links {
   border-left: 1px solid var(--stone);
   padding-left: 16px;
@@ -773,6 +798,14 @@ select.field {
 }
 .mega-col-links a:hover {
   color: var(--forest);
+}
+
+.mega-cols-card .mega-col-links {
+  border-left-color: rgba(25, 31, 29, 0.18);
+}
+
+[dir="rtl"] .mega-cols-card .mega-col-links {
+  border-right-color: rgba(25, 31, 29, 0.18);
 }
 
 /* ------------------------------------------------------------------
@@ -1196,13 +1229,11 @@ select.field {
 }
 
 @media (max-width: 900px) {
-  .promises-grid,
-  .values-grid {
+  .promises-grid {
     grid-template-columns: 1fr 1fr !important;
     gap: 40px 0;
   }
-  .promises-grid > *,
-  .values-grid > * {
+  .promises-grid > * {
     padding: 0 20px !important;
     border-inline-start: none !important;
   }
@@ -1215,12 +1246,10 @@ select.field {
 }
 
 @media (max-width: 640px) {
-  .promises-grid,
-  .values-grid {
+  .promises-grid {
     grid-template-columns: 1fr !important;
   }
-  .promises-grid > *,
-  .values-grid > * {
+  .promises-grid > * {
     padding: 0 !important;
   }
   .featured-card__body {
@@ -1312,5 +1341,277 @@ select.field {
   }
   .route-card__title {
     font-size: 22px;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Standards grid ("What we hold ourselves to")
+   A ruled, four-up editorial row: each column hangs from a hairline
+   that runs the full column width, so the four cards align across the
+   top no matter how the copy wraps. Replaces the earlier vertical
+   dividers, which only spanned the text and left the row looking
+   ragged.
+   ------------------------------------------------------------------ */
+.standards-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 64px;
+  margin-bottom: 72px;
+}
+
+.standards-head__lede {
+  max-width: 380px;
+  padding-bottom: 6px;
+}
+
+.standards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0 48px;
+}
+
+.standards-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 28px;
+  border-top: 1px solid var(--stone);
+}
+
+.standards-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 28px;
+}
+
+.standards-card__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--mint);
+}
+
+.standards-card__num {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--muted-slot);
+  font-variant-numeric: tabular-nums;
+}
+
+.standards-card__title {
+  margin: 0 0 12px;
+}
+
+@media (max-width: 900px) {
+  .standards-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 56px;
+  }
+  .standards-head__lede {
+    max-width: 560px;
+    padding-bottom: 0;
+  }
+  .standards-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px 40px;
+  }
+}
+
+@media (max-width: 640px) {
+  .standards-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .standards-card__top {
+    margin-bottom: 20px;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Pointer feedback
+   Every card, media frame and stat on the editorial pages answers the
+   cursor: a small lift, a slow zoom on the photograph beneath, and a
+   colour shift on the accents inside it. Effects are grouped here so
+   the timing stays identical across components, and all of them are
+   suppressed under prefers-reduced-motion.
+   ------------------------------------------------------------------ */
+
+/* Media frame — wraps an ImageSlot that should zoom under the cursor. */
+.hover-media {
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+}
+.hover-media .image-slot,
+.hover-media .image-slot img {
+  transition: transform 0.6s ease;
+}
+.hover-media:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 60px rgba(25, 31, 29, 0.16);
+}
+.hover-media:hover .image-slot img {
+  transform: scale(1.04);
+}
+.hover-media:hover .image-slot__caption {
+  color: var(--ink);
+}
+
+/* Photo cards lift and deepen their scrim alongside the existing zoom. */
+.photo-card {
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+}
+.photo-card .card-scrim,
+.photo-card .pill-frosted,
+.photo-card .card-body {
+  transition:
+    background 0.3s ease,
+    opacity 0.3s ease,
+    transform 0.4s ease;
+}
+.photo-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 28px 64px rgba(25, 31, 29, 0.22);
+}
+.photo-card:hover .card-scrim {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.82) 100%);
+}
+.photo-card:hover .card-body {
+  transform: translateY(-4px);
+}
+.photo-card:hover .pill-frosted {
+  background: rgba(255, 255, 255, 0.34);
+}
+.photo-card:focus-visible {
+  outline: 2px solid var(--forest);
+  outline-offset: 3px;
+}
+
+/* Standards cards — the ruled "What we hold ourselves to" row. */
+.standards-card {
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease;
+}
+.standards-card__badge,
+.standards-card__num,
+.standards-card__title {
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+.standards-card:hover {
+  transform: translateY(-6px);
+  border-top-color: var(--forest);
+}
+.standards-card:hover .standards-card__badge {
+  background: var(--mint-hover);
+  transform: translateY(-2px) scale(1.06);
+}
+.standards-card:hover .standards-card__num {
+  color: var(--ink);
+}
+.standards-card:hover .standards-card__title {
+  color: var(--forest);
+}
+
+/* Team portraits — hover on the whole tile, linked or not. */
+.team-card {
+  transition: transform 0.4s ease;
+}
+.team-card__media {
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+}
+.team-card .image-slot img {
+  transition: transform 0.6s ease;
+}
+.team-card:hover .team-card__media {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 60px rgba(25, 31, 29, 0.18);
+}
+.team-card:hover .image-slot img {
+  transform: scale(1.04);
+}
+.team-card:hover .card-scrim {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.82) 100%);
+}
+
+/* Credential stats — each column answers the cursor on its own. */
+.credential-item {
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+.credential-item svg,
+.credential-item .stat-num {
+  transition:
+    transform 0.3s ease,
+    color 0.3s ease;
+}
+.credential-item:hover {
+  transform: translateY(-4px);
+}
+.credential-item:hover svg {
+  transform: scale(1.08);
+}
+.credential-item:hover .stat-num {
+  color: var(--forest);
+}
+
+/* Chapter number in the story carousel tracks the active slide. */
+.story-num {
+  transition: color 0.3s ease;
+}
+.story-figure:hover ~ div .story-num,
+.story-num:hover {
+  color: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hover-media,
+  .hover-media .image-slot,
+  .hover-media .image-slot img,
+  .photo-card,
+  .photo-card .card-scrim,
+  .photo-card .card-body,
+  .photo-card .pill-frosted,
+  .standards-card,
+  .standards-card__badge,
+  .standards-card__num,
+  .standards-card__title,
+  .team-card,
+  .team-card__media,
+  .team-card .image-slot img,
+  .credential-item,
+  .credential-item svg,
+  .credential-item .stat-num,
+  .story-num {
+    transition: none;
+  }
+  .hover-media:hover,
+  .photo-card:hover,
+  .photo-card:hover .card-body,
+  .standards-card:hover,
+  .standards-card:hover .standards-card__badge,
+  .team-card:hover .team-card__media,
+  .credential-item:hover,
+  .credential-item:hover svg,
+  .hover-media:hover .image-slot img,
+  .team-card:hover .image-slot img {
+    transform: none;
   }
 }

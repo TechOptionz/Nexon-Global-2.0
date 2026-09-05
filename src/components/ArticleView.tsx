@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useLang } from "@/lib/i18n";
 import { ARTICLES, ARTICLE_BY_SLUG, type Block } from "@/data/articles";
 import SiteHeader from "./SiteHeader";
+import SplitText from "@/components/motion/SplitText";
 import SiteFooter from "./SiteFooter";
 import CtaBand from "./CtaBand";
 import ImageSlot from "./ImageSlot";
@@ -65,11 +66,16 @@ export default function ArticleView({ slug }: { slug: string }) {
           </Link>
 
           <div>
-            <span className="eyebrow">{a.tag[lang]}</span>
+            <span className="eyebrow hero-1" data-hero>
+              {a.tag[lang]}
+            </span>
           </div>
 
-          <h1
+          <SplitText
+            as="h1"
             className="serif"
+            delay={170}
+            stagger={40}
             style={{
               fontSize: "clamp(36px, 4.4vw, 64px)",
               lineHeight: 1.02,
@@ -77,9 +83,8 @@ export default function ArticleView({ slug }: { slug: string }) {
               margin: "24px 0",
               textWrap: "balance",
             }}
-          >
-            {a.title[lang]}
-          </h1>
+            text={a.title[lang]}
+          />
 
           <p
             style={{

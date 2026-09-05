@@ -1,7 +1,7 @@
 "use client";
 
 import Lenis from "lenis";
-import { createContext, useContext, useEffect, useRef, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useMemo, useRef, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { prefersReducedMotion } from "@/lib/reveal";
 
@@ -109,12 +109,16 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
     lenisRef.current?.resize();
   }, [pathname]);
 
-  const controls: Controls = {
-    stop: () => lenisRef.current?.stop(),
-    start: () => lenisRef.current?.start(),
-    scrollTo: (target) =>
-      lenisRef.current?.scrollTo(target, { offset: headerOffset(), duration: 1.1 }),
-  };
+  /* Stable across renders: consumers put it in effect dependencies. */
+  const controls = useMemo<Controls>(
+    () => ({
+      stop: () => lenisRef.current?.stop(),
+      start: () => lenisRef.current?.start(),
+      scrollTo: (target) =>
+        lenisRef.current?.scrollTo(target, { offset: headerOffset(), duration: 1.1 }),
+    }),
+    [],
+  );
 
   return <SmoothScrollContext.Provider value={controls}>{children}</SmoothScrollContext.Provider>;
 }

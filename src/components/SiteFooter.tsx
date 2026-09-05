@@ -137,22 +137,25 @@ export default function SiteFooter() {
                   <span
                     style={{
                       display: "inline-flex",
-                      transition: "transform 0.25s",
+                      transition: "transform 0.32s var(--ease-premium)",
                       transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
                     }}
                   >
                     <ChevronDown size={18} />
                   </span>
                 </button>
-                {isOpen && (
-                  <div className="footer-col-links" style={{ margin: "0 0 20px" }}>
-                    {c.links.map((l) => (
-                      <Link key={l.label} href={l.href}>
-                        {t(l.label)}
-                      </Link>
-                    ))}
+                {/* Kept mounted so the column can grow rather than jump. */}
+                <div className={`acc-panel${isOpen ? " is-open" : ""}`} inert={!isOpen}>
+                  <div className="acc-inner">
+                    <div className="footer-col-links" style={{ margin: "0 0 20px" }}>
+                      {c.links.map((l) => (
+                        <Link key={l.label} href={l.href}>
+                          {t(l.label)}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
-                )}
+                </div>
               </div>
             );
           })}

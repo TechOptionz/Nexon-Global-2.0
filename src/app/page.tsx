@@ -15,6 +15,7 @@ import TestimonialBand from "@/components/TestimonialBand";
 import EligibilityCheck from "@/components/EligibilityCheck";
 import ImageSlot from "@/components/ImageSlot";
 import Reveal from "@/components/Reveal";
+import SplitText from "@/components/motion/SplitText";
 import { useTrack } from "@/components/useTrack";
 import {
   CredentialsBand,
@@ -121,6 +122,7 @@ export default function HomePage() {
     <div className="artboard">
       {announce && (
         <div
+          data-hero
           style={{
             position: "relative",
             margin: "12px 12px 0",
@@ -185,10 +187,12 @@ export default function HomePage() {
           color: "var(--white)",
         }}
       >
-        <ImageSlot
-          placeholder="hero video — nature / travel"
-          src="/assets/airport-collage.jpg"
-        />
+        <div data-hero-media data-parallax style={{ position: "absolute", inset: 0 }}>
+          <ImageSlot
+            placeholder="hero video — nature / travel"
+            src="/assets/airport-collage.jpg"
+          />
+        </div>
         <div
           style={{
             position: "absolute",
@@ -223,17 +227,21 @@ export default function HomePage() {
             pointerEvents: "none",
           }}
         >
-          <span className="pill-frosted">{t("NEXON Global Immigration")}</span>
-          <h1
+          <span className="pill-frosted" data-hero style={{ ["--hero-delay" as string]: "80ms" }}>
+            {t("NEXON Global Immigration")}
+          </span>
+          <SplitText
+            as="h1"
             className="h1-hero"
+            delay={220}
+            text={t("Your next country, handled with care and precision.")}
             style={{
               maxWidth: 1240,
               textShadow: "0 2px 24px rgba(0,0,0,0.45), 0 1px 2px rgba(0,0,0,0.3)",
             }}
-          >
-            {t("Your next country, handled with care and precision.")}
-          </h1>
+          />
           <p
+            data-hero
             style={{
               fontSize: 18,
               lineHeight: 1.5,
@@ -241,13 +249,24 @@ export default function HomePage() {
               margin: "0 0 32px",
               textWrap: "pretty",
               textShadow: "0 1px 12px rgba(0,0,0,0.45)",
+              ["--hero-delay" as string]: "620ms",
             }}
           >
             {t(
               "NEXON guides individuals, families, investors and skilled professionals through residency, citizenship and global mobility programs — from first consultation to approval, with full transparency at every step.",
             )}
           </p>
-          <div style={{ display: "flex", gap: 12, pointerEvents: "auto", flexWrap: "wrap", justifyContent: "center" }}>
+          <div
+            data-hero
+            style={{
+              display: "flex",
+              gap: 12,
+              pointerEvents: "auto",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              ["--hero-delay" as string]: "780ms",
+            }}
+          >
             <Link href="/#eligibility" className="btn btn--primary">
               {t("Check Your Eligibility")}
             </Link>

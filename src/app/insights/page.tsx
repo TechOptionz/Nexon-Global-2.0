@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useLang } from "@/lib/i18n";
 import { ARTICLES } from "@/data/articles";
 import SiteHeader from "@/components/SiteHeader";
+import SplitText from "@/components/motion/SplitText";
 import SiteFooter from "@/components/SiteFooter";
 import CtaBand from "@/components/CtaBand";
 import ImageSlot from "@/components/ImageSlot";
@@ -19,11 +20,18 @@ export default function InsightsPage() {
 
       <section style={{ padding: "128px 0 64px" }}>
         <div className="container">
-          <span className="eyebrow">{t("Insights")}</span>
-          <h1 className="h1-96" style={{ maxWidth: 1100 }}>
-            {t("Migration, explained without the sales pitch.")}
-          </h1>
-          <p className="lede" style={{ maxWidth: 560 }}>
+          <span className="eyebrow hero-1" data-hero>
+            {t("Insights")}
+          </span>
+          <SplitText
+            as="h1"
+            className="h1-96"
+            delay={170}
+            stagger={45}
+            style={{ maxWidth: 1100 }}
+            text={t("Migration, explained without the sales pitch.")}
+          />
+          <p className="lede hero-4" data-hero style={{ maxWidth: 560 }}>
             {t("Program changes, comparisons and practical guides from our consultants.")}
           </p>
         </div>

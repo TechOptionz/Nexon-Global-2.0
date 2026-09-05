@@ -3,6 +3,7 @@
 import { useLang } from "@/lib/i18n";
 import { CASE_STUDIES, REVIEW_QUOTES } from "@/data/testimonials";
 import SiteHeader from "@/components/SiteHeader";
+import SplitText from "@/components/motion/SplitText";
 import SiteFooter from "@/components/SiteFooter";
 import CtaBand from "@/components/CtaBand";
 import { StarIcon, WaveBgCard } from "@/components/Icons";
@@ -16,11 +17,18 @@ export default function SuccessStoriesPage() {
 
       <section className="section-pad" style={{ padding: "128px 0 96px" }}>
         <div className="container" style={{ textAlign: "center" }}>
-          <span className="eyebrow">{t("Success stories")}</span>
-          <h1 className="h1-page" style={{ margin: "24px auto", maxWidth: 1000 }}>
-            {t("Families who made the move.")}
-          </h1>
-          <p className="lede" style={{ maxWidth: 560, margin: "0 auto" }}>
+          <span className="eyebrow hero-1" data-hero>
+            {t("Success stories")}
+          </span>
+          <SplitText
+            as="h1"
+            className="h1-page"
+            delay={170}
+            stagger={45}
+            style={{ margin: "24px auto", maxWidth: 1000 }}
+            text={t("Families who made the move.")}
+          />
+          <p className="lede hero-4" data-hero style={{ maxWidth: 560, margin: "0 auto" }}>
             {t("Names abbreviated for privacy. Programs, timelines and outcomes as delivered.")}
           </p>
         </div>

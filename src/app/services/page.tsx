@@ -5,6 +5,7 @@ import { useLang } from "@/lib/i18n";
 import { PRACTICES } from "@/data/services";
 import { AUDIENCES } from "@/data/site";
 import SiteHeader from "@/components/SiteHeader";
+import SplitText from "@/components/motion/SplitText";
 import SiteFooter from "@/components/SiteFooter";
 import CtaBand from "@/components/CtaBand";
 import TestimonialBand from "@/components/TestimonialBand";
@@ -19,16 +20,23 @@ export default function ServicesPage() {
 
       <section className="section-pad" style={{ padding: "128px 0 96px" }}>
         <div className="container">
-          <span className="eyebrow">{t("Services")}</span>
-          <h1 className="h1-page" style={{ maxWidth: 1100 }}>
-            {t("Four practices. One clear path abroad.")}
-          </h1>
-          <p className="lede" style={{ maxWidth: 560, margin: "0 0 32px" }}>
+          <span className="eyebrow hero-1" data-hero>
+            {t("Services")}
+          </span>
+          <SplitText
+            as="h1"
+            className="h1-page"
+            delay={170}
+            stagger={45}
+            style={{ maxWidth: 1100 }}
+            text={t("Four practices. One clear path abroad.")}
+          />
+          <p className="lede hero-4" data-hero style={{ maxWidth: 560, margin: "0 0 32px" }}>
             {t(
               "Every engagement begins with an honest assessment of your options. We only recommend programs you genuinely qualify for.",
             )}
           </p>
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          <div className="hero-5" data-hero style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
             <Link href="/#eligibility" className="btn btn--primary">
               {t("Check Your Eligibility")}
             </Link>

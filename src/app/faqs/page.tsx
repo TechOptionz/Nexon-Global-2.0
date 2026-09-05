@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useLang } from "@/lib/i18n";
 import { FAQ_GROUPS } from "@/data/faqs";
 import SiteHeader from "@/components/SiteHeader";
+import SplitText from "@/components/motion/SplitText";
 import SiteFooter from "@/components/SiteFooter";
 import CtaBand from "@/components/CtaBand";
 import { Plus } from "@/components/Icons";
@@ -27,11 +28,18 @@ export default function FaqsPage() {
 
       <section className="section-pad" style={{ padding: "128px 0 96px" }}>
         <div className="container" style={{ textAlign: "center" }}>
-          <span className="eyebrow">{t("FAQs")}</span>
-          <h1 className="h1-page" style={{ margin: "24px auto", maxWidth: 1000 }}>
-            {t("Questions, answered plainly.")}
-          </h1>
-          <p className="lede" style={{ maxWidth: 560, margin: "0 auto" }}>
+          <span className="eyebrow hero-1" data-hero>
+            {t("FAQs")}
+          </span>
+          <SplitText
+            as="h1"
+            className="h1-page"
+            delay={170}
+            stagger={45}
+            style={{ margin: "24px auto", maxWidth: 1000 }}
+            text={t("Questions, answered plainly.")}
+          />
+          <p className="lede hero-4" data-hero style={{ maxWidth: 560, margin: "0 auto" }}>
             {t(
               "If your question isn't here, a consultant will answer it on a free call — in English or Arabic.",
             )}
@@ -74,7 +82,12 @@ export default function FaqsPage() {
                           <Plus />
                         </span>
                       </button>
-                      {isOpen && <p className="faq-answer">{t(f.a)}</p>}
+                      {/* Kept mounted so the row can grow rather than jump. */}
+                      <div className={`acc-panel${isOpen ? " is-open" : ""}`} inert={!isOpen}>
+                        <div className="acc-inner">
+                          <p className="faq-answer">{t(f.a)}</p>
+                        </div>
+                      </div>
                     </div>
                   );
                 })}

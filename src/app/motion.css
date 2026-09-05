@@ -123,6 +123,13 @@ html.lenis body {
   transform: translate3d(calc(var(--anim-shift) * -1), 0, 0);
 }
 
+/* A scroll-snap child must not change size while it arrives: a scaled
+   card moves its own snap position and the carousel re-snaps under it.
+   Inside a track, cards rise without the scale. */
+.track > [data-anim] {
+  transform: translate3d(0, var(--anim-rise), 0);
+}
+
 [data-anim][data-anim][data-in] {
   opacity: 1;
   transform: none;
@@ -173,6 +180,45 @@ html.lenis body {
   animation: heroMediaIn 1200ms var(--ease-premium) both;
 }
 
+/* The beats of a hero, so page markup carries a position in the
+   sequence rather than a hard-coded number of milliseconds. */
+.hero-1 {
+  --hero-delay: 60ms;
+}
+.hero-2 {
+  --hero-delay: 160ms;
+}
+.hero-3 {
+  --hero-delay: 300ms;
+}
+.hero-4 {
+  --hero-delay: 420ms;
+}
+.hero-5 {
+  --hero-delay: 540ms;
+}
+.hero-6 {
+  --hero-delay: 660ms;
+}
+
+/* Content that replaces content in place — the next testimonial, the
+   next question in the eligibility wizard. Keyed on the value it shows,
+   so React remounts it and the animation runs again. */
+@keyframes swapIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.swap-in {
+  animation: swapIn 420ms var(--ease-premium) both;
+}
+
 /* ------------------------------------------------------------------
    Split text
 
@@ -211,7 +257,8 @@ html.lenis body {
    Buttons
    ------------------------------------------------------------------ */
 
-.btn {
+.btn,
+.btn--secondary {
   transition:
     background var(--dur-hover) var(--ease-soft),
     border-color var(--dur-hover) var(--ease-soft),
@@ -221,13 +268,15 @@ html.lenis body {
 }
 
 @media (hover: hover) {
-  .btn:hover {
+  .btn:hover,
+  .btn--secondary:hover {
     transform: translate3d(0, var(--lift), 0);
     box-shadow: 0 10px 24px -12px rgba(25, 31, 29, 0.45);
   }
 }
 
-.btn:active {
+.btn:active,
+.btn--secondary:active {
   transform: translate3d(0, 0, 0) scale(0.985);
   transition-duration: 90ms;
 }
@@ -243,16 +292,19 @@ html.lenis body {
 
 /* Arrows lean toward where they are taking you. */
 .btn svg,
+.btn--secondary svg,
 .mega-tile-all span {
   transition: transform var(--dur-hover) var(--ease-premium);
 }
 
 @media (hover: hover) {
   .btn:hover svg,
+  .btn--secondary:hover svg:last-of-type,
   .mega-tile-all:hover span {
     transform: translateX(3px);
   }
   [dir="rtl"] .btn:hover svg,
+  [dir="rtl"] .btn--secondary:hover svg:last-of-type,
   [dir="rtl"] .mega-tile-all:hover span {
     transform: translateX(-3px);
   }
@@ -333,31 +385,13 @@ html.lenis body {
    Cards
    ------------------------------------------------------------------ */
 
-.photo-card {
-  transition:
-    transform var(--dur-hover) var(--ease-premium),
-    box-shadow var(--dur-hover) var(--ease-premium);
-}
-
-.photo-card__media {
-  transition: transform 700ms var(--ease-premium);
-}
-
-.card-scrim {
-  transition: opacity var(--dur-hover) var(--ease-soft);
-}
-
-@media (hover: hover) {
-  .photo-card:hover {
-    transform: translate3d(0, var(--lift-card), 0);
-    box-shadow: 0 24px 48px -28px rgba(25, 31, 29, 0.55);
-  }
-  .photo-card:hover .card-scrim {
-    opacity: 0.92;
-  }
-}
-
-.photo-card:active {
+/* Photo cards, media frames, team portraits, standards cards and the
+   credential columns already answer the cursor — globals.css owns that
+   "Pointer feedback" layer. Nothing is repeated here; this file only
+   adds the press state those rules do not describe. */
+.photo-card:active,
+.hover-media:active,
+.standards-card:active {
   transform: translate3d(0, -2px, 0) scale(0.995);
   transition-duration: 120ms;
 }
@@ -625,7 +659,7 @@ html.lenis body {
 }
 
 @media (hover: hover) {
-  .faq-row:hover {
+  .faq-row:has(.faq-trigger:hover) {
     background: var(--sky-mid);
   }
 }
@@ -752,6 +786,10 @@ html.lenis body {
 
   .acc-panel {
     transition: none;
+  }
+
+  .swap-in {
+    animation: none !important;
   }
 
   .marquee__inner {

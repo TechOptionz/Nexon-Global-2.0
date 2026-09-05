@@ -3,9 +3,12 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useLang } from "@/lib/i18n";
+import { useSmoothScroll } from "./motion/SmoothScroll";
 import { MENUS, TILE_BG, type NavKey } from "@/data/site";
 import ImageSlot from "./ImageSlot";
 import { ChevronDown, Close, Menu, Search } from "./Icons";
+
+const WORDMARK = "NEXON".split("");
 
 type Props = { active?: NavKey };
 
@@ -15,6 +18,7 @@ export default function SiteHeader({ active }: Props) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [group, setGroup] = useState<string | null>(null);
+  const smooth = useSmoothScroll();
 
   // Hairline appears under the header once the page scrolls.
   useEffect(() => {
@@ -24,38 +28,60 @@ export default function SiteHeader({ active }: Props) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Lock the page behind the mobile drawer.
+  /* Lock the page behind the mobile drawer. The smooth-scroll runtime
+     is paused with it, so the drawer scrolls natively and the page
+     underneath cannot drift. */
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
+    if (menuOpen) smooth?.stop();
+    else smooth?.start();
     return () => {
       document.body.style.overflow = "";
     };
-  }, [menuOpen]);
+  }, [menuOpen, smooth]);
 
   const menu = MENUS.find((m) => m.key === open) ?? null;
   const hairline = scrolled ? "var(--stone)" : "transparent";
   const ar = lang === "ar";
 
+  // Same construction as the footer wordmark: the sub-line sets the block
+  // width at its own natural tracking, and NEXON is justified across it with
+  // space-between, so both rows sit flush on the left and right edges.
   const wordmark = (
-    <span style={{ display: "flex", flexDirection: "column", lineHeight: 1, color: "var(--ink)" }}>
+    <span
+      style={{
+        display: "inline-flex",
+        flexDirection: "column",
+        alignItems: "stretch",
+        width: "fit-content",
+        lineHeight: 1,
+        color: "var(--ink)",
+      }}
+    >
       <span
         style={{
-          fontSize: 20,
+          display: "flex",
+          justifyContent: "space-between",
+          fontSize: 24,
           fontWeight: 600,
-          letterSpacing: "0.22em",
           textTransform: "uppercase",
         }}
       >
-        NE<span style={{ color: "var(--deep-red)" }}>X</span>ON
+        {WORDMARK.map((c, i) => (
+          <span key={i} style={c === "X" ? { color: "var(--deep-red)" } : undefined}>
+            {c}
+          </span>
+        ))}
       </span>
       <span
         style={{
-          fontSize: 8,
+          fontSize: 9.5,
           fontWeight: 600,
           letterSpacing: "0.3em",
+          marginInlineEnd: "-0.3em",
           textTransform: "uppercase",
           color: "var(--muted)",
-          marginTop: 5,
+          marginTop: 6,
         }}
       >
         Global Immigration
@@ -72,13 +98,17 @@ export default function SiteHeader({ active }: Props) {
       {/* Scrim behind the open mega-menu */}
       {menu && (
         <div
+          className="mega-scrim"
           onClick={() => setOpen(null)}
           style={{ position: "fixed", inset: 0, background: "rgba(25,31,29,0.22)", zIndex: 0 }}
         />
       )}
 
-      <div className="site-header" style={{ borderBottomColor: hairline }}>
-        <Link href="/" style={{ flex: "none", width: 140 }} aria-label={SITE_LABEL}>
+      <div
+        className={`site-header${scrolled ? " is-scrolled" : ""}`}
+        style={{ borderBottomColor: hairline }}
+      >
+        <Link href="/" style={{ flex: "none" }} aria-label={SITE_LABEL}>
           {wordmark}
         </Link>
 
@@ -216,10 +246,18 @@ export default function SiteHeader({ active }: Props) {
               })}
             </div>
 
+            {/* The link columns share one card, sized and styled to sit with
+                the tiles above rather than as loose text under them. */}
             {menu.columns.length > 0 && (
-              <div style={{ display: "flex", gap: 56 }}>
+              <div
+                className="mega-cols-card"
+                style={{
+                  background: TILE_BG[menu.tiles.length][0],
+                  gridTemplateColumns: `repeat(${menu.columns.length}, minmax(0, 1fr))`,
+                }}
+              >
                 {menu.columns.map((col) => (
-                  <div key={col.eyebrow} style={{ minWidth: 200 }}>
+                  <div key={col.eyebrow}>
                     <div className="kicker" style={{ marginBottom: 12 }}>
                       {t(col.eyebrow)}
                     </div>
@@ -272,6 +310,8 @@ export default function SiteHeader({ active }: Props) {
       {menuOpen && (
         <div
           dir={dir}
+          className="mobile-drawer"
+          data-lenis-prevent
           style={{
             position: "fixed",
             inset: 0,
@@ -305,7 +345,7 @@ export default function SiteHeader({ active }: Props) {
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", borderTop: "1px solid var(--stone)", marginTop: 8 }}>
-            {MENUS.map((m) => {
+            {MENUS.map((m, mi) => {
               const isOpen = group === m.key;
               const links = [
                 ...m.tiles.flatMap((x) => [
@@ -315,7 +355,14 @@ export default function SiteHeader({ active }: Props) {
                 ...m.columns.flatMap((c) => c.links),
               ];
               return (
-                <div key={m.key} style={{ borderBottom: "1px solid var(--stone)" }}>
+                <div
+                  key={m.key}
+                  className="drawer-row"
+                  style={{
+                    borderBottom: "1px solid var(--stone)",
+                    ["--row-delay" as string]: `${60 + mi * 45}ms`,
+                  }}
+                >
                   <button
                     type="button"
                     onClick={() => setGroup(isOpen ? null : m.key)}
@@ -340,37 +387,41 @@ export default function SiteHeader({ active }: Props) {
                     <span
                       style={{
                         display: "inline-flex",
-                        transition: "transform 0.25s",
+                        transition: "transform 0.32s var(--ease-premium)",
                         transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
                       }}
                     >
                       <ChevronDown size={18} />
                     </span>
                   </button>
-                  {isOpen && (
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 14,
-                        padding: "4px 0 20px",
-                        paddingInlineStart: 16,
-                        borderInlineStart: "1px solid var(--stone)",
-                        marginBottom: 16,
-                      }}
-                    >
-                      {links.map((l) => (
-                        <Link
-                          key={l.label}
-                          href={l.href}
-                          onClick={() => setMenuOpen(false)}
-                          style={{ fontSize: 15, fontWeight: 500, color: "var(--ink)", lineHeight: 1.4 }}
-                        >
-                          {t(l.label)}
-                        </Link>
-                      ))}
+                  {/* Kept mounted so the panel can animate open; `inert`
+                      keeps the collapsed links out of the tab order. */}
+                  <div className={`acc-panel${isOpen ? " is-open" : ""}`} inert={!isOpen}>
+                    <div className="acc-inner">
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: 14,
+                          padding: "4px 0 20px",
+                          paddingInlineStart: 16,
+                          borderInlineStart: "1px solid var(--stone)",
+                          marginBottom: 16,
+                        }}
+                      >
+                        {links.map((l) => (
+                          <Link
+                            key={l.label}
+                            href={l.href}
+                            onClick={() => setMenuOpen(false)}
+                            style={{ fontSize: 15, fontWeight: 500, color: "var(--ink)", lineHeight: 1.4 }}
+                          >
+                            {t(l.label)}
+                          </Link>
+                        ))}
+                      </div>
                     </div>
-                  )}
+                  </div>
                 </div>
               );
             })}

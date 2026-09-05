@@ -29,7 +29,8 @@ type Rule = { selector: string; variant: string };
 const RULES: Rule[] = [
   // Cards are the signature component: they lift as a single object.
   {
-    selector: ".photo-card, .sand-card, .white-card, .route-card, .faq-row",
+    selector:
+      ".photo-card, .sand-card, .white-card, .route-card, .faq-row, .standards-card, .team-card",
     variant: "card",
   },
   // Headings carry the most travel — they lead each section.
@@ -40,11 +41,11 @@ const RULES: Rule[] = [
   // Cells of the measured grids rise together in sequence.
   {
     selector:
-      ".stats-row > *, .credentials-grid > *, .steps-grid > *, .promises-grid > *, .values-grid > *, .practice-grid > *",
+      ".stats-row > *, .credentials-grid > *, .steps-grid > *, .promises-grid > *, .practice-grid > *",
     variant: "up",
   },
   // Large media settles in rather than travelling.
-  { selector: ".sticky-media, .image-slot--static", variant: "scale" },
+  { selector: ".sticky-media, .hover-media, .image-slot--static", variant: "scale" },
   // Supporting copy and controls simply arrive.
   {
     selector:
@@ -65,7 +66,13 @@ const EXCLUDED_ANCESTORS = [
   "[data-hero]",
   "[data-no-anim]",
   "[data-anim]",
+  // A reveal that has finished hands its attributes back, so its
+  // subtree is recognised by the arrival marker instead.
+  "[data-done]",
 ].join(", ");
+
+/** Elements whose own component drives them; never double-animate. */
+const SELF_EXCLUDED = ".split, [data-hero], [data-hero-media]";
 
 /** Stagger between siblings — small enough to read as one movement. */
 const STEP_MS = 65;
@@ -77,7 +84,11 @@ function collect(): HTMLElement[] {
   for (const { selector, variant } of RULES) {
     for (const node of Array.from(document.querySelectorAll<HTMLElement>(selector))) {
       if (chosen.has(node)) continue;
+      // Already tagged, already arrived, or opted out.
       if (node.hasAttribute("data-anim") || node.hasAttribute("data-no-anim")) continue;
+      if (node.hasAttribute("data-in") || node.hasAttribute("data-done")) continue;
+      // Elements that carry their own entrance, and their subtrees.
+      if (node.closest(SELF_EXCLUDED)) continue;
       if (node.parentElement?.closest(EXCLUDED_ANCESTORS)) continue;
       chosen.set(node, variant);
     }

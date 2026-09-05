@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useLang } from "@/lib/i18n";
 import { DESTINATIONS, type Destination } from "@/data/destinations";
 import SiteHeader from "./SiteHeader";
+import SplitText from "@/components/motion/SplitText";
 import SiteFooter from "./SiteFooter";
 import CtaBand from "./CtaBand";
 import FaqBlock from "./FaqBlock";
@@ -37,18 +38,28 @@ export default function DestinationView({ slug }: { slug: string }) {
           }}
         >
           <div>
-            <span className="eyebrow">{t(d.tag)}</span>
-            <h1 className={d.heroSize === 104 ? "h1-page" : "h1-96"}>{t(d.title)}</h1>
-            <p className="lede" style={{ maxWidth: 520, margin: "0 0 32px" }}>
+            <span className="eyebrow hero-1" data-hero>
+              {t(d.tag)}
+            </span>
+            <SplitText
+              as="h1"
+              className={d.heroSize === 104 ? "h1-page" : "h1-96"}
+              delay={170}
+              stagger={45}
+              text={t(d.title)}
+            />
+            <p className="lede hero-4" data-hero style={{ maxWidth: 520, margin: "0 0 32px" }}>
               {t(d.intro)}
             </p>
-            <Link href="/contact" className="btn btn--primary">
+            <Link href="/contact" className="btn btn--primary hero-5" data-hero>
               {t(enquire)}
             </Link>
           </div>
 
           <div className="dest-hero" style={{ position: "relative", height: 620 }}>
             <div
+              data-hero-media
+              data-parallax
               style={{
                 position: "absolute",
                 inset: 0,

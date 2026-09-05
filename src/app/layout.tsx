@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Inter, Instrument_Serif } from "next/font/google";
 import { LangProvider } from "@/lib/i18n";
+import ScrollMotion from "@/components/motion/ScrollMotion";
+import SmoothScroll from "@/components/motion/SmoothScroll";
 import "./globals.css";
+import "./motion.css";
 
 /* The two families the design system allows: an editorial display serif
    and Inter for everything else. */
@@ -40,10 +43,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: `try{var l=localStorage.getItem('nexon-lang');if(l==='ar'){var e=document.documentElement;e.setAttribute('lang','ar');e.setAttribute('dir','rtl');}}catch(e){}`,
           }}
         />
+        {/* Without scripting nothing can reveal itself, so nothing is
+            allowed to start hidden. */}
+        <noscript>
+          <style>{NO_JS_CSS}</style>
+        </noscript>
       </head>
       <body>
-        <LangProvider>{children}</LangProvider>
+        <LangProvider>
+          <SmoothScroll>
+            <ScrollMotion />
+            {children}
+          </SmoothScroll>
+        </LangProvider>
       </body>
     </html>
   );
 }
+
+/* Entrance animations are progressive enhancement: with scripting off,
+   every element that would have been revealed is simply already there. */
+const NO_JS_CSS = `[data-anim],[data-hero],[data-hero-media],.split-word{opacity:1!important;transform:none!important;animation:none!important}.acc-panel{grid-template-rows:1fr!important}`;

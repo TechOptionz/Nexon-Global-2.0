@@ -49,8 +49,19 @@ export default function SplitText({
     return watch(el);
   }, [trigger, text]);
 
-  const words = text.split(/(\s+)/);
-  let index = 0;
+  /* Split on the whitespace and keep it: the gaps stay outside the
+     spans, so an inline-block word never glues itself to the next one
+     and the line wraps exactly as it did before. */
+  const parts: Array<{ chunk: string; wordDelay: number | null }> = [];
+  let word = 0;
+  for (const chunk of text.split(/(\s+)/)) {
+    if (chunk.trim()) {
+      parts.push({ chunk, wordDelay: delay + word * stagger });
+      word += 1;
+    } else if (chunk) {
+      parts.push({ chunk, wordDelay: null });
+    }
+  }
 
   return (
     <Tag
@@ -59,11 +70,10 @@ export default function SplitText({
       style={style}
       data-split-trigger={trigger}
     >
-      {words.map((chunk, i) => {
-        if (!chunk.trim()) return chunk;
-        const wordDelay = delay + index * stagger;
-        index += 1;
-        return (
+      {parts.map(({ chunk, wordDelay }, i) =>
+        wordDelay === null ? (
+          chunk
+        ) : (
           <span
             key={i}
             className="split-word"
@@ -71,8 +81,8 @@ export default function SplitText({
           >
             {chunk}
           </span>
-        );
-      })}
+        ),
+      )}
     </Tag>
   );
 }

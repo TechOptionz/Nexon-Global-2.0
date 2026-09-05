@@ -12,6 +12,8 @@ export const DICT: Record<string, string> = {
   "Our story": "قصتنا",
   "Who we serve": "من نخدم",
   "What we hold ourselves to": "ما نلتزم به",
+  "Our standards": "معاييرنا",
+  "Four commitments that shape every file we take on — written down, and the same for every client.": "أربعة التزامات تحكم كل ملف نتولاه — مكتوبة، وواحدة لكل عميل.",
   "Transparency first": "الشفافية أولًا",
   "Written fee schedules and engagement terms before you commit a dirham. No hidden charges, ever.": "جداول رسوم وشروط تعاقد مكتوبة قبل أن تدفع درهمًا واحدًا. لا رسوم خفية، أبدًا.",
   "Authorised programs only": "برامج معتمدة فقط",
@@ -123,6 +125,10 @@ export const DICT: Record<string, string> = {
   "Skilled & Family Migration": "الهجرة المهنية والعائلية",
   "Skilled & family migration": "الهجرة المهنية والعائلية",
   "A clear process, from first call to approval.": "عملية واضحة، من أول مكالمة حتى الموافقة.",
+  "Real client files — the programs, the timelines, the outcomes.":
+    "ملفات عملاء حقيقية — البرامج والمُدد الزمنية والنتائج.",
+  "Speak to a named advisor in Dubai, in English or Arabic.":
+    "تحدّث إلى مستشار مخصّص في دبي، بالعربية أو الإنجليزية.",
   "Five stages. At each one you know exactly what we're doing, what it costs, and what you receive.": "خمس مراحل. في كل مرحلة تعرف تمامًا ما نقوم به، وكم يكلّف، وما الذي تحصل عليه.",
   "You receive:": "تحصل على:",
   "Insights": "رؤى ومقالات",

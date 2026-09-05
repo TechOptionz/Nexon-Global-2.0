@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useLang } from "@/lib/i18n";
 import { BUSINESS_SERVICES } from "@/data/site";
 import SiteHeader from "@/components/SiteHeader";
+import SplitText from "@/components/motion/SplitText";
 import SiteFooter from "@/components/SiteFooter";
 import CtaBand from "@/components/CtaBand";
 import FaqBlock from "@/components/FaqBlock";
@@ -24,16 +25,23 @@ export default function ForBusinessPage() {
 
       <section style={{ background: "var(--sky)", padding: "128px 0 0" }}>
         <div className="container">
-          <span className="eyebrow">{t("For business")}</span>
-          <h1 className="h1-page" style={{ maxWidth: 1000 }}>
-            {t("Corporate & Global Mobility")}
-          </h1>
-          <p className="lede" style={{ maxWidth: 560, margin: "0 0 32px" }}>
+          <span className="eyebrow hero-1" data-hero>
+            {t("For business")}
+          </span>
+          <SplitText
+            as="h1"
+            className="h1-page"
+            delay={170}
+            stagger={45}
+            style={{ maxWidth: 1000 }}
+            text={t("Corporate & Global Mobility")}
+          />
+          <p className="lede hero-4" data-hero style={{ maxWidth: 560, margin: "0 0 32px" }}>
             {t(
               "Relocation of founders, executives and whole teams. Company setup, work permits and dependent visas handled end to end, with UAE free-zone expertise.",
             )}
           </p>
-          <Link href="/contact" className="btn btn--primary">
+          <Link href="/contact" className="btn btn--primary hero-5" data-hero>
             {t("Book a Consultation")}
           </Link>
           <div

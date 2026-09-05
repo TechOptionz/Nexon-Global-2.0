@@ -107,127 +107,137 @@ export default function EligibilityCheck() {
               {[0, 1, 2].map((i) => (
                 <div
                   key={i}
-                  style={{ height: 4, flex: 1, borderRadius: 2, background: bar(i) }}
+                  style={{
+                    height: 4,
+                    flex: 1,
+                    borderRadius: 2,
+                    background: bar(i),
+                    transition: "background 360ms var(--ease-premium)",
+                  }}
                 />
               ))}
             </div>
 
-            {step === 0 && (
-              <>
-                <div style={{ fontSize: 18, fontWeight: 600, lineHeight: 1.3, marginBottom: 16 }}>
-                  {t("What is your primary goal?")}
-                </div>
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,200px),1fr))",
-                    gap: 10,
-                  }}
-                >
-                  {GOALS.map((g) => (
-                    <button key={g} type="button" className="choice-btn" onClick={() => setStep(1)}>
-                      {t(g)}
-                    </button>
-                  ))}
-                </div>
-              </>
-            )}
+            {/* Each question replaces the last with a short fade rather
+                than a jump. */}
+            <div key={step} className="swap-in">
+              {step === 0 && (
+                <>
+                  <div style={{ fontSize: 18, fontWeight: 600, lineHeight: 1.3, marginBottom: 16 }}>
+                    {t("What is your primary goal?")}
+                  </div>
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,200px),1fr))",
+                      gap: 10,
+                    }}
+                  >
+                    {GOALS.map((g) => (
+                      <button key={g} type="button" className="choice-btn" onClick={() => setStep(1)}>
+                        {t(g)}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
 
-            {step === 1 && (
-              <>
-                <div style={{ fontSize: 18, fontWeight: 600, lineHeight: 1.3, marginBottom: 16 }}>
-                  {t("What budget could you commit, if the route involves investment?")}
-                </div>
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,180px),1fr))",
-                    gap: 10,
-                  }}
-                >
-                  {BUDGETS.map((b) => (
-                    <button
-                      key={b}
-                      type="button"
-                      className="choice-btn"
-                      onClick={() => {
-                        setBudget(b);
-                        setStep(2);
-                      }}
-                    >
-                      {t(b)}
-                    </button>
-                  ))}
-                </div>
-                {back}
-              </>
-            )}
+              {step === 1 && (
+                <>
+                  <div style={{ fontSize: 18, fontWeight: 600, lineHeight: 1.3, marginBottom: 16 }}>
+                    {t("What budget could you commit, if the route involves investment?")}
+                  </div>
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,180px),1fr))",
+                      gap: 10,
+                    }}
+                  >
+                    {BUDGETS.map((b) => (
+                      <button
+                        key={b}
+                        type="button"
+                        className="choice-btn"
+                        onClick={() => {
+                          setBudget(b);
+                          setStep(2);
+                        }}
+                      >
+                        {t(b)}
+                      </button>
+                    ))}
+                  </div>
+                  {back}
+                </>
+              )}
 
-            {step === 2 && (
-              <>
-                <div style={{ fontSize: 18, fontWeight: 600, lineHeight: 1.3, marginBottom: 6 }}>
-                  {t("Where should we send your assessment?")}
-                </div>
-                <div style={{ fontSize: 14, color: "var(--muted)", marginBottom: 20 }}>
-                  {t("Based on your answers:")}{" "}
-                  <strong style={{ color: "var(--ink)" }}>
-                    {(budget && MATCHES[budget]) ?? 3} {t("programs")}
-                  </strong>{" "}
-                  {t("look worth exploring.")}
-                </div>
-                <form
-                  onSubmit={onSubmit}
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,200px),1fr))",
-                    gap: 12,
-                  }}
-                >
-                  <input required type="text" className="field" placeholder={t("Full name")} />
-                  <input required type="email" className="field" placeholder={t("Email address")} />
-                  <input
-                    type="tel"
-                    className="field"
-                    placeholder={t("Phone / WhatsApp (optional)")}
-                  />
-                  <button type="submit" className="btn btn--primary">
-                    {t("Get my assessment")}
+              {step === 2 && (
+                <>
+                  <div style={{ fontSize: 18, fontWeight: 600, lineHeight: 1.3, marginBottom: 6 }}>
+                    {t("Where should we send your assessment?")}
+                  </div>
+                  <div style={{ fontSize: 14, color: "var(--muted)", marginBottom: 20 }}>
+                    {t("Based on your answers:")}{" "}
+                    <strong style={{ color: "var(--ink)" }}>
+                      {(budget && MATCHES[budget]) ?? 3} {t("programs")}
+                    </strong>{" "}
+                    {t("look worth exploring.")}
+                  </div>
+                  <form
+                    onSubmit={onSubmit}
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,200px),1fr))",
+                      gap: 12,
+                    }}
+                  >
+                    <input required type="text" className="field" placeholder={t("Full name")} />
+                    <input required type="email" className="field" placeholder={t("Email address")} />
+                    <input
+                      type="tel"
+                      className="field"
+                      placeholder={t("Phone / WhatsApp (optional)")}
+                    />
+                    <button type="submit" className="btn btn--primary">
+                      {t("Get my assessment")}
+                    </button>
+                  </form>
+                  {back}
+                </>
+              )}
+
+              {step === 3 && (
+                <div style={{ textAlign: "center", padding: "16px 0" }}>
+                  <div className="serif" style={{ fontSize: 32, lineHeight: 1.05, marginBottom: 12 }}>
+                    {t("Thank you — assessment on its way.")}
+                  </div>
+                  <p
+                    style={{
+                      fontSize: 15,
+                      lineHeight: 1.55,
+                      color: "var(--muted)",
+                      margin: "0 auto 24px",
+                      maxWidth: 420,
+                    }}
+                  >
+                    {t(
+                      "A consultant will review your answers and reply within one business day with a shortlist and honest next steps.",
+                    )}
+                  </p>
+                  <button
+                    type="button"
+                    className="btn btn--secondary btn--sm"
+                    onClick={() => {
+                      setStep(0);
+                      setBudget(null);
+                    }}
+                  >
+                    {t("Start over")}
                   </button>
-                </form>
-                {back}
-              </>
-            )}
-
-            {step === 3 && (
-              <div style={{ textAlign: "center", padding: "16px 0" }}>
-                <div className="serif" style={{ fontSize: 32, lineHeight: 1.05, marginBottom: 12 }}>
-                  {t("Thank you — assessment on its way.")}
                 </div>
-                <p
-                  style={{
-                    fontSize: 15,
-                    lineHeight: 1.55,
-                    color: "var(--muted)",
-                    margin: "0 auto 24px",
-                    maxWidth: 420,
-                  }}
-                >
-                  {t(
-                    "A consultant will review your answers and reply within one business day with a shortlist and honest next steps.",
-                  )}
-                </p>
-                <button
-                  type="button"
-                  className="btn btn--secondary btn--sm"
-                  onClick={() => {
-                    setStep(0);
-                    setBudget(null);
-                  }}
-                >
-                  {t("Start over")}
-                </button>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </div>
