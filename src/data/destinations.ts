@@ -879,7 +879,7 @@ export const DESTINATIONS: Record<string, Destination> = {
     intro:
       "Permanent residence for skilled professionals and their families through Canada’s points-based system — no investment required.",
     photoHero: "Toronto waterfront skyline",
-    photoSmall: "engineer at a Toronto office",
+    photoSmall: "Old Montréal cobblestone street",
     photoWhy: "Vancouver harbour and mountains",
     stats: [
       ["Investment required", "None"],
@@ -957,7 +957,7 @@ export const DESTINATIONS: Record<string, Destination> = {
     intro:
       "Points-tested permanent residence through SkillSelect, with independent, state-nominated and regional routes.",
     photoHero: "Sydney harbour and Opera House",
-    photoSmall: "professionals in a Melbourne laneway",
+    photoSmall: "Melbourne laneway",
     photoWhy: "Great Ocean Road",
     stats: [
       ["Investment required", "None"],

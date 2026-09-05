@@ -76,11 +76,13 @@ export const SLOT_IMAGES: Record<string, string> = {
   "Toronto waterfront": "/images/destinations/toronto-waterfront.jpg",
   "Toronto waterfront skyline": "/images/destinations/toronto-waterfront.jpg",
   "Vancouver harbour and mountains": "/images/destinations/vancouver-harbour.jpg",
+  "Old Montréal cobblestone street": "/images/destinations/montreal-oldtown.jpg",
 
   // Australia — skilled migration
   "Sydney harbour": "/images/destinations/sydney-harbour.jpg",
   "Sydney harbour and Opera House": "/images/destinations/sydney-harbour.jpg",
   "Great Ocean Road": "/images/destinations/great-ocean-road.jpg",
+  "Melbourne laneway": "/images/destinations/melbourne-laneway.jpg",
 
   // United States — EB-5 and global mobility
   "New York street": "/images/destinations/newyork-street.jpg",
