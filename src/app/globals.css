@@ -1615,3 +1615,211 @@ select.field {
     transform: none;
   }
 }
+
+/* ------------------------------------------------------------------
+   Legal documents — /privacy and /terms
+
+   One long read rather than a marketing page: a narrow measure, a
+   sticky contents column that marks the section you are in, and
+   generous space between sections so the numbering does the work of
+   dividing rules. Logical properties throughout, so the whole thing
+   mirrors with the Arabic layout.
+   ------------------------------------------------------------------ */
+
+.legal-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: var(--muted-slot);
+}
+.legal-meta a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--sand-mid);
+  transition: text-decoration-color 0.2s ease;
+}
+.legal-meta a:hover {
+  text-decoration-color: var(--ink);
+}
+
+/* ---- Contents ---- */
+
+.legal-toc {
+  position: sticky;
+  top: calc(var(--header-h) + 32px);
+}
+
+.legal-toc__heading {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--stone);
+}
+
+.legal-toc__list {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  counter-reset: none;
+}
+
+.legal-toc__link {
+  display: flex;
+  gap: 10px;
+  padding: 7px 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--muted-slot);
+  text-wrap: pretty;
+  transition:
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+.legal-toc__link:hover {
+  color: var(--ink);
+}
+.legal-toc__link.is-current {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.legal-toc__num {
+  flex: none;
+  min-width: 18px;
+  font-variant-numeric: tabular-nums;
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--sand-mid);
+  transition: color 0.2s ease;
+}
+.legal-toc__link.is-current .legal-toc__num,
+.legal-toc__link:hover .legal-toc__num {
+  color: var(--accent);
+}
+
+/* ---- The document ---- */
+
+.legal-body {
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
+}
+
+.legal-section {
+  scroll-margin-top: calc(var(--header-h) + 32px);
+}
+
+.legal-section__num {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--sand-mid);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 10px;
+}
+
+.legal-section__title {
+  margin: 0 0 20px;
+  scroll-margin-top: calc(var(--header-h) + 32px);
+}
+
+.legal-h3 {
+  margin: 28px 0 10px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+.legal-p {
+  margin: 0 0 16px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+.legal-p:last-child {
+  margin-bottom: 0;
+}
+
+.legal-list {
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.legal-list li {
+  position: relative;
+  padding-inline-start: 22px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+/* A rule rather than a bullet: it lines up with the numbering above
+   and keeps a long clause from reading as a bulleted sales list. */
+.legal-list li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.8em;
+  width: 10px;
+  height: 1px;
+  background: var(--sand-mid);
+}
+
+.legal-note {
+  border-top: 1px solid var(--stone);
+  padding-top: 32px;
+}
+.legal-note__contact {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  font-size: 15px;
+  color: var(--ink);
+}
+.legal-note__contact a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--sand-mid);
+  transition: text-decoration-color 0.2s ease;
+}
+.legal-note__contact a:hover {
+  text-decoration-color: var(--ink);
+}
+
+@media (max-width: 900px) {
+  /* The contents list stops being a sidebar and becomes a lead-in. */
+  .legal-toc {
+    position: static;
+  }
+  .legal-body {
+    max-width: none;
+    gap: 56px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .legal-toc__link,
+  .legal-toc__num,
+  .legal-meta a,
+  .legal-note__contact a {
+    transition: none;
+  }
+}

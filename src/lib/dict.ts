@@ -456,5 +456,303 @@ export const DICT: Record<string, string> = {
   "Search": "بحث",
   "Language": "اللغة",
   "Menu": "القائمة",
-  "Close menu": "إغلاق القائمة"
+  "Close menu": "إغلاق القائمة",
+
+  /* ----------------------------------------------------------------
+     Legal documents — /privacy and /terms.
+     Added with those pages rather than lifted from i18n.js, which
+     predates them. Translated for a reader, not word for word; the
+     English remains the operative version of both documents.
+     ---------------------------------------------------------------- */
+
+  // Chrome shared by both pages
+  "Last updated": "آخر تحديث",
+  "On this page": "في هذه الصفحة",
+  "Read our Terms": "اطّلع على الشروط",
+  "Read our Privacy Policy": "اطّلع على سياسة الخصوصية",
+  "6 September 2026": "٦ سبتمبر ٢٠٢٦",
+  "This page is written for clarity, not to cover us. If any part of it is unclear, ask your consultant and you will get a straight answer in writing.":
+    "كُتبت هذه الصفحة للوضوح، لا لحماية أنفسنا. إن كان أي جزء منها غير واضح، اسأل مستشارك وستحصل على إجابة صريحة مكتوبة.",
+
+  // ---- Privacy Policy ----
+  "Privacy": "الخصوصية",
+  "How we handle your information.": "كيف نتعامل مع معلوماتك.",
+  "An immigration file is one of the most personal things you will ever hand to a company. This page sets out exactly what we collect, why we need it, who sees it and what you can ask us to do with it.":
+    "ملف الهجرة من أكثر ما قد تسلّمه لشركة خصوصية. توضّح هذه الصفحة بالتحديد ما الذي نجمعه، ولماذا نحتاجه، ومن يطّلع عليه، وما الذي يمكنك أن تطلب منا فعله به.",
+
+  "Who we are": "من نحن",
+  "NEXON Global Immigration Services is a licensed residency, citizenship and global mobility consultancy based in Business Bay, Dubai, United Arab Emirates. In this policy \"we\", \"us\" and \"our\" mean NEXON Global Immigration Services; \"you\" means anyone who contacts us, uses this website, or engages us on an application.":
+    "نكسون لخدمات الهجرة العالمية شركة استشارات مرخّصة في الإقامة والجنسية والتنقل العالمي، مقرها الخليج التجاري، دبي، الإمارات العربية المتحدة. في هذه السياسة تعني «نحن» و«لنا» نكسون لخدمات الهجرة العالمية، ويعني «أنت» كل من يتواصل معنا أو يستخدم هذا الموقع أو يوكّلنا بطلب.",
+  "We are the controller of the personal data described here. That means we decide what is collected and why, and we are accountable for it — including for the work carried out on our instructions by the government-authorised agents, due-diligence firms and other partners named below.":
+    "نحن الجهة المتحكّمة في البيانات الشخصية الموضّحة هنا؛ أي أننا نقرر ما يُجمع ولماذا، ونتحمّل المسؤولية عنه — بما في ذلك الأعمال التي تنفَّذ بتعليماتنا من الوكلاء المعتمدين حكوميًا وشركات التدقيق والشركاء الآخرين المذكورين أدناه.",
+  "NEXON Global Immigration Services, Business Bay, Dubai, United Arab Emirates. Email hello@nexonglobal.ae or call +971 4 000 0000.":
+    "نكسون لخدمات الهجرة العالمية، الخليج التجاري، دبي، الإمارات العربية المتحدة. راسلنا على hello@nexonglobal.ae أو اتصل على ‎+971 4 000 0000‎.",
+
+  "What we collect": "ما الذي نجمعه",
+  "We collect only what a consultation or an application actually requires. In practice that falls into five groups.":
+    "لا نجمع إلا ما تتطلبه الاستشارة أو الطلب فعليًا، وهو ينقسم عمليًا إلى خمس مجموعات.",
+  "Information you give us directly": "معلومات تقدّمها لنا مباشرة",
+  "Contact details — name, email address, phone or WhatsApp number, country of residence and preferred language.":
+    "بيانات التواصل — الاسم، البريد الإلكتروني، رقم الهاتف أو واتساب، بلد الإقامة، واللغة المفضّلة.",
+  "Eligibility details — nationality, age, marital status, family composition, education, occupation, work history and language test results.":
+    "بيانات الأهلية — الجنسية، العمر، الحالة الاجتماعية، تكوين الأسرة، التعليم، المهنة، السجل الوظيفي، ونتائج اختبارات اللغة.",
+  "Financial information — source of funds and source of wealth evidence, bank statements, tax records, proof of investment capital and business ownership documents.":
+    "المعلومات المالية — إثباتات مصدر الأموال ومصدر الثروة، كشوف الحسابات البنكية، السجلات الضريبية، إثبات رأس المال الاستثماري، ومستندات ملكية الأعمال.",
+  "Identity and travel documents — passports, national identity cards, birth and marriage certificates, residence permits and previous visa history.":
+    "وثائق الهوية والسفر — جوازات السفر، بطاقات الهوية الوطنية، شهادات الميلاد والزواج، تصاريح الإقامة، وسجل التأشيرات السابقة.",
+  "Background information — police clearance certificates, medical certificates and any prior visa refusals or immigration history you disclose to us.":
+    "معلومات الخلفية — شهادات حسن السيرة والسلوك، الشهادات الطبية، وأي رفض سابق لتأشيرة أو سجل هجرة تفصح عنه لنا.",
+  "Information we generate about your file": "معلومات ننشئها عن ملفك",
+  "Consultation notes, assessments, program recommendations and the written fee schedule issued to you.":
+    "ملاحظات الاستشارة، التقييمات، توصيات البرامج، وجدول الرسوم المكتوب الصادر إليك.",
+  "Correspondence with you and with the authorities, agents and institutions handling your application.":
+    "المراسلات معك ومع الجهات والوكلاء والمؤسسات التي تتولى طلبك.",
+  "Application status, submission dates, decisions and any conditions attached to an approval.":
+    "حالة الطلب، تواريخ التقديم، القرارات، وأي شروط مرتبطة بالموافقة.",
+  "Information about your family": "معلومات عن عائلتك",
+  "Most programs cover a spouse, dependent children and, in some cases, parents. Where you provide information about another person, you confirm that you are entitled to do so and that you have shown them this policy. Information about children is collected only where a program requires it for a dependent applicant, and is handled with the same protections as the rest of the file.":
+    "تشمل معظم البرامج الزوج أو الزوجة والأبناء المعالين، وفي بعض الحالات الوالدين. وعندما تقدّم معلومات عن شخص آخر، فإنك تؤكد أن لك الحق في ذلك وأنك أطلعته على هذه السياسة. ولا تُجمع معلومات الأطفال إلا حين يشترطها البرنامج لمقدّم طلب معال، وتُعامل بالحماية ذاتها التي يحظى بها باقي الملف.",
+  "Information collected automatically": "معلومات تُجمع تلقائيًا",
+  "Technical data — IP address, device type, browser, and the pages you viewed on this website.":
+    "بيانات تقنية — عنوان IP، نوع الجهاز، المتصفح، والصفحات التي زرتها في هذا الموقع.",
+  "Your language preference, which is stored in your browser so the site opens in English or Arabic as you left it.":
+    "تفضيل اللغة، ويُحفظ في متصفحك ليفتح الموقع بالإنجليزية أو العربية كما تركته.",
+  "Sensitive information": "المعلومات الحساسة",
+  "Some of what an application requires is sensitive by nature: health declarations, criminal record checks, and in a few programs biometric data taken by the receiving government. We collect it only where a specific program requires it, we tell you when that is the case, and we do not use it for anything else.":
+    "بعض ما يتطلبه الطلب حسّاس بطبيعته: الإقرارات الصحية، فحوص السجل الجنائي، وفي برامج قليلة بيانات حيوية تأخذها الدولة المستقبِلة. لا نجمعها إلا حين يشترطها برنامج بعينه، ونخبرك حين يكون الأمر كذلك، ولا نستخدمها لأي غرض آخر.",
+
+  "Why we use it, and on what basis": "لماذا نستخدمها، وعلى أي أساس",
+  "We use your information for a defined set of purposes, each with a lawful basis under UAE Federal Decree-Law No. 45 of 2021 on the Protection of Personal Data and, where it applies to you, the EU and UK General Data Protection Regulation.":
+    "نستخدم معلوماتك لأغراض محددة، لكل منها أساس قانوني بموجب المرسوم بقانون اتحادي رقم ٤٥ لسنة ٢٠٢١ في شأن حماية البيانات الشخصية في الإمارات، وبموجب اللائحة العامة لحماية البيانات في الاتحاد الأوروبي والمملكة المتحدة حيثما انطبقت عليك.",
+  "To answer your enquiry and carry out a free assessment — on the basis of steps taken at your request before entering a contract.":
+    "للرد على استفسارك وإجراء تقييم مجاني — على أساس خطوات تُتخذ بناءً على طلبك قبل التعاقد.",
+  "To advise you, prepare your file and submit your application — on the basis of performing our engagement with you.":
+    "لتقديم المشورة وإعداد ملفك وتقديم طلبك — على أساس تنفيذ التعاقد المبرم معك.",
+  "To complete due diligence and anti-money-laundering checks — on the basis of our legal obligations as a licensed advisory practice, and the obligations of the programs we submit to.":
+    "لاستكمال إجراءات التدقيق ومكافحة غسل الأموال — على أساس التزاماتنا القانونية كجهة استشارية مرخّصة، والتزامات البرامج التي نقدّم إليها.",
+  "To keep records of the advice we gave and the fees we quoted — on the basis of our legal obligations and our legitimate interest in being able to evidence our own work.":
+    "لحفظ سجلات المشورة التي قدّمناها والرسوم التي عرضناها — على أساس التزاماتنا القانونية ومصلحتنا المشروعة في إثبات عملنا.",
+  "To improve the website and understand which pages are useful — on the basis of our legitimate interest in running the site, using aggregated data only.":
+    "لتحسين الموقع ومعرفة الصفحات المفيدة — على أساس مصلحتنا المشروعة في تشغيل الموقع، وباستخدام بيانات مجمّعة فقط.",
+  "To send you program updates or newsletters — only where you have asked for them, and with an unsubscribe link in every message.":
+    "لإرسال تحديثات البرامج أو النشرات البريدية — فقط إذا طلبتها، ومع رابط إلغاء الاشتراك في كل رسالة.",
+  "We do not sell your personal data, we do not rent our client list, and we do not use your file to make automated decisions that produce a legal effect for you. Every recommendation you receive is reviewed by a named consultant.":
+    "لا نبيع بياناتك الشخصية، ولا نؤجّر قائمة عملائنا، ولا نستخدم ملفك في قرارات آلية ترتّب أثرًا قانونيًا عليك. كل توصية تصلك يراجعها مستشار محدد بالاسم.",
+
+  "Who sees it": "من يطّلع عليها",
+  "An application cannot be submitted without disclosure to third parties. We share the minimum each recipient needs, and only where the program or the law requires it.":
+    "لا يمكن تقديم أي طلب دون الإفصاح لأطراف ثالثة. ونشارك الحد الأدنى الذي يحتاجه كل مستلم، وفقط حين يشترط ذلك البرنامج أو القانون.",
+  "Government departments and immigration authorities in the country you are applying to, and the units within them that assess applications.":
+    "الدوائر الحكومية وسلطات الهجرة في الدولة التي تتقدم إليها، والوحدات المختصة بتقييم الطلبات داخلها.",
+  "Government-authorised agents and promoters, where a program can only be filed through a licensed intermediary.":
+    "الوكلاء والوسطاء المعتمدون حكوميًا، حيث لا يمكن تقديم البرنامج إلا عبر وسيط مرخّص.",
+  "International due-diligence firms appointed by the receiving government to run background checks.":
+    "شركات التدقيق الدولية التي تعيّنها الدولة المستقبِلة لإجراء فحوص الخلفية.",
+  "Banks, escrow agents, licensed funds, developers and other institutions where an investment or a qualifying deposit forms part of the route you choose.":
+    "البنوك ووكلاء الضمان والصناديق المرخّصة والمطوّرون والمؤسسات الأخرى، حين يشكّل الاستثمار أو الوديعة المؤهِّلة جزءًا من المسار الذي تختاره.",
+  "Translators, notaries, apostille services and courier companies handling your documents.":
+    "المترجمون وكتّاب العدل وخدمات التصديق وشركات الشحن التي تتولى مستنداتك.",
+  "Our professional advisers — external counsel, auditors and insurers — where they need it to advise us.":
+    "مستشارونا المهنيون — المحامون الخارجيون والمدققون وشركات التأمين — حين يحتاجونها لتقديم المشورة لنا.",
+  "IT and hosting providers who operate the systems our records sit in, under written instructions that they process data only for us.":
+    "مزوّدو التقنية والاستضافة الذين يشغّلون الأنظمة التي تُحفظ فيها سجلاتنا، بتعليمات مكتوبة تقضي بمعالجة البيانات لصالحنا وحدنا.",
+  "We will also disclose information where we are compelled to by a court, a regulator or applicable law. If we are ever asked for your file by a party not on this list, we will tell you unless we are legally prohibited from doing so.":
+    "كما نفصح عن المعلومات حين تلزمنا بذلك محكمة أو جهة رقابية أو قانون واجب التطبيق. وإذا طلب ملفك طرف غير مدرج في هذه القائمة، فسنخبرك ما لم يمنعنا القانون من ذلك.",
+
+  "Sending information abroad": "نقل المعلومات خارج الدولة",
+  "By its nature this work moves information across borders: a Portuguese golden visa file is assessed in Portugal, a Caribbean citizenship file by that country's due-diligence unit. Your data will therefore be transferred outside the United Arab Emirates, including to countries whose data protection regime differs from the UAE's.":
+    "تنقل طبيعة هذا العمل المعلومات عبر الحدود: فملف التأشيرة الذهبية البرتغالية يُقيَّم في البرتغال، وملف الجنسية الكاريبية تقيّمه وحدة التدقيق في تلك الدولة. لذلك ستُنقل بياناتك خارج الإمارات، بما في ذلك إلى دول يختلف نظام حماية البيانات فيها عن النظام الإماراتي.",
+  "Where a transfer is not to a jurisdiction recognised as providing an adequate level of protection, we rely on contractual safeguards with the recipient, or on the transfer being necessary to perform the contract you have asked us to carry out. You can ask us which basis applies to a particular transfer on your file.":
+    "وحين لا يكون النقل إلى ولاية قضائية معترف بها كمستوفية لمستوى حماية كافٍ، نعتمد على ضمانات تعاقدية مع المستلم، أو على كون النقل ضروريًا لتنفيذ العقد الذي كلّفتنا به. ويمكنك أن تسألنا عن الأساس المطبّق على أي نقل يخص ملفك.",
+
+  "How long we keep it": "مدة الاحتفاظ بها",
+  "Enquiries that do not become engagements — up to 24 months from your last contact with us, so that we can pick up a conversation where it left off.":
+    "الاستفسارات التي لا تتحول إلى تعاقد — حتى ٢٤ شهرًا من آخر تواصل بيننا، حتى نتمكن من استئناف الحديث من حيث انتهى.",
+  "Client files — for the duration of the engagement and then for the period required of us as a licensed practice, which is currently seven years from the closure of the file.":
+    "ملفات العملاء — طوال مدة التعاقد ثم للمدة المطلوبة منا كجهة مرخّصة، وهي حاليًا سبع سنوات من إغلاق الملف.",
+  "Anti-money-laundering and due-diligence records — for the minimum period required by the applicable regulations, even where the rest of the file has been closed.":
+    "سجلات مكافحة غسل الأموال والتدقيق — للحد الأدنى من المدة التي تفرضها الأنظمة المعمول بها، حتى بعد إغلاق باقي الملف.",
+  "Marketing preferences — until you withdraw consent, plus a permanent suppression record so we do not contact you again by mistake.":
+    "تفضيلات التسويق — حتى تسحب موافقتك، مع سجل استبعاد دائم حتى لا نتواصل معك مجددًا بالخطأ.",
+  "When a retention period ends, records are deleted or irreversibly anonymised. Where a document has been submitted to a government authority, that authority keeps its own copy under its own retention rules, which we do not control.":
+    "عند انتهاء مدة الاحتفاظ تُحذف السجلات أو تُجهَّل بصورة لا رجعة فيها. وحين يكون المستند قد قُدّم إلى جهة حكومية، تحتفظ تلك الجهة بنسختها وفق قواعدها الخاصة التي لا نتحكم فيها.",
+
+  "How we protect it": "كيف نحميها",
+  "Files are held in access-controlled systems; a consultant sees a file because it has been assigned to them, not because they work here.":
+    "تُحفظ الملفات في أنظمة مقيّدة الوصول؛ فالمستشار يطّلع على الملف لأنه أُسند إليه، لا لمجرد أنه يعمل لدينا.",
+  "Documents are encrypted in transit and at rest, and are exchanged with you through a secure channel rather than as loose email attachments.":
+    "المستندات مشفّرة أثناء النقل وفي التخزين، وتُتبادل معك عبر قناة آمنة لا كمرفقات بريد إلكتروني مفتوحة.",
+  "Every member of staff is bound by written confidentiality obligations that survive the end of their employment.":
+    "كل موظف ملتزم بتعهدات سرية مكتوبة تظل سارية بعد انتهاء عمله لدينا.",
+  "Access is reviewed regularly, and removed on the day someone leaves or changes role.":
+    "تُراجع صلاحيات الوصول دوريًا، وتُلغى في اليوم الذي يغادر فيه الموظف أو يتغير دوره.",
+  "No system is perfect. If a breach occurs that is likely to put your rights or your application at risk, we will notify you and the competent authority without undue delay, and tell you plainly what happened and what we are doing about it.":
+    "لا يوجد نظام كامل. وإذا وقع اختراق يُرجَّح أن يعرّض حقوقك أو طلبك للخطر، فسنخطرك وتُخطَر الجهة المختصة دون تأخير غير مبرر، ونخبرك بوضوح بما حدث وبما نفعله حياله.",
+
+  "Your rights": "حقوقك",
+  "You can exercise any of the following at no charge, by writing to us at the address at the end of this page.":
+    "يمكنك ممارسة أي من الحقوق التالية دون رسوم، بمراسلتنا على العنوان المذكور في نهاية هذه الصفحة.",
+  "Access — ask for a copy of the personal data we hold about you.":
+    "الاطّلاع — طلب نسخة من البيانات الشخصية التي نحتفظ بها عنك.",
+  "Correction — have inaccurate or incomplete information put right.":
+    "التصحيح — تصويب المعلومات غير الدقيقة أو الناقصة.",
+  "Erasure — ask us to delete data we no longer have a lawful reason to keep.":
+    "المحو — مطالبتنا بحذف بيانات لم يعد لدينا سبب قانوني للاحتفاظ بها.",
+  "Restriction and objection — ask us to pause a particular use, or object to processing we carry out on the basis of legitimate interests.":
+    "التقييد والاعتراض — مطالبتنا بإيقاف استخدام معيّن، أو الاعتراض على معالجة نجريها على أساس المصلحة المشروعة.",
+  "Portability — receive the data you gave us in a structured, machine-readable format, or have it sent to another adviser.":
+    "قابلية النقل — استلام البيانات التي قدّمتها لنا بصيغة منظمة قابلة للقراءة آليًا، أو إرسالها إلى مستشار آخر.",
+  "Withdraw consent — for anything we do on the basis of consent, including marketing, with effect from the moment you tell us.":
+    "سحب الموافقة — لأي أمر نقوم به بناءً على موافقتك، بما في ذلك التسويق، ويسري من لحظة إبلاغنا.",
+  "Complain — to us first, and then to the UAE Data Office or, if you are in the EU or the UK, to your local supervisory authority.":
+    "الشكوى — إلينا أولًا، ثم إلى مكتب البيانات في الإمارات، أو إلى الجهة الرقابية المحلية إن كنت في الاتحاد الأوروبي أو المملكة المتحدة.",
+  "We respond within 30 days. Some rights have limits: we cannot delete records we are required to retain for anti-money-laundering purposes, and we cannot withdraw a document already lodged with a government authority.":
+    "نرد خلال ٣٠ يومًا. ولبعض الحقوق حدود: لا يمكننا حذف سجلات يُلزمنا القانون بحفظها لأغراض مكافحة غسل الأموال، ولا يمكننا سحب مستند سبق إيداعه لدى جهة حكومية.",
+
+  "Cookies and this website": "ملفات الارتباط وهذا الموقع",
+  "This site uses the smallest set of storage it can. Your language choice is kept in your browser's local storage so the page opens in the language you last used; it is not a tracking identifier and never leaves your device.":
+    "يستخدم هذا الموقع أقل قدر ممكن من التخزين. ويُحفظ اختيارك للغة في التخزين المحلي لمتصفحك ليفتح الموقع باللغة التي استخدمتها آخر مرة؛ وهو ليس معرّف تتبّع ولا يغادر جهازك إطلاقًا.",
+  "Where we use analytics, it is configured to report on pages and referrers in aggregate rather than to build a profile of you, and IP addresses are truncated. We do not run advertising trackers or share website behaviour with advertising networks. Your browser's controls will let you clear or block this storage; the site will still work, but it will open in English each time.":
+    "وحين نستخدم أدوات التحليل، فهي مضبوطة لتقديم تقارير مجمّعة عن الصفحات ومصادر الزيارات لا لبناء ملف عنك، مع اقتطاع عناوين IP. ولا نشغّل أدوات تتبّع إعلانية ولا نشارك سلوك التصفح مع الشبكات الإعلانية. ويتيح لك متصفحك مسح هذا التخزين أو حظره؛ وسيظل الموقع يعمل، لكنه سيفتح بالإنجليزية في كل مرة.",
+
+  "Changes to this policy": "التعديلات على هذه السياسة",
+  "Programs and regulations change, and this policy changes with them. The date at the top of this page is the version in force. Where a change materially affects how we use information on an open file, we will tell active clients directly rather than relying on this page alone.":
+    "تتغير البرامج والأنظمة، وتتغير معها هذه السياسة. والتاريخ في أعلى الصفحة هو النسخة السارية. وحين يؤثر تعديل تأثيرًا جوهريًا في طريقة استخدامنا للمعلومات في ملف مفتوح، نبلغ العملاء النشطين مباشرة بدل الاكتفاء بهذه الصفحة.",
+
+  "Contact and complaints": "التواصل والشكاوى",
+  "Questions about this policy, or a request to exercise one of the rights above, should go to our data protection contact:":
+    "توجَّه الأسئلة حول هذه السياسة، أو طلب ممارسة أي من الحقوق أعلاه، إلى مسؤول حماية البيانات لدينا:",
+  "If you are not satisfied with our answer, you may complain to the UAE Data Office. Complaining to a regulator does not affect any other remedy available to you.":
+    "وإذا لم تقتنع بردّنا، فلك أن تشتكي إلى مكتب البيانات في الإمارات. ولا تؤثر الشكوى إلى جهة رقابية في أي وسيلة انتصاف أخرى متاحة لك.",
+
+  // ---- Terms ----
+  "The terms we work under.": "الشروط التي نعمل بموجبها.",
+  "What we do, what we do not do, what an engagement costs and what each of us is responsible for. Written in the same plain language we use in a consultation — because terms you cannot read are not terms you have agreed to.":
+    "ما نقوم به، وما لا نقوم به، وكم يكلّف التعاقد، وما مسؤولية كل طرف. مكتوبة باللغة البسيطة نفسها التي نستخدمها في الاستشارة — لأن الشروط التي لا تستطيع قراءتها ليست شروطًا وافقت عليها.",
+
+  "About these terms": "عن هذه الشروط",
+  "These terms govern your use of this website and any consultation you book with NEXON Global Immigration Services. By using the site or booking a consultation, you accept them.":
+    "تحكم هذه الشروط استخدامك لهذا الموقع وأي استشارة تحجزها لدى نكسون لخدمات الهجرة العالمية. وباستخدام الموقع أو حجز استشارة فإنك تقبلها.",
+  "They are not the whole agreement for paid work. When you engage us on an application, you receive a separate written engagement letter and fee schedule covering that specific file. Where that document and this page disagree, the engagement letter governs.":
+    "وهي ليست الاتفاق الكامل للأعمال المدفوعة. فعند تكليفنا بطلب، تحصل على خطاب تعاقد مكتوب منفصل وجدول رسوم يخص ذلك الملف تحديدًا. وعند التعارض بين ذلك المستند وهذه الصفحة، يُعتد بخطاب التعاقد.",
+  "NEXON Global Immigration Services is a licensed residency, citizenship and global mobility consultancy based in Business Bay, Dubai, United Arab Emirates.":
+    "نكسون لخدمات الهجرة العالمية شركة استشارات مرخّصة في الإقامة والجنسية والتنقل العالمي، مقرها الخليج التجاري، دبي، الإمارات العربية المتحدة.",
+
+  "What we do": "ما نقوم به",
+  "Our work is advisory and administrative. On a typical file that means:":
+    "عملنا استشاري وإداري. وفي الملف المعتاد يعني ذلك:",
+  "Assessing your profile against the programs you may qualify for, and telling you which ones you do not.":
+    "تقييم ملفك مقابل البرامج التي قد تكون مؤهلًا لها، وإخبارك بالبرامج التي لست مؤهلًا لها.",
+  "Recommending a route, with the costs, timelines and obligations of each option set out in writing.":
+    "التوصية بمسار، مع بيان التكاليف والجداول الزمنية والالتزامات لكل خيار كتابةً.",
+  "Preparing, checking and assembling the application file, including translations, legalisation and supporting evidence.":
+    "إعداد ملف الطلب ومراجعته وتجميعه، بما في ذلك الترجمات والتصديقات والمستندات المؤيدة.",
+  "Coordinating with government-authorised agents, due-diligence firms, banks, funds and developers on your behalf.":
+    "التنسيق نيابة عنك مع الوكلاء المعتمدين حكوميًا وشركات التدقيق والبنوك والصناديق والمطوّرين.",
+  "Submitting the application through the correct channel and tracking it to a decision.":
+    "تقديم الطلب عبر القناة الصحيحة ومتابعته حتى صدور القرار.",
+  "Guiding you through what follows an approval — residence cards, oaths, registrations and renewal obligations.":
+    "إرشادك فيما يلي الموافقة — بطاقات الإقامة، وأداء اليمين، والتسجيلات، والتزامات التجديد.",
+
+  "What we are not": "ما لسنا عليه",
+  "This section matters more than any other on this page. Please read it before you engage us.":
+    "هذا القسم أهم ما في هذه الصفحة. نرجو قراءته قبل تكليفنا.",
+  "We are not a government department, and we are not able to grant, refuse or accelerate a visa, residence permit or citizenship. Those decisions belong entirely to the authority concerned.":
+    "لسنا جهة حكومية، ولا نملك منح أو رفض أو تسريع تأشيرة أو إقامة أو جنسية. فتلك القرارات تعود بالكامل إلى الجهة المختصة.",
+  "We do not guarantee an outcome. No consultant honestly can. Where we quote approval rates or timelines, they describe past files and published government data, not a promise about yours.":
+    "لا نضمن نتيجة، ولا يستطيع أي مستشار صادق أن يضمنها. وحين نذكر معدلات موافقة أو جداول زمنية، فهي وصف لملفات سابقة وبيانات حكومية منشورة، لا وعدًا بشأن ملفك.",
+  "We do not provide legal advice, tax advice or investment advice. We will tell you when a question needs a lawyer, a tax adviser or a regulated financial adviser, and we can introduce you to one.":
+    "لا نقدّم استشارات قانونية أو ضريبية أو استثمارية. وسنخبرك حين تستدعي المسألة محاميًا أو مستشارًا ضريبيًا أو مستشارًا ماليًا مرخّصًا، ويمكننا تعريفك بأحدهم.",
+  "We do not recommend a property, fund or development because a third party pays us to. Where any commission arrangement exists on a route we propose, we disclose it to you in writing before you commit.":
+    "لا نوصي بعقار أو صندوق أو مشروع لأن طرفًا ثالثًا يدفع لنا. وإذا وُجد أي ترتيب عمولة على مسار نقترحه، نفصح عنه لك كتابةً قبل أن تلتزم.",
+  "We do not work on routes that are not officially established, and we will not submit an application we believe to be untrue.":
+    "لا نعمل على مسارات غير معتمدة رسميًا، ولن نقدّم طلبًا نعتقد أنه غير صحيح.",
+
+  "Consultations and assessments": "الاستشارات والتقييمات",
+  "The first consultation is free, lasts about thirty minutes and carries no obligation on either side. Its purpose is to establish whether a route exists for you and what it would realistically involve.":
+    "الاستشارة الأولى مجانية، ومدتها نحو ثلاثين دقيقة، ولا تُلزم أي طرف. والغرض منها تحديد ما إذا كان هناك مسار مناسب لك وما الذي يتطلبه واقعيًا.",
+  "An assessment given in a consultation, or produced by the eligibility check on this website, is an indication based on what you have told us. It is not an application, not a decision, and not a commitment by us to take on your file. A definitive answer follows the review of your documents.":
+    "التقييم المقدَّم في الاستشارة، أو الناتج عن فحص الأهلية في هذا الموقع، مؤشر مبني على ما أخبرتنا به. وهو ليس طلبًا ولا قرارًا ولا التزامًا منا بقبول ملفك. والإجابة القاطعة تأتي بعد مراجعة مستنداتك.",
+
+  "Fees and payment": "الرسوم والدفع",
+  "You receive a written fee schedule before you commit to anything, and it separates three things that are too often bundled together:":
+    "تحصل على جدول رسوم مكتوب قبل أن تلتزم بأي شيء، ويفصل ثلاثة بنود كثيرًا ما تُدمج معًا:",
+  "Our professional fees — what we charge for the work described in your engagement letter, fixed at the outset and staged against milestones.":
+    "أتعابنا المهنية — ما نتقاضاه مقابل العمل الموصوف في خطاب التعاقد، محددة من البداية ومقسّمة على مراحل الإنجاز.",
+  "Government and program fees — application, processing, due-diligence and contribution amounts set by the receiving state, paid to it, and outside our control.":
+    "الرسوم الحكومية ورسوم البرنامج — مبالغ التقديم والمعالجة والتدقيق والمساهمة التي تحددها الدولة المستقبِلة وتُدفع إليها، وهي خارجة عن سيطرتنا.",
+  "Third-party costs — translation, legalisation, courier, medical, police certificate, escrow and bank charges, quoted as accurately as we can and reconciled to actuals.":
+    "تكاليف الأطراف الثالثة — الترجمة والتصديق والشحن والفحص الطبي وشهادة الشرطة ورسوم الضمان والبنوك، تُقدَّر بأدق ما نستطيع وتُسوّى على المبالغ الفعلية.",
+  "Nothing is added later. If a program changes its fees mid-file, or an unforeseen document is required, we tell you before any cost is incurred and you decide whether to proceed. Invoices are payable within the period stated on them, and we may pause work on an overdue file after written notice.":
+    "لا يُضاف شيء لاحقًا. وإذا غيّر برنامج رسومه أثناء سير الملف، أو لزم مستند غير متوقع، نخبرك قبل تكبّد أي تكلفة وتقرر أنت المضي من عدمه. وتُستحق الفواتير خلال المدة المذكورة فيها، ويجوز لنا إيقاف العمل في ملف متأخر السداد بعد إشعار كتابي.",
+
+  "What we need from you": "ما نحتاجه منك",
+  "Applications succeed or fail on the quality and honesty of the file. By engaging us you agree to:":
+    "تنجح الطلبات أو تخفق بحسب جودة الملف وصدقه. وبتكليفنا فإنك توافق على:",
+  "Give complete and accurate information, including prior refusals, criminal matters and immigration history, even where you believe they will count against you.":
+    "تقديم معلومات كاملة ودقيقة، بما فيها حالات الرفض السابقة والمسائل الجنائية وسجل الهجرة، حتى لو ظننت أنها في غير صالحك.",
+  "Provide genuine, unaltered documents, and originals or certified copies where a program requires them.":
+    "تقديم مستندات أصلية غير معدّلة، والأصول أو النسخ المصدّقة حيث يشترطها البرنامج.",
+  "Tell us promptly if your circumstances change — marriage, divorce, a new child, a change of employment, address or nationality — while a file is open.":
+    "إبلاغنا فورًا بأي تغير في ظروفك — زواج أو طلاق أو مولود جديد أو تغيّر في العمل أو العنوان أو الجنسية — ما دام الملف مفتوحًا.",
+  "Respond to requests for information within the deadlines set by the authority, which we cannot extend.":
+    "الرد على طلبات المعلومات ضمن المهل التي تحددها الجهة المختصة، وهي مهل لا نستطيع تمديدها.",
+  "Meet the government and third-party payments on your file when they fall due.":
+    "سداد المدفوعات الحكومية ومدفوعات الأطراف الثالثة في ملفك عند استحقاقها.",
+  "If information given to us proves to be false or materially incomplete, we will stop work immediately. Fees for work already performed remain payable, and we may be obliged to report the matter.":
+    "وإذا تبيّن أن المعلومات المقدَّمة إلينا غير صحيحة أو ناقصة جوهريًا، نوقف العمل فورًا. وتظل أتعاب العمل المنجَز مستحقة، وقد نكون ملزمين بالإبلاغ عن الأمر.",
+
+  "Due diligence and cases we decline": "التدقيق والحالات التي نعتذر عنها",
+  "As a licensed practice we are required to verify your identity and the source of your funds before we act, and to keep those records. Programs run their own independent background checks in addition to ours.":
+    "بوصفنا جهة مرخّصة، يلزمنا التحقق من هويتك ومصدر أموالك قبل أن نتصرف، والاحتفاظ بتلك السجلات. وتجري البرامج فحوص خلفية مستقلة خاصة بها إضافة إلى فحوصنا.",
+  "We may decline to act, or withdraw from a file, where we cannot complete those checks, where we believe an application will fail, or where proceeding would breach sanctions or anti-money-laundering obligations. We will always tell you why, in writing, and tell you what would change our answer.":
+    "ويجوز لنا الاعتذار عن العمل أو الانسحاب من ملف إذا تعذّر استكمال تلك الفحوص، أو إذا رأينا أن الطلب سيخفق، أو إذا كان المضي فيه يخالف العقوبات أو التزامات مكافحة غسل الأموال. وسنخبرك دائمًا بالسبب كتابةً، وبما قد يغيّر إجابتنا.",
+
+  "Timelines": "الجداول الزمنية",
+  "We quote the timelines programs actually deliver rather than the fastest case on record. Even so, processing time belongs to the authority. Draw schedules, policy changes, document backlogs, public holidays and requests for further evidence can all move a date, and none of them is within our control.":
+    "نذكر الجداول الزمنية التي تحققها البرامج فعليًا لا أسرع حالة مسجّلة. ومع ذلك تظل مدة المعالجة بيد الجهة المختصة. فمواعيد السحوبات وتغيّر السياسات وتراكم المستندات والعطلات الرسمية وطلبات الأدلة الإضافية كلها قد تحرّك التاريخ، ولا شيء منها تحت سيطرتنا.",
+  "Where a delay is caused by something we could have prevented, we will say so and correct it at our cost.":
+    "وإذا نتج التأخير عن أمر كان بوسعنا تفاديه، نقرّ بذلك ونصححه على نفقتنا.",
+
+  "Cancellation and refunds": "الإلغاء والاسترداد",
+  "Either of us may end the engagement on written notice. If you withdraw, you pay for the work completed up to that point and any third-party costs already committed; anything held on account and not yet earned is returned to you.":
+    "لأي منا إنهاء التعاقد بإشعار كتابي. وإذا انسحبت، تدفع مقابل العمل المنجَز حتى تلك اللحظة وأي تكاليف أطراف ثالثة تم الالتزام بها؛ ويُعاد إليك أي مبلغ محتفظ به ولم يُستحق بعد.",
+  "Government fees, contributions and due-diligence charges are paid to the receiving state and its appointed agents. Whether any part of them is refundable after a refusal or withdrawal is a matter for that authority, and is stated in your fee schedule for the route you choose. We do not refund third-party amounts we have already paid on your behalf.":
+    "تُدفع الرسوم الحكومية والمساهمات ورسوم التدقيق إلى الدولة المستقبِلة ووكلائها المعينين. وقابلية أي جزء منها للاسترداد بعد الرفض أو الانسحاب أمر يعود إلى تلك الجهة، ويُبيَّن في جدول رسومك للمسار الذي تختاره. ولا نردّ مبالغ أطراف ثالثة سبق أن دفعناها نيابة عنك.",
+
+  "Using this website": "استخدام هذا الموقع",
+  "The content of this site is published for general information. Program rules, thresholds and fees change frequently, and nothing here should be relied on as advice for your situation without speaking to a consultant.":
+    "يُنشر محتوى هذا الموقع للمعلومات العامة. وتتغير قواعد البرامج وحدودها ورسومها باستمرار، ولا ينبغي الاعتماد على أي شيء هنا كمشورة لحالتك دون التحدث إلى مستشار.",
+  "The text, design, photography and marks on this site belong to us or our licensors. You may read, print and share pages for your own use; you may not republish or reuse them commercially without our written permission.":
+    "النصوص والتصميم والصور والعلامات في هذا الموقع ملك لنا أو لمرخّصينا. ولك أن تقرأ الصفحات وتطبعها وتشاركها لاستخدامك الشخصي؛ ولا يجوز إعادة نشرها أو استخدامها تجاريًا دون إذن كتابي منا.",
+  "You agree not to misuse the site — no attempts to gain unauthorised access, no automated scraping, no submission of false enquiries, and nothing that would interfere with its operation for others.":
+    "توافق على عدم إساءة استخدام الموقع — لا محاولات وصول غير مصرّح به، ولا استخلاص آلي للبيانات، ولا إرسال استفسارات كاذبة، ولا أي فعل يعطّل عمله للآخرين.",
+  "Links to third-party sites, including government pages, are provided for convenience. We do not control their content and are not responsible for it.":
+    "روابط المواقع الخارجية، بما فيها الصفحات الحكومية، مقدَّمة للتسهيل. ولا نتحكم في محتواها ولسنا مسؤولين عنه.",
+
+  "Liability": "المسؤولية",
+  "We are liable for our own professional negligence and we carry insurance against it. Nothing in these terms excludes liability that cannot lawfully be excluded, including for fraud.":
+    "نتحمل المسؤولية عن إهمالنا المهني ونحمل تأمينًا ضده. ولا يستبعد أي بند في هذه الشروط مسؤولية لا يجيز القانون استبعادها، بما في ذلك الاحتيال.",
+  "Subject to that, we are not liable for the decision of any government authority, for the performance of an investment, property or fund you choose, for the acts of a third party you appoint directly, or for a loss arising from information you gave us that was inaccurate or incomplete. Our total liability in connection with an engagement is limited to the professional fees you have paid us on that file.":
+    "ومع مراعاة ذلك، لسنا مسؤولين عن قرار أي جهة حكومية، ولا عن أداء استثمار أو عقار أو صندوق تختاره، ولا عن تصرفات طرف ثالث تعيّنه مباشرة، ولا عن خسارة ناشئة عن معلومات قدّمتها لنا وكانت غير دقيقة أو ناقصة. وتقتصر مسؤوليتنا الإجمالية عن أي تعاقد على الأتعاب المهنية التي دفعتها لنا في ذلك الملف.",
+  "We are not liable for indirect or consequential loss, including lost profit or lost opportunity, arising from a delay or refusal.":
+    "ولسنا مسؤولين عن الخسائر غير المباشرة أو التبعية، بما فيها الربح الفائت أو الفرصة الضائعة، الناشئة عن تأخير أو رفض.",
+
+  "Confidentiality and your data": "السرية وبياناتك",
+  "Everything you tell us is confidential, and stays confidential after the engagement ends. We disclose it only to the authorities and partners your application requires, or where the law compels us.":
+    "كل ما تخبرنا به سري، ويبقى سريًا بعد انتهاء التعاقد. ولا نفصح عنه إلا للجهات والشركاء الذين يتطلبهم طلبك، أو حين يلزمنا القانون.",
+  "How we collect, use, store and share personal information — and the rights you have over it — is set out in full in our Privacy Policy, which forms part of these terms.":
+    "أما كيفية جمعنا للمعلومات الشخصية واستخدامها وتخزينها ومشاركتها — وحقوقك عليها — فمبيّنة بالكامل في سياسة الخصوصية، وهي جزء من هذه الشروط.",
+
+  "Changes to these terms": "التعديلات على هذه الشروط",
+  "We may update these terms as our services and the regulations change. The date at the top of this page is the version in force, and it applies from the moment it is published. The terms of an engagement already under way do not change without your written agreement.":
+    "قد نحدّث هذه الشروط مع تغيّر خدماتنا والأنظمة. والتاريخ في أعلى الصفحة هو النسخة السارية، وتسري من لحظة نشرها. ولا تتغير شروط تعاقد جارٍ بالفعل دون موافقتك الكتابية.",
+
+  "Governing law": "القانون الواجب التطبيق",
+  "These terms are governed by the laws of the United Arab Emirates as applied in the Emirate of Dubai, and the courts of Dubai have exclusive jurisdiction over any dispute arising from them.":
+    "تخضع هذه الشروط لقوانين دولة الإمارات العربية المتحدة كما تُطبَّق في إمارة دبي، ولمحاكم دبي الاختصاص الحصري في أي نزاع ينشأ عنها.",
+  "Before anything reaches a court we would rather talk. Raise a complaint with your consultant, or with us at the address below, and you will have a written response within one business day and a named person accountable for resolving it.":
+    "ونفضّل الحوار قبل اللجوء إلى القضاء. قدّم شكواك إلى مستشارك، أو إلينا على العنوان أدناه، وستحصل على رد كتابي خلال يوم عمل واحد وعلى شخص محدد بالاسم مسؤول عن حلّها.",
+
+  "Questions about these terms:": "أسئلة حول هذه الشروط:"
 };

@@ -71,8 +71,8 @@ export default function SiteFooter() {
           >
             <span>{t(SITE.copyright)}</span>
             <div style={{ display: "flex", gap: 24 }}>
-              <Link href="#">{t("Privacy Policy")}</Link>
-              <Link href="#">{t("Terms")}</Link>
+              <Link href="/privacy">{t("Privacy Policy")}</Link>
+              <Link href="/terms">{t("Terms")}</Link>
               <Link href="/contact">{t("Contact")}</Link>
             </div>
           </div>
@@ -187,8 +187,8 @@ export default function SiteFooter() {
         >
           <span>{t(SITE.copyright)}</span>
           <div style={{ display: "flex", gap: 20 }}>
-            <Link href="#">{t("Privacy Policy")}</Link>
-            <Link href="#">{t("Terms")}</Link>
+            <Link href="/privacy">{t("Privacy Policy")}</Link>
+            <Link href="/terms">{t("Terms")}</Link>
             <Link href="/contact">{t("Contact")}</Link>
           </div>
         </div>
