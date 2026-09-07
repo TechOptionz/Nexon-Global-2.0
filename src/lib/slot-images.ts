@@ -102,6 +102,43 @@ export const SLOT_IMAGES: Record<string, string> = {
 
   // Hero media
   "hero video — nature / travel": "/assets/slot-hero-band.webp",
+
+  // Team and leadership portraits
+  "Layla Haddad": "/images/team/layla-haddad.jpg",
+  "portrait — Layla Haddad": "/images/team/layla-haddad.jpg",
+  "Omar Al Farsi": "/images/team/omar-al-farsi.jpg",
+  "portrait — Omar Al Farsi": "/images/team/omar-al-farsi.jpg",
+  "Priya Nair": "/images/team/priya-nair.jpg",
+  "portrait — Priya Nair": "/images/team/priya-nair.jpg",
+  "portrait — NEXON": "/images/team/layla-haddad.jpg",
+  "author": "/images/team/layla-haddad.jpg",
+
+  // Corporate, offices and business mobility
+  "founders and team in a Dubai free-zone office": "/images/lifestyle/dubai-office-team.jpg",
+  "executives in a Dubai free-zone office": "/images/lifestyle/dubai-office-team.jpg",
+  "the NEXON team in the Business Bay office": "/images/lifestyle/dubai-office-team.jpg",
+
+  // Consultations, advisory and client files
+  "consultant reviewing a due-diligence file with a client": "/images/lifestyle/consultant-meeting.jpg",
+  "consultant reviewing a fee schedule with a client": "/images/lifestyle/consultant-meeting.jpg",
+  "consultant and client reviewing a written timeline": "/images/lifestyle/consultant-meeting.jpg",
+  "consultant with client": "/images/lifestyle/consultant-meeting.jpg",
+  "consultant explaining a points assessment": "/images/lifestyle/consultant-meeting.jpg",
+
+  // Skilled migration and workplace
+  "engineer at a Toronto office": "/images/lifestyle/toronto-engineer.jpg",
+  "engineer at work": "/images/lifestyle/toronto-engineer.jpg",
+
+  // Documents and investment prospectuses
+  "documents on a desk": "/images/lifestyle/fund-documents.jpg",
+  "consultant and client reviewing a fund prospectus": "/images/lifestyle/fund-documents.jpg",
+  "a written fee schedule on a desk": "/images/lifestyle/fund-documents.jpg",
+  "investor reviewing documents": "/images/lifestyle/investor-documents.jpg",
+
+  // Audience & story slots
+  "founders in a bright Dubai office": "/images/lifestyle/dubai-office-team.jpg",
+  "the team at the Business Bay office": "/images/lifestyle/dubai-office-team.jpg",
+  "archival photo — the founders’ first Gulf office": "/images/lifestyle/founders-first-office.jpg",
 };
 
 /**

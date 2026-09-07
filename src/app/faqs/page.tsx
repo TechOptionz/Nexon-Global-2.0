@@ -16,10 +16,13 @@ export default function FaqsPage() {
   /* Deep links from the header menu (/faqs#faq-g1-0) open and scroll to
      the question they name. */
   useEffect(() => {
-    const id = window.location.hash.replace(/^#/, "");
-    if (!id.startsWith("faq-")) return;
-    setOpen(id.slice(4));
-    document.getElementById(id)?.scrollIntoView({ block: "center" });
+    const handleHash = () => {
+      const id = window.location.hash.replace(/^#/, "");
+      if (!id.startsWith("faq-")) return;
+      setOpen(id.slice(4));
+      document.getElementById(id)?.scrollIntoView({ block: "center" });
+    };
+    requestAnimationFrame(handleHash);
   }, []);
 
   return (
