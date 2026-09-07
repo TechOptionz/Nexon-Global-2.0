@@ -14,6 +14,7 @@ import InsightsRow from "@/components/InsightsRow";
 import TestimonialBand from "@/components/TestimonialBand";
 import EligibilityCheck from "@/components/EligibilityCheck";
 import ImageSlot from "@/components/ImageSlot";
+import HeroVideo from "@/components/HeroVideo";
 import Reveal from "@/components/Reveal";
 import SplitText from "@/components/motion/SplitText";
 import { useTrack } from "@/components/useTrack";
@@ -188,9 +189,9 @@ export default function HomePage() {
         }}
       >
         <div data-hero-media data-parallax style={{ position: "absolute", inset: 0 }}>
-          <ImageSlot
-            placeholder="hero video — nature / travel"
-            src="/assets/airport-collage.jpg"
+          <HeroVideo
+            src="/assets/hero-loop.mp4"
+            poster="/assets/hero-poster.jpg"
           />
         </div>
         <div
@@ -198,7 +199,11 @@ export default function HomePage() {
             position: "absolute",
             inset: 0,
             background:
-              "linear-gradient(180deg,rgba(16,65,59,0.55) 0%,rgba(16,65,59,0.72) 50%,rgba(16,65,59,0.6) 100%)",
+              /* A whisper of forest to tie the video to the palette, with the
+                 actual darkening done by a neutral scrim underneath — the
+                 footage keeps its own colour instead of going green. */
+              "linear-gradient(180deg,rgba(16,65,59,0.18) 0%,rgba(16,65,59,0.26) 50%,rgba(16,65,59,0.22) 100%)," +
+              "linear-gradient(180deg,rgba(10,18,17,0.20) 0%,rgba(10,18,17,0.28) 50%,rgba(10,18,17,0.24) 100%)",
             pointerEvents: "none",
           }}
         />
@@ -210,7 +215,7 @@ export default function HomePage() {
             height: 560,
             transform: "translateY(-50%)",
             background:
-              "radial-gradient(ellipse 60% 50% at 50% 50%,rgba(0,0,0,0.45) 0%,rgba(0,0,0,0) 100%)",
+              "radial-gradient(ellipse 60% 50% at 50% 50%,rgba(0,0,0,0.5) 0%,rgba(0,0,0,0) 100%)",
             pointerEvents: "none",
           }}
         />

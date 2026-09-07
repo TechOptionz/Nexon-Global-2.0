@@ -754,7 +754,8 @@ html.lenis body {
 
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) and (min-width: 901px) {
-    [data-parallax] img {
+    [data-parallax] img,
+    [data-parallax] video {
       animation: parallaxDrift linear both;
       animation-timeline: view();
       animation-range: entry 0% exit 100%;
@@ -836,7 +837,8 @@ html.lenis body {
     animation: none !important;
   }
 
-  [data-parallax] img {
+  [data-parallax] img,
+  [data-parallax] video {
     animation: none !important;
   }
 }
