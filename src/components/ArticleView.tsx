@@ -321,7 +321,11 @@ export default function ArticleView({ slug }: { slug: string }) {
           >
             {related.map((r) => (
               <Link key={r.slug} href={r.href} className="photo-card" style={{ height: 480 }}>
-                <ImageSlot placeholder={r.photo} className="photo-card__media" sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" />
+                <ImageSlot
+                  placeholder={r.photo}
+                  className="photo-card__media"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 900px"
+                />
                 <div className="card-scrim" />
                 <div className="card-body">
                   <span className="pill-frosted">{r.tag[lang]}</span>

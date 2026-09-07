@@ -198,7 +198,7 @@ export default function ServiceView({ slug }: { slug: string }) {
                 background: "var(--sand)",
               }}
             >
-              <ImageSlot placeholder={sv.photoProcess} sizes="(max-width: 900px) 100vw, 50vw" />
+              <ImageSlot placeholder={sv.photoProcess} sizes="(max-width: 900px) 100vw, 1100px" />
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", paddingTop: 8 }}>

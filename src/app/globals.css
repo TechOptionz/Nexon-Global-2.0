@@ -832,7 +832,7 @@ select.field {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  height: var(--header-h);
+  padding: 6px 4px;
   font-size: 14px;
   font-weight: 500;
   color: var(--ink);
@@ -850,8 +850,8 @@ select.field {
 
 .nav-link__active {
   position: absolute;
-  left: 0;
-  right: 18px;
+  left: 4px;
+  right: 22px;
   bottom: 0;
   height: 2px;
   background: var(--accent);
@@ -1337,8 +1337,8 @@ select.field {
 }
 
 [dir="rtl"] .nav-link__active {
-  left: 18px;
-  right: 0;
+  left: 22px;
+  right: 4px;
 }
 
 /* Arabic renders in the sans stack — Instrument Serif has no Arabic
@@ -1690,17 +1690,7 @@ select.field {
   .dest-hero {
     height: 420px !important;
   }
-  /* The inset photograph was hidden because it is positioned into the
-     hero's left margin, where on a phone it would hang off the screen.
-     It stays an inset — it just tucks into the opposite corner, inside
-     the frame, at a size the frame can hold. */
-  .dest-hero__inset {
-    inset-inline-start: auto !important;
-    inset-inline-end: 12px !important;
-    bottom: 12px !important;
-    width: 116px !important;
-    height: 116px !important;
-  }
+
   .service-hero {
     margin-inline: 0 !important;
   }

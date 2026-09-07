@@ -14,7 +14,7 @@ const WORDMARK = "NEXON".split("");
 /* Grace period before an open mega-menu closes on mouse-out. Long
    enough that a fast diagonal from a nav link to the far side of the
    panel doesn't dismiss it mid-travel, short enough to feel immediate. */
-const CLOSE_DELAY = 140;
+const CLOSE_DELAY = 180;
 
 /* How long the panel and the drawer take to leave. Matches
    --dur-exit in globals.css; the two must not drift apart. */
@@ -279,11 +279,24 @@ export default function SiteHeader({ active }: Props) {
               key={m.key}
               href={m.href}
               className="nav-link"
-              onMouseEnter={() => setOpen(m.key)}
-              onFocus={() => setOpen(m.key)}
+              onMouseEnter={() => {
+                cancelClose();
+                setOpen(m.key);
+              }}
+              onMouseLeave={scheduleClose}
+              onFocus={() => {
+                cancelClose();
+                setOpen(m.key);
+              }}
+              onBlur={scheduleClose}
             >
               <span>{t(m.label)}</span>
-              <ChevronDown />
+              <ChevronDown
+                style={{
+                  transform: open === m.key ? "rotate(180deg)" : undefined,
+                  transition: "transform var(--dur-micro) var(--ease-premium)",
+                }}
+              />
               {active === m.key && <span className="nav-link__active" />}
             </Link>
           ))}
@@ -340,7 +353,13 @@ export default function SiteHeader({ active }: Props) {
       {mega.present && shownMenu && (
         /* On its way out it is scenery: not clickable, not focusable,
            not announced. `inert` covers all three. */
-        <div className="mega-panel" data-leaving={mega.leaving ? "" : undefined} inert={mega.leaving}>
+        <div
+          className="mega-panel"
+          data-leaving={mega.leaving ? "" : undefined}
+          inert={mega.leaving}
+          onMouseEnter={cancelClose}
+          onMouseLeave={scheduleClose}
+        >
           <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
             <div className="mega-tiles">
               {shownMenu.tiles.map((tile, i) => {
@@ -445,7 +464,7 @@ export default function SiteHeader({ active }: Props) {
             className="photo-card"
             style={{ minHeight: 316, borderRadius: 12 }}
           >
-            <ImageSlot placeholder={shownMenu.photo} sizes="360px" />
+            <ImageSlot placeholder={shownMenu.photo} sizes="640px" />
             <div className="card-scrim card-scrim--menu" />
             <div style={{ position: "absolute", insetInline: 20, bottom: 20, color: "#fff", pointerEvents: "none" }}>
               <div className="serif" style={{ fontSize: 28, lineHeight: 1.05, marginBottom: 8, textWrap: "balance" }}>

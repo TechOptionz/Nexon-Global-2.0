@@ -55,7 +55,7 @@ export default function ForBusinessPage() {
               background: "var(--sand)",
             }}
           >
-            <ImageSlot placeholder="founders and team in a Dubai free-zone office" sizes="(max-width: 900px) 100vw, 50vw" />
+            <ImageSlot placeholder="founders and team in a Dubai free-zone office" sizes="(max-width: 1200px) 100vw, 1200px" />
           </div>
         </div>
       </section>
@@ -90,7 +90,7 @@ export default function ForBusinessPage() {
                 background: "var(--sand)",
               }}
             >
-              <ImageSlot placeholder="consultant reviewing a fee schedule with a client" sizes="(max-width: 900px) 100vw, 50vw" />
+              <ImageSlot placeholder="consultant reviewing a fee schedule with a client" sizes="(max-width: 900px) 100vw, 1100px" />
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", gap: 48, paddingTop: 8 }}>

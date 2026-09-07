@@ -44,7 +44,11 @@ export default function InsightsRow() {
                 height: 480,
               }}
             >
-              <ImageSlot placeholder={a.photo} className="photo-card__media" sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" />
+              <ImageSlot
+                placeholder={a.photo}
+                className="photo-card__media"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 900px"
+              />
               <div className="card-scrim" />
               <div className="card-body">
                 <span className="pill-frosted">{a.tag[lang]}</span>

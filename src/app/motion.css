@@ -567,7 +567,7 @@ html.lenis body {
 .nav-link::after {
   content: "";
   position: absolute;
-  inset-inline: 0 18px;
+  inset-inline: 4px 22px;
   bottom: 0;
   height: 2px;
   background: var(--accent);

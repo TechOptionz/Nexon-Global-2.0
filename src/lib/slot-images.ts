@@ -96,8 +96,8 @@ export const SLOT_IMAGES: Record<string, string> = {
   "parent carrying a child outdoors": "/images/lifestyle/family-arrivals.jpg",
   "three generations at home": "/images/lifestyle/family-arrivals.jpg",
   "photo collage — families travelling": "/images/lifestyle/family-arrivals.jpg",
-  "traveller with passport at the gate": "/images/lifestyle/traveller-gate.jpg",
-  "reading at a departure gate": "/images/lifestyle/traveller-gate.jpg",
+  "traveller with passport at the gate": "/images/lifestyle/traveller-airport-departure.jpg",
+  "reading at a departure gate": "/images/lifestyle/traveller-airport-departure.jpg",
   "Caribbean harbour": "/images/destinations/caribbean-harbour.jpg",
 
   // Hero media

@@ -56,36 +56,19 @@ export default function DestinationView({ slug }: { slug: string }) {
             </Link>
           </div>
 
-          <div className="dest-hero" style={{ position: "relative", height: 620 }}>
-            <div
-              data-hero-media
-              data-parallax
-              style={{
-                position: "absolute",
-                inset: 0,
-                borderRadius: 16,
-                overflow: "hidden",
-                background: "var(--sand)",
-              }}
-            >
-              <ImageSlot placeholder={d.photoHero} sizes="(max-width: 1200px) 100vw, 1200px" eager />
-            </div>
-            <div
-              className="dest-hero__inset"
-              style={{
-                position: "absolute",
-                insetInlineStart: -96,
-                bottom: 72,
-                width: 280,
-                height: 280,
-                borderRadius: 12,
-                overflow: "hidden",
-                background: "var(--mint)",
-                boxShadow: "0 24px 48px rgba(25,31,29,0.12)",
-              }}
-            >
-              <ImageSlot placeholder={d.photoSmall} sizes="280px" eager />
-            </div>
+          <div
+            className="dest-hero"
+            data-hero-media
+            data-parallax
+            style={{
+              position: "relative",
+              height: 620,
+              borderRadius: 16,
+              overflow: "hidden",
+              background: "var(--sand)",
+            }}
+          >
+            <ImageSlot placeholder={d.photoHero} sizes="(max-width: 1200px) 100vw, 1200px" eager />
           </div>
         </div>
       </section>
@@ -256,7 +239,7 @@ export default function DestinationView({ slug }: { slug: string }) {
               background: "var(--sand)",
             }}
           >
-            <ImageSlot placeholder={d.photoWhy} sizes="(max-width: 900px) 100vw, 50vw" />
+            <ImageSlot placeholder={d.photoWhy} sizes="(max-width: 900px) 100vw, 1200px" />
           </div>
 
           <div style={{ paddingTop: 8 }}>

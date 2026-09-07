@@ -63,6 +63,7 @@ const AUDIENCE_CARDS = [
     pill: "Individuals",
     title: "A second residency or passport as a plan B and travel freedom.",
     photo: "traveller with passport at the gate",
+    focal: "62% 38%",
   },
 ];
 
@@ -299,7 +300,12 @@ export default function HomePage() {
           {AUDIENCE_CARDS.map((c, i) => (
             <Reveal key={c.slot} delay={i * 100}>
               <Link href={c.href} className="photo-card" style={{ height: 480 }}>
-                <ImageSlot placeholder={c.photo} className="photo-card__media" sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" />
+                <ImageSlot
+                  placeholder={c.photo}
+                  focal={c.focal}
+                  className="photo-card__media"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 900px"
+                />
                 <div className="card-scrim" />
                 <div className="card-body">
                   <span className="pill-frosted">{t(c.pill)}</span>
@@ -459,7 +465,7 @@ export default function HomePage() {
               background: "var(--sand)",
             }}
           >
-            <ImageSlot placeholder="executives in a Dubai free-zone office" sizes="(max-width: 900px) 100vw, 50vw" />
+            <ImageSlot placeholder="executives in a Dubai free-zone office" sizes="(max-width: 900px) 100vw, 1200px" />
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 128, paddingTop: 16 }}>
@@ -640,7 +646,7 @@ export default function HomePage() {
               background: "var(--sand)",
             }}
           >
-            <ImageSlot placeholder="parent carrying a child outdoors" sizes="(max-width: 900px) 100vw, 50vw" />
+            <ImageSlot placeholder="parent carrying a child outdoors" sizes="(max-width: 900px) 100vw, 1200px" />
           </div>
         </div>
       </section>

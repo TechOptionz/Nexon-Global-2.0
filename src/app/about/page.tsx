@@ -53,6 +53,7 @@ const AUDIENCE_CARDS = [
     who: "Individuals",
     need: "A second residency or passport as a plan B and travel freedom.",
     photo: "traveller with passport at the gate",
+    focal: "62% 38%",
   },
   {
     slot: "families",
@@ -192,7 +193,7 @@ export default function AboutPage() {
                 background: "var(--sand)",
               }}
             >
-              <ImageSlot placeholder={ch.photo} sizes="(max-width: 900px) 100vw, 50vw" />
+              <ImageSlot placeholder={ch.photo} sizes="(max-width: 900px) 100vw, 1000px" />
             </div>
             <div>
               <div
@@ -259,7 +260,12 @@ export default function AboutPage() {
                 className="photo-card"
                 style={{ flex: "0 0 calc((100% - 48px)/3)", minWidth: 260, height: 480 }}
               >
-                <ImageSlot placeholder={au.photo} className="photo-card__media" sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" />
+                <ImageSlot
+                  placeholder={au.photo}
+                  focal={au.focal}
+                  className="photo-card__media"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 900px"
+                />
                 <div className="card-scrim" />
                 <div className="card-body">
                   <span className="pill-frosted">{t(au.who)}</span>
