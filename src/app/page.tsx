@@ -17,6 +17,7 @@ import ImageSlot from "@/components/ImageSlot";
 import HeroVideo from "@/components/HeroVideo";
 import Reveal from "@/components/Reveal";
 import SplitText from "@/components/motion/SplitText";
+import Magnetic from "@/components/motion/Magnetic";
 import { useTrack } from "@/components/useTrack";
 import {
   CredentialsBand,
@@ -117,18 +118,22 @@ export default function HomePage() {
   const [announce, setAnnounce] = useState(true);
   const { ref: destsRef, prev: destsPrev, next: destsNext } = useTrack();
 
-  const heroHeight = announce ? "calc(100vh - 136px)" : "calc(100vh - 84px)";
+  /* svh, not vh: on a phone `100vh` is the *largest* viewport — the one
+     with the browser chrome retracted — so a vh-sized hero is taller
+     than the screen actually is on arrival, and its content gets cut
+     off at the bottom. svh is the smallest viewport, which always fits. */
+  const heroHeight = announce ? "calc(100svh - 136px)" : "calc(100svh - 84px)";
 
   return (
     <div className="artboard">
       {announce && (
         <div
           data-hero
+          className="announce-bar"
           style={{
             position: "relative",
-            margin: "12px 12px 0",
             minHeight: 40,
-            padding: "8px 44px",
+            padding: "8px 52px",
             background: "var(--sky)",
             borderRadius: 8,
             display: "flex",
@@ -154,11 +159,11 @@ export default function HomePage() {
             onClick={() => setAnnounce(false)}
             style={{
               position: "absolute",
-              insetInlineEnd: 12,
+              insetInlineEnd: 4,
               top: "50%",
               transform: "translateY(-50%)",
-              width: 24,
-              height: 24,
+              width: 44,
+              height: 44,
               border: 0,
               background: "none",
               color: "var(--ink)",
@@ -177,10 +182,9 @@ export default function HomePage() {
 
       {/* ---- Hero ---- */}
       <section
+        className="hero-band"
         style={{
           position: "relative",
-          margin: "12px 20px 0",
-          height: 700,
           minHeight: heroHeight,
           borderRadius: 24,
           overflow: "hidden",
@@ -272,12 +276,16 @@ export default function HomePage() {
               ["--hero-delay" as string]: "780ms",
             }}
           >
-            <Link href="/#eligibility" className="btn btn--primary">
-              {t("Check Your Eligibility")}
-            </Link>
-            <Link href="/contact" className="btn btn--white">
-              {t("Speak to an Expert")}
-            </Link>
+            <Magnetic>
+              <Link href="/#eligibility" className="btn btn--primary">
+                {t("Check Your Eligibility")}
+              </Link>
+            </Magnetic>
+            <Magnetic>
+              <Link href="/contact" className="btn btn--white">
+                {t("Speak to an Expert")}
+              </Link>
+            </Magnetic>
           </div>
         </div>
       </section>
@@ -291,7 +299,7 @@ export default function HomePage() {
           {AUDIENCE_CARDS.map((c, i) => (
             <Reveal key={c.slot} delay={i * 100}>
               <Link href={c.href} className="photo-card" style={{ height: 480 }}>
-                <ImageSlot placeholder={c.photo} className="photo-card__media" />
+                <ImageSlot placeholder={c.photo} className="photo-card__media" sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" />
                 <div className="card-scrim" />
                 <div className="card-body">
                   <span className="pill-frosted">{t(c.pill)}</span>
@@ -451,7 +459,7 @@ export default function HomePage() {
               background: "var(--sand)",
             }}
           >
-            <ImageSlot placeholder="executives in a Dubai free-zone office" />
+            <ImageSlot placeholder="executives in a Dubai free-zone office" sizes="(max-width: 900px) 100vw, 50vw" />
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 128, paddingTop: 16 }}>
@@ -632,7 +640,7 @@ export default function HomePage() {
               background: "var(--sand)",
             }}
           >
-            <ImageSlot placeholder="parent carrying a child outdoors" />
+            <ImageSlot placeholder="parent carrying a child outdoors" sizes="(max-width: 900px) 100vw, 50vw" />
           </div>
         </div>
       </section>

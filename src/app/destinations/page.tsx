@@ -61,7 +61,7 @@ export default function DestinationsPage() {
 
       <section className="section-pad" style={{ padding: "64px 0 128px" }}>
         <div className="container">
-          <div style={{ display: "flex", gap: 8, marginBottom: 40, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: 12, marginBottom: 40, flexWrap: "wrap" }}>
             {FILTERS.map((f) => (
               <button
                 key={f}
@@ -71,7 +71,7 @@ export default function DestinationsPage() {
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
-                  height: 40,
+                  minHeight: 44,
                   padding: "0 20px",
                   border: "1px solid var(--ink)",
                   borderRadius: 8,

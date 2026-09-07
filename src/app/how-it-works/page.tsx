@@ -83,7 +83,7 @@ export default function HowItWorksPage() {
               background: "var(--sand)",
             }}
           >
-            <ImageSlot placeholder="consultant and client reviewing a written timeline" />
+            <ImageSlot placeholder="consultant and client reviewing a written timeline" sizes="(max-width: 900px) 100vw, 50vw" />
           </div>
 
           <div style={{ display: "flex", flexDirection: "column" }}>

@@ -192,10 +192,28 @@ export default function EligibilityCheck() {
                       gap: 12,
                     }}
                   >
-                    <input required type="text" className="field" placeholder={t("Full name")} />
-                    <input required type="email" className="field" placeholder={t("Email address")} />
+                    <input
+                      required
+                      type="text"
+                      name="name"
+                      autoComplete="name"
+                      className="field"
+                      placeholder={t("Full name")}
+                    />
+                    <input
+                      required
+                      type="email"
+                      name="email"
+                      autoComplete="email"
+                      inputMode="email"
+                      className="field"
+                      placeholder={t("Email address")}
+                    />
                     <input
                       type="tel"
+                      name="tel"
+                      autoComplete="tel"
+                      inputMode="tel"
                       className="field"
                       placeholder={t("Phone / WhatsApp (optional)")}
                     />

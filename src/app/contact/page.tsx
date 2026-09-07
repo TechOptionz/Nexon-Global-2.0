@@ -82,7 +82,9 @@ export default function ContactPage() {
                 <span style={{ flex: "none", marginTop: 2 }}>
                   <ChatIcon size={20} />
                 </span>
-                <span style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                {/* Each of these is something you tap to place a call
+                    or open a message, so they carry their own target. */}
+                <span className="contact-links" style={{ display: "flex", flexDirection: "column" }}>
                   <a href={SITE.phoneHref} style={{ color: "var(--ink)" }}>
                     {SITE.phone}
                   </a>
@@ -135,19 +137,41 @@ export default function ContactPage() {
                   <span>
                     {t("Full name")} <span style={{ color: "var(--muted)", fontWeight: 400 }}>*</span>
                   </span>
-                  <input required type="text" className="field" placeholder={t("Your full name")} />
+                  <input
+                    required
+                    type="text"
+                    name="name"
+                    autoComplete="name"
+                    className="field"
+                    placeholder={t("Your full name")}
+                  />
                 </label>
 
                 <label className="field-label">
                   <span>
                     {t("Email")} <span style={{ color: "var(--muted)", fontWeight: 400 }}>*</span>
                   </span>
-                  <input required type="email" className="field" placeholder="name@example.com" />
+                  <input
+                    required
+                    type="email"
+                    name="email"
+                    autoComplete="email"
+                    inputMode="email"
+                    className="field"
+                    placeholder="name@example.com"
+                  />
                 </label>
 
                 <label className="field-label">
                   <span>{t("Phone / WhatsApp")}</span>
-                  <input type="tel" className="field" placeholder="+971 50 000 0000" />
+                  <input
+                    type="tel"
+                    name="tel"
+                    autoComplete="tel"
+                    inputMode="tel"
+                    className="field"
+                    placeholder="+971 50 000 0000"
+                  />
                 </label>
 
                 <SelectField label={t("I'm interested in")} options={PRACTICE_OPTIONS} />

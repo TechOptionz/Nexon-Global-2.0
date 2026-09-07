@@ -55,12 +55,12 @@ export default function ForBusinessPage() {
               background: "var(--sand)",
             }}
           >
-            <ImageSlot placeholder="founders and team in a Dubai free-zone office" />
+            <ImageSlot placeholder="founders and team in a Dubai free-zone office" sizes="(max-width: 900px) 100vw, 50vw" />
           </div>
         </div>
       </section>
 
-      <div style={{ height: 160 }} />
+      <div className="band-gap" />
 
       <Marquee style={{ marginTop: 64 }} />
 
@@ -90,7 +90,7 @@ export default function ForBusinessPage() {
                 background: "var(--sand)",
               }}
             >
-              <ImageSlot placeholder="consultant reviewing a fee schedule with a client" />
+              <ImageSlot placeholder="consultant reviewing a fee schedule with a client" sizes="(max-width: 900px) 100vw, 50vw" />
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", gap: 48, paddingTop: 8 }}>

@@ -71,12 +71,12 @@ export default function ServiceView({ slug }: { slug: string }) {
               background: "var(--sand)",
             }}
           >
-            <ImageSlot placeholder={sv.photoHero} />
+            <ImageSlot placeholder={sv.photoHero} sizes="(max-width: 1200px) 100vw, 1200px" eager />
           </div>
         </div>
       </section>
 
-      <div style={{ height: 160 }} />
+      <div className="band-gap" />
 
       <section style={{ padding: "96px 0 0" }}>
         <div className="container">
@@ -198,7 +198,7 @@ export default function ServiceView({ slug }: { slug: string }) {
                 background: "var(--sand)",
               }}
             >
-              <ImageSlot placeholder={sv.photoProcess} />
+              <ImageSlot placeholder={sv.photoProcess} sizes="(max-width: 900px) 100vw, 50vw" />
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", paddingTop: 8 }}>

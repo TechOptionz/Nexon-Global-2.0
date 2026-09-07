@@ -9,7 +9,31 @@ npm run dev     # http://localhost:3000
 npm run build   # static prerender of all 32 routes
 npm run start
 npm run lint
+npm run warm-images   # against a running server; see Images below
 ```
+
+## Images
+
+Photographs go through `next/image`, which encodes AVIF on demand: the first
+request for a given (photo, width) costs 1-2s of CPU, every request after it
+is served from `.next/cache/images` in ~15ms. Unwarmed, that cost lands on
+whoever browses first, once per rendition, as slots that sit on the sand
+placeholder for a beat before the picture appears.
+
+`npm run warm-images` pays it up front. It reads the routes from the build's
+prerender manifest, collects the `srcset` URLs each page actually emits, and
+requests every one, so nothing is left to encode at view time:
+
+```bash
+npm run start &
+npm run warm-images                  # ~135s cold, ~2s once warm
+npm run warm-images -- --webp        # also warm the pre-Safari-16 fallback
+npm run warm-images -- --base http://localhost:3001
+```
+
+Run it after `next build` and before the site takes traffic. It is safe to
+re-run — already-cached renditions are skipped. A non-zero exit means a slot
+points at a photograph that isn't in `public/`.
 
 ## Stack
 

@@ -51,6 +51,7 @@ export default function ArticleView({ slug }: { slug: string }) {
         <div style={{ width: "min(760px, 100% - 48px)", margin: "0 auto", textAlign: "center" }}>
           <Link
             href="/insights"
+            className="back-link"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -58,7 +59,6 @@ export default function ArticleView({ slug }: { slug: string }) {
               fontSize: 14,
               fontWeight: 500,
               color: "var(--muted)",
-              marginBottom: 24,
             }}
           >
             <ArrowLeft size={16} />
@@ -122,7 +122,7 @@ export default function ArticleView({ slug }: { slug: string }) {
                 flex: "none",
               }}
             >
-              <ImageSlot placeholder={a.authorPhoto} shape="circle" />
+              <ImageSlot placeholder={a.authorPhoto} shape="circle" sizes="64px" />
             </div>
             <span style={{ fontWeight: 600, color: "var(--ink)" }}>{a.author[lang]}</span>
             <span>·</span>
@@ -143,7 +143,7 @@ export default function ArticleView({ slug }: { slug: string }) {
             background: "var(--sand)",
           }}
         >
-          <ImageSlot placeholder={a.photo} />
+          <ImageSlot placeholder={a.photo} sizes="(max-width: 1080px) 100vw, 1080px" eager />
         </div>
       </section>
 
@@ -279,7 +279,7 @@ export default function ArticleView({ slug }: { slug: string }) {
                     flex: "none",
                   }}
                 >
-                  <ImageSlot placeholder={a.authorPhoto} shape="circle" />
+                  <ImageSlot placeholder={a.authorPhoto} shape="circle" sizes="64px" />
                 </div>
                 <div style={{ flex: 1, minWidth: 180 }}>
                   <div style={{ fontSize: 16, fontWeight: 600 }}>{a.author[lang]}</div>
@@ -321,7 +321,7 @@ export default function ArticleView({ slug }: { slug: string }) {
           >
             {related.map((r) => (
               <Link key={r.slug} href={r.href} className="photo-card" style={{ height: 480 }}>
-                <ImageSlot placeholder={r.photo} className="photo-card__media" />
+                <ImageSlot placeholder={r.photo} className="photo-card__media" sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" />
                 <div className="card-scrim" />
                 <div className="card-body">
                   <span className="pill-frosted">{r.tag[lang]}</span>

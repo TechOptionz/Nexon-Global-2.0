@@ -10,16 +10,9 @@
    ------------------------------------------------------------------ */
 
 :root {
-  /* One easing family, used everywhere, so the whole page shares a
-     single sense of weight. */
-  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
-  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
-
-  --dur-micro: 200ms;
-  --dur-hover: 280ms;
-  --dur-reveal: 680ms;
-  --dur-hero: 900ms;
+  /* Durations and easing curves live in globals.css, next to the rest
+     of the design tokens, because both files consume them. This file
+     adds only the distances things travel. */
 
   /* Travel distances. Mobile steps these down rather than reusing the
      desktop values at a smaller scale. */
@@ -139,6 +132,25 @@ html.lenis body {
    fights its own offset. It fades instead. */
 .sticky-media[data-anim] {
   transform: none !important;
+}
+
+/* ------------------------------------------------------------------
+   Route transition
+
+   See app/template.tsx for why this is opacity only.
+   ------------------------------------------------------------------ */
+
+@keyframes routeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.route-fade {
+  animation: routeIn var(--dur-hover) var(--ease-soft) both;
 }
 
 /* ------------------------------------------------------------------
@@ -303,7 +315,7 @@ html.lenis body {
     transform var(--dur-hover) var(--ease-premium);
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .btn:hover,
   .btn--secondary:hover {
     transform: translate3d(0, var(--lift), 0);
@@ -333,7 +345,7 @@ html.lenis body {
   transition: transform var(--dur-hover) var(--ease-premium);
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .btn:hover svg,
   .btn--secondary:hover svg:last-of-type,
   .mega-tile-all:hover span {
@@ -358,7 +370,7 @@ html.lenis body {
   transition: transform var(--dur-hover) var(--ease-premium);
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .arrow-btn:hover {
     transform: translate3d(0, var(--lift), 0);
     box-shadow: 0 8px 18px -10px rgba(25, 31, 29, 0.5);
@@ -382,7 +394,7 @@ html.lenis body {
     transform var(--dur-hover) var(--ease-premium);
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .icon-btn-round:hover {
     transform: scale(1.05);
   }
@@ -406,7 +418,7 @@ html.lenis body {
     transform var(--dur-hover) var(--ease-premium);
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .choice-btn:hover {
     transform: translate3d(0, -2px, 0);
   }
@@ -445,7 +457,7 @@ html.lenis body {
   transition: transform var(--dur-hover) var(--ease-premium);
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .sand-card:hover,
   .white-card:hover {
     transform: translate3d(0, var(--lift-card), 0);
@@ -474,7 +486,7 @@ html.lenis body {
     transform var(--dur-hover) var(--ease-premium);
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .mega-tile:hover {
     transform: translate3d(0, -2px, 0);
   }
@@ -491,7 +503,7 @@ html.lenis body {
     transform var(--dur-hover) var(--ease-premium);
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .link-list a:hover {
     transform: translateX(3px);
   }
@@ -523,7 +535,7 @@ html.lenis body {
   background-position: 100% 100%;
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .inline-link:hover,
   .footer-col-links a:hover,
   .footer-legal a:hover,
@@ -568,7 +580,7 @@ html.lenis body {
   transform-origin: right center;
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .nav-link:hover::after,
   .nav-link:focus-visible::after {
     transform: scaleX(1);
@@ -603,7 +615,7 @@ html.lenis body {
   transition: transform var(--dur-micro) var(--ease-premium);
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .nav-link:hover svg {
     transform: translateY(1px);
   }
@@ -630,6 +642,19 @@ html.lenis body {
   }
 }
 
+@keyframes megaOut {
+  to {
+    opacity: 0;
+    transform: translate3d(0, -8px, 0);
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
 .mega-panel {
   animation: megaIn 300ms var(--ease-premium) both;
   transform-origin: top center;
@@ -637,6 +662,20 @@ html.lenis body {
 
 .mega-scrim {
   animation: fadeIn 260ms var(--ease-soft) both;
+}
+
+/* Leaving. Shorter than the entrance and on an ease-in curve, so the
+   panel commits to going instead of drifting. `data-leaving` is set by
+   usePresence, which holds the element in the tree for exactly
+   --dur-exit before React takes it away. */
+.mega-panel[data-leaving] {
+  animation: megaOut var(--dur-exit) var(--ease-exit) both;
+  pointer-events: none;
+}
+
+.mega-scrim[data-leaving] {
+  animation: fadeOut var(--dur-exit) var(--ease-exit) both;
+  pointer-events: none;
 }
 
 /* Mobile drawer */
@@ -651,6 +690,13 @@ html.lenis body {
   }
 }
 
+@keyframes drawerOut {
+  to {
+    opacity: 0;
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
 .mobile-drawer {
   animation: drawerIn 320ms var(--ease-premium) both;
 }
@@ -658,6 +704,18 @@ html.lenis body {
 .mobile-drawer .drawer-row {
   animation: heroIn 420ms var(--ease-premium) both;
   animation-delay: var(--row-delay, 0ms);
+}
+
+/* The drawer leaves as one piece: the rows do not stagger back out,
+   which would read as hesitation on a control the user has already
+   dismissed. */
+.mobile-drawer[data-leaving] {
+  animation: drawerOut var(--dur-exit) var(--ease-exit) both;
+  pointer-events: none;
+}
+
+.mobile-drawer[data-leaving] .drawer-row {
+  animation: none;
 }
 
 /* ------------------------------------------------------------------
@@ -694,7 +752,7 @@ html.lenis body {
   transition: background var(--dur-hover) var(--ease-soft);
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .faq-row:has(.faq-trigger:hover) {
     background: var(--sky-mid);
   }
@@ -768,7 +826,7 @@ html.lenis body {
    ------------------------------------------------------------------ */
 
 /* The logo strip pauses so a name can actually be read. */
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .marquee:hover .marquee__inner {
     animation-play-state: paused;
   }
@@ -788,7 +846,7 @@ html.lenis body {
   transition: transform 420ms var(--ease-premium);
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .wordmark-row:hover > span {
     transform: translateY(-4px);
   }
@@ -797,6 +855,104 @@ html.lenis body {
 .stat-num,
 .stat-value {
   font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------------
+   Keyboard parity
+
+   Everything above answers the cursor from inside a pointer gate, so a
+   touch device never latches into a hover state. That gate would also
+   lock keyboard users out of the same feedback, so each effect is
+   repeated here against :focus-visible, ungated. Same values, same
+   tokens — a tab and a hover look identical.
+   ------------------------------------------------------------------ */
+
+.btn:focus-visible,
+.btn--secondary:focus-visible {
+  transform: translate3d(0, var(--lift), 0);
+  box-shadow: 0 10px 24px -12px rgba(25, 31, 29, 0.45);
+}
+
+.btn:focus-visible svg,
+.btn--secondary:focus-visible svg:last-of-type,
+.mega-tile-all:focus-visible span {
+  transform: translateX(3px);
+}
+
+[dir="rtl"] .btn:focus-visible svg,
+[dir="rtl"] .btn--secondary:focus-visible svg:last-of-type,
+[dir="rtl"] .mega-tile-all:focus-visible span {
+  transform: translateX(-3px);
+}
+
+.arrow-btn:focus-visible {
+  transform: translate3d(0, var(--lift), 0);
+  box-shadow: 0 8px 18px -10px rgba(25, 31, 29, 0.5);
+}
+
+.icon-btn-round:focus-visible {
+  transform: scale(1.05);
+}
+
+.choice-btn:focus-visible {
+  transform: translate3d(0, -2px, 0);
+}
+
+.sand-card:focus-visible,
+.white-card:focus-visible {
+  transform: translate3d(0, var(--lift-card), 0);
+  box-shadow: 0 20px 40px -26px rgba(25, 31, 29, 0.4);
+}
+
+.sand-card:focus-visible svg:last-of-type,
+.white-card:focus-visible svg:last-of-type {
+  transform: translateX(3px);
+}
+
+[dir="rtl"] .sand-card:focus-visible svg:last-of-type,
+[dir="rtl"] .white-card:focus-visible svg:last-of-type {
+  transform: translateX(-3px);
+}
+
+.mega-tile:focus-within {
+  transform: translate3d(0, -2px, 0);
+}
+
+.link-list a:focus-visible {
+  transform: translateX(3px);
+}
+
+[dir="rtl"] .link-list a:focus-visible {
+  transform: translateX(-3px);
+}
+
+/* The underline draws itself in for a tab exactly as it does for a
+   cursor, so the focus ring is not the only signal. */
+.inline-link:focus-visible,
+.footer-col-links a:focus-visible,
+.footer-legal a:focus-visible,
+.mega-col-links a:focus-visible,
+.mega-tile-items a:focus-visible {
+  background-size: 100% 1px;
+}
+
+.faq-row:has(.faq-trigger:focus-visible) {
+  background: var(--sky-mid);
+}
+
+/* Cards and buttons that are not otherwise outlined get a visible ring;
+   the lift alone is not a focus indicator. */
+.sand-card:focus-visible,
+.white-card:focus-visible,
+.team-card a:focus-visible,
+.credential-item a:focus-visible,
+.hover-media a:focus-visible,
+.standards-card a:focus-visible,
+.mega-tile-all:focus-visible,
+.inline-link:focus-visible,
+.nav-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 /* ------------------------------------------------------------------
@@ -814,6 +970,18 @@ html.lenis body {
     scroll-behavior: auto !important;
   }
 
+  .btn:focus-visible,
+  .btn--secondary:focus-visible,
+  .arrow-btn:focus-visible,
+  .icon-btn-round:focus-visible,
+  .choice-btn:focus-visible,
+  .sand-card:focus-visible,
+  .white-card:focus-visible,
+  .mega-tile:focus-within,
+  .link-list a:focus-visible {
+    transform: none !important;
+  }
+
   [data-anim],
   [data-hero],
   [data-hero-media],
@@ -829,7 +997,8 @@ html.lenis body {
     transition: none;
   }
 
-  .swap-in {
+  .swap-in,
+  .route-fade {
     animation: none !important;
   }
 

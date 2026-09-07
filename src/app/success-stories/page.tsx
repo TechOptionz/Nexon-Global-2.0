@@ -74,11 +74,15 @@ export default function SuccessStoriesPage() {
               >
                 {t(c.body)}
               </p>
+              {/* auto-fit rather than a fixed three: at 390px the three
+                  columns were 71/64/86px wide and labels like "first
+                  call to passports" wrapped four lines deep. */}
               <div
+                className="case-facts"
                 style={{
                   position: "relative",
                   display: "grid",
-                  gridTemplateColumns: "repeat(3,1fr)",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 140px), 1fr))",
                   gap: 16,
                   borderTop: "1px solid rgba(255,255,255,0.2)",
                   paddingTop: 24,

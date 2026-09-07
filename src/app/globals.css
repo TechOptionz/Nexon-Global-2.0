@@ -41,6 +41,33 @@
   --gutter: clamp(24px, 4.2vw, 80px);
   --header-h: 72px;
 
+  /* ----------------------------------------------------------------
+     Motion tokens
+
+     The single source of truth for how long anything takes and how it
+     moves. motion.css consumes these too; nothing in either file may
+     invent its own duration or curve.
+
+     Durations run fast -> base -> slow -> entrance. Anything leaving
+     the screen uses --dur-exit, which is deliberately shorter than the
+     matching entrance: a thing that is going should not linger.
+     ---------------------------------------------------------------- */
+  --dur-micro: 200ms;   /* colour, border and text shifts */
+  --dur-hover: 280ms;   /* base: lifts, presses, underlines */
+  --dur-slow: 400ms;    /* a lift and its shadow travelling together */
+  --dur-zoom: 700ms;    /* a photograph easing inside a fixed frame */
+  --dur-reveal: 680ms;  /* scroll entrance */
+  --dur-hero: 900ms;    /* hero entrance */
+  --dur-exit: 220ms;    /* anything leaving */
+
+  /* Entering uses an ease-out family, so movement arrives quickly and
+     settles. Leaving uses ease-in, so it commits and goes. Nothing
+     linear anywhere. */
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
   color-scheme: light;
 }
 
@@ -60,9 +87,17 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-body {
-  overflow-x: hidden;
-}
+/* Deliberately no `overflow-x` here.
+
+   It used to be `hidden`, which hid overflow rather than preventing it
+   — and it cannot prevent the kind that actually matters: an element
+   that refuses to shrink widens the layout viewport itself, and the
+   page then renders zoomed out with the clip doing nothing at all.
+   Both causes are fixed at the source (.bleed above, and .btn wrapping
+   below), so nothing needs hiding. Leaving it off means the next piece
+   of overflow announces itself with a scrollbar instead of passing
+   silently: `document.documentElement.scrollWidth === innerWidth` is a
+   real test again. */
 
 a {
   color: var(--ink);
@@ -116,10 +151,18 @@ img {
   container-type: inline-size;
 }
 
-/* Full-bleed strip that escapes the artboard column */
+/* Full-bleed strip.
+
+   This used to be `width: 100vw`, which is wider than the page whenever
+   a scrollbar is present — 100vw counts the scrollbar, the content box
+   does not — so it overflowed by half a scrollbar at each edge and the
+   `overflow-x` on body existed to hide it. The artboard is already
+   full-width (--artboard is 100%), so the strip only has to fill its
+   container. If the artboard is ever capped again, this needs to become
+   a scrollbar-aware calculation rather than going back to 100vw. */
 .bleed {
-  width: 100vw;
-  margin-inline-start: calc(50% - 50vw);
+  width: 100%;
+  margin-inline-start: 0;
 }
 
 /* ------------------------------------------------------------------
@@ -199,8 +242,17 @@ img {
   text-wrap: pretty;
 }
 
+/* ---- Running body copy: 16px on a phone ----
+
+   The artboards set body copy at 14 and 15px, which is comfortable at
+   arm's length on a desktop monitor and too small held in one hand.
+   These three classes are the site's actual prose; from 640px up they
+   return to the artboard sizes exactly, so the desktop composition is
+   untouched. Labels, kickers, captions and metadata are deliberately
+   NOT included — they are not body copy and enlarging them would break
+   the type hierarchy. */
 .body-15 {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.55;
   color: var(--muted);
   margin: 0;
@@ -208,10 +260,19 @@ img {
 }
 
 .body-14 {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
   color: var(--muted);
   margin: 0;
+}
+
+@media (min-width: 640px) {
+  .body-15 {
+    font-size: 15px;
+  }
+  .body-14 {
+    font-size: 14px;
+  }
 }
 
 .feature-title {
@@ -285,26 +346,53 @@ img {
    Buttons
    ------------------------------------------------------------------ */
 
+/* Labels wrap on a phone and hold one line from 640px up.
+
+   A nowrap button sets a min-content width its container cannot go
+   below, and a long label ("Explore Citizenship by Investment" is
+   294px) then pushes the whole page wider than the screen — which
+   `overflow-x: hidden` cannot undo, because the layout viewport has
+   already been widened. Wrapping is the only fix that keeps the label
+   intact. Restored to a single line at 640px, where every label fits. */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 48px;
-  padding: 0 24px;
+  min-height: 48px;
+  padding: 12px 24px;
   border: 0;
   border-radius: 8px;
   font-size: 15px;
   font-weight: 600;
-  white-space: nowrap;
+  line-height: 1.25;
+  text-align: center;
+  text-wrap: balance;
   cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  transition: background var(--dur-micro) var(--ease-soft), border-color var(--dur-micro) var(--ease-soft), color var(--dur-micro) var(--ease-soft);
+}
+
+@media (min-width: 640px) {
+  .btn {
+    /* min-height is released so the .btn--sm height below still governs. */
+    min-height: 0;
+    height: 48px;
+    padding: 0 24px;
+    white-space: nowrap;
+  }
 }
 
 .btn--primary {
   background: var(--ink);
   color: var(--white);
 }
-.btn--primary:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  .btn--primary:hover {
+    background: var(--black);
+    color: var(--white);
+  }
+}
+.btn--primary:is(:focus-visible, :has(:focus-visible)) {
   background: var(--black);
   color: var(--white);
 }
@@ -314,7 +402,14 @@ img {
   border: 1px solid var(--stone);
   color: var(--ink);
 }
-.btn--secondary:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  .btn--secondary:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+}
+.btn--secondary:is(:focus-visible, :has(:focus-visible)) {
   border-color: var(--ink);
   color: var(--ink);
 }
@@ -323,7 +418,14 @@ img {
   background: var(--white);
   color: var(--ink);
 }
-.btn--white:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  .btn--white:hover {
+    background: var(--sand);
+    color: var(--ink);
+  }
+}
+.btn--white:is(:focus-visible, :has(:focus-visible)) {
   background: var(--sand);
   color: var(--ink);
 }
@@ -334,15 +436,30 @@ img {
   border: 1px solid var(--ink);
   color: var(--ink);
 }
-.btn--outline-ink:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  .btn--outline-ink:hover {
+    background: var(--ink);
+    color: var(--white);
+  }
+}
+.btn--outline-ink:is(:focus-visible, :has(:focus-visible)) {
   background: var(--ink);
   color: var(--white);
 }
 
+/* The small button keeps its 40px height on a pointer device; on a
+   phone it inherits the 48px minimum above so it stays tappable. */
 .btn--sm {
-  height: 40px;
-  padding: 0 20px;
+  padding: 10px 20px;
   font-size: 14px;
+}
+
+@media (min-width: 640px) {
+  .btn--sm {
+    height: 40px;
+    padding: 0 20px;
+  }
 }
 
 /* Circular carousel arrows */
@@ -357,9 +474,15 @@ img {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background var(--dur-micro) var(--ease-soft);
 }
-.arrow-btn:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  .arrow-btn:hover {
+    background: var(--sky-mid-hover);
+  }
+}
+.arrow-btn:is(:focus-visible, :has(:focus-visible)) {
   background: var(--sky-mid-hover);
 }
 
@@ -367,7 +490,13 @@ img {
   background: rgba(255, 255, 255, 0.2);
   color: var(--white);
 }
-.arrow-btn--onforest:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  .arrow-btn--onforest:hover {
+    background: rgba(255, 255, 255, 0.32);
+  }
+}
+.arrow-btn--onforest:is(:focus-visible, :has(:focus-visible)) {
   background: rgba(255, 255, 255, 0.32);
 }
 
@@ -387,9 +516,15 @@ img {
 .photo-card__media {
   position: absolute;
   inset: 0;
-  transition: transform 0.6s ease;
+  transition: transform var(--dur-zoom) var(--ease-premium);
 }
-.photo-card:hover .photo-card__media {
+
+@media (hover: hover) and (pointer: fine) {
+  .photo-card:hover .photo-card__media {
+    transform: scale(1.03);
+  }
+}
+.photo-card:is(:focus-visible, :has(:focus-visible)) .photo-card__media {
   transform: scale(1.03);
 }
 
@@ -439,9 +574,16 @@ img {
   border-radius: 16px;
   padding: 32px;
   color: var(--ink);
-  transition: background 0.2s ease;
+  transition: background var(--dur-micro) var(--ease-soft);
 }
-.sand-card:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  .sand-card:hover {
+    background: var(--sand-hover);
+    color: var(--ink);
+  }
+}
+.sand-card:is(:focus-visible, :has(:focus-visible)) {
   background: var(--sand-hover);
   color: var(--ink);
 }
@@ -453,9 +595,16 @@ img {
   border-radius: 16px;
   padding: 32px;
   color: var(--ink);
-  transition: background 0.2s ease;
+  transition: background var(--dur-micro) var(--ease-soft);
 }
-.white-card:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  .white-card:hover {
+    background: var(--sand);
+    color: var(--ink);
+  }
+}
+.white-card:is(:focus-visible, :has(:focus-visible)) {
   background: var(--sand);
   color: var(--ink);
 }
@@ -467,6 +616,9 @@ img {
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
+  /* Swiping past the last card used to hand the gesture to the page,
+     which then scrolled vertically under the reader's thumb. */
+  overscroll-behavior-x: contain;
 }
 .track::-webkit-scrollbar {
   display: none;
@@ -486,20 +638,36 @@ img {
   gap: 12px;
 }
 
+/* On a phone each row carries enough vertical padding to clear 44px;
+   the design's tighter rhythm returns on a pointer device. */
 .link-list a {
   display: block;
   padding-left: 16px;
+  padding-block: 13px;
   margin-left: -1px;
   border-left: 1px solid transparent;
   font-size: 15px;
   font-weight: 500;
   line-height: 1.4;
   color: var(--ink);
-  transition: border-color 0.2s ease, color 0.2s ease;
+  transition: border-color var(--dur-micro) var(--ease-soft), color var(--dur-micro) var(--ease-soft);
 }
-.link-list a:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  .link-list a:hover {
+    border-left-color: var(--accent);
+    color: var(--forest);
+  }
+}
+.link-list a:is(:focus-visible, :has(:focus-visible)) {
   border-left-color: var(--accent);
   color: var(--forest);
+}
+
+@media (min-width: 640px) {
+  .link-list a {
+    padding-block: 0;
+  }
 }
 
 /* ------------------------------------------------------------------
@@ -513,6 +681,7 @@ img {
 }
 
 .faq-trigger {
+  position: relative;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -529,6 +698,17 @@ img {
   cursor: pointer;
 }
 
+/* A one-line question is only 24px tall, but it sits in a row with
+   24px of padding that did nothing on touch. This claims that padding
+   as hit area — the row you can see is now the row you can press —
+   without moving a pixel of the design. It stops short of the answer
+   below, so reading an open answer cannot collapse it. */
+.faq-trigger::after {
+  content: "";
+  position: absolute;
+  inset: -24px -24px -16px;
+}
+
 .faq-icon {
   width: 24px;
   height: 24px;
@@ -536,32 +716,49 @@ img {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.25s ease;
+  transition: transform var(--dur-hover) var(--ease-premium);
 }
 
 .faq-answer {
   margin: 16px 0 0;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.6;
   color: var(--muted);
   max-width: 840px;
   text-wrap: pretty;
 }
 
+@media (min-width: 640px) {
+  .faq-answer {
+    font-size: 15px;
+  }
+}
+
 /* ------------------------------------------------------------------
    Forms
    ------------------------------------------------------------------ */
 
+/* 16px on a phone, 14px from 640px up.
+
+   iOS Safari zooms the page in when a field smaller than 16px takes
+   focus, and never zooms back out — the reader is left on a page wider
+   than the screen. The design's 14px is kept everywhere it is safe. */
 .field {
   height: 48px;
   padding: 0 16px;
   border: 0;
   border-radius: 8px;
   background: var(--sky);
-  font-size: 14px;
+  font-size: 16px;
   color: var(--ink);
   outline: none;
   width: 100%;
+}
+
+@media (min-width: 640px) {
+  .field {
+    font-size: 14px;
+  }
 }
 .field:focus {
   box-shadow: 0 0 0 2px var(--ink);
@@ -598,9 +795,16 @@ select.field {
   font-weight: 500;
   line-height: 1.3;
   cursor: pointer;
-  transition: border-color 0.2s ease, background 0.2s ease;
+  transition: border-color var(--dur-micro) var(--ease-soft), background var(--dur-micro) var(--ease-soft);
 }
-.choice-btn:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  .choice-btn:hover {
+    border-color: var(--ink);
+    background: var(--sky);
+  }
+}
+.choice-btn:is(:focus-visible, :has(:focus-visible)) {
   border-color: var(--ink);
   background: var(--sky);
 }
@@ -620,7 +824,7 @@ select.field {
   gap: 40px;
   padding: 0 var(--gutter);
   border-bottom: 1px solid transparent;
-  transition: border-color 0.2s ease;
+  transition: border-color var(--dur-micro) var(--ease-soft);
 }
 
 .nav-link {
@@ -632,9 +836,15 @@ select.field {
   font-size: 14px;
   font-weight: 500;
   color: var(--ink);
-  transition: color 0.2s ease;
+  transition: color var(--dur-micro) var(--ease-soft);
 }
-.nav-link:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-link:hover {
+    color: var(--forest);
+  }
+}
+.nav-link:is(:focus-visible, :has(:focus-visible)) {
   color: var(--forest);
 }
 
@@ -658,9 +868,15 @@ select.field {
   justify-content: center;
   color: var(--ink);
   cursor: pointer;
-  transition: border-color 0.2s ease;
+  transition: border-color var(--dur-micro) var(--ease-soft);
 }
-.icon-btn-round:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  .icon-btn-round:hover {
+    border-color: var(--ink);
+  }
+}
+.icon-btn-round:is(:focus-visible, :has(:focus-visible)) {
   border-color: var(--ink);
 }
 
@@ -712,7 +928,7 @@ select.field {
   border-radius: 12px;
   padding: 24px;
   color: var(--ink);
-  transition: background 0.2s ease;
+  transition: background var(--dur-micro) var(--ease-soft);
 }
 
 /* Tiles that carry related links: heading on top, list beneath, "all" pinned. */
@@ -738,11 +954,18 @@ select.field {
   font-weight: 500;
   line-height: 1.4;
   color: var(--ink);
-  transition: color 0.2s ease;
+  transition: color var(--dur-micro) var(--ease-soft);
 }
-.mega-tile-items a:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  .mega-tile-items a:hover {
+    color: var(--forest);
+  }
+}
+.mega-tile-items a:is(:focus-visible, :has(:focus-visible)) {
   color: var(--forest);
 }
+
 .mega-tile-all {
   margin-top: auto;
   padding-top: 18px;
@@ -753,7 +976,13 @@ select.field {
   font-weight: 600;
   color: var(--forest);
 }
-.mega-tile-all:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  .mega-tile-all:hover {
+    text-decoration: underline;
+  }
+}
+.mega-tile-all:is(:focus-visible, :has(:focus-visible)) {
   text-decoration: underline;
 }
 
@@ -794,9 +1023,15 @@ select.field {
   font-weight: 500;
   color: var(--ink);
   line-height: 1.4;
-  transition: color 0.2s ease;
+  transition: color var(--dur-micro) var(--ease-soft);
 }
-.mega-col-links a:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  .mega-col-links a:hover {
+    color: var(--forest);
+  }
+}
+.mega-col-links a:is(:focus-visible, :has(:focus-visible)) {
   color: var(--forest);
 }
 
@@ -819,29 +1054,74 @@ select.field {
 
 .site-footer a {
   color: var(--white);
-  transition: color 0.2s ease;
+  transition: color var(--dur-micro) var(--ease-soft);
 }
-.site-footer a:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  .site-footer a:hover {
+    color: var(--accent);
+  }
+}
+.site-footer a:is(:focus-visible, :has(:focus-visible)) {
   color: var(--accent);
 }
 
+/* The footer columns are the densest link list on the site — 32 of
+   them. On a phone the rows carry their own padding and the gap
+   shrinks to suit, giving a 48px pitch with clear separation; the
+   desktop footer (which only ever renders from 1024px up) keeps the
+   design's tighter 10px rhythm. */
 .footer-col-links {
   border-left: 1px solid rgba(255, 255, 255, 0.2);
   padding-left: 16px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 4px;
 }
 .footer-col-links a {
   font-size: 14px;
   font-weight: 500;
   line-height: 1.4;
+  padding-block: 13px;
 }
 
+@media (min-width: 1024px) {
+  .footer-col-links {
+    gap: 10px;
+  }
+  .footer-col-links a {
+    padding-block: 0;
+  }
+}
+
+/* The legal row's links sit shoulder to shoulder at 17-21px tall.
+   Padding gives them a real target on touch; the desktop footer only
+   renders from 1024px up, where the row returns to its printed size. */
 .footer-legal a {
   color: var(--on-ink);
+  display: inline-block;
+  padding-block: 14px;
+  /* "Terms" is only 41px wide as set. The padding takes it past 44 and
+     the row's gap absorbs it, so the spacing you see does not change. */
+  padding-inline: 3px;
+  margin-inline: -3px;
 }
-.footer-legal a:hover {
+
+@media (min-width: 1024px) {
+  .footer-legal a {
+    display: inline;
+    padding-block: 0;
+    padding-inline: 0;
+    margin-inline: 0;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .footer-legal a:hover {
+    color: var(--white);
+  }
+}
+.footer-legal a:is(:focus-visible, :has(:focus-visible)) {
   color: var(--white);
 }
 
@@ -983,7 +1263,7 @@ select.field {
 .reveal {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  transition: opacity var(--dur-reveal) var(--ease-premium), transform var(--dur-reveal) var(--ease-premium);
 }
 
 .reveal.is-visible {
@@ -1000,9 +1280,6 @@ select.field {
   .marquee__inner {
     animation: none;
   }
-  .photo-card:hover .photo-card__media {
-    transform: none;
-  }
 }
 
 /* ------------------------------------------------------------------
@@ -1012,9 +1289,15 @@ select.field {
 .inline-link {
   color: var(--link-blue);
   font-weight: 500;
-  transition: color 0.2s ease;
+  transition: color var(--dur-micro) var(--ease-soft);
 }
-.inline-link:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  .inline-link:hover {
+    color: var(--forest);
+  }
+}
+.inline-link:is(:focus-visible, :has(:focus-visible)) {
   color: var(--forest);
 }
 
@@ -1043,7 +1326,13 @@ select.field {
   border-left: 0;
   border-right: 1px solid transparent;
 }
-[dir="rtl"] .link-list a:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  [dir="rtl"] .link-list a:hover {
+    border-right-color: var(--accent);
+  }
+}
+[dir="rtl"] .link-list a:is(:focus-visible, :has(:focus-visible)) {
   border-right-color: var(--accent);
 }
 
@@ -1147,6 +1436,136 @@ select.field {
   display: none;
 }
 
+/* ------------------------------------------------------------------
+   Mobile gutters and safe areas
+
+   The page gutter is --gutter; three components used to hardcode their
+   own (20px, 24px, 12px), so the edge of the content stepped in and
+   out as you scrolled. They all take the token now.
+
+   The insets keep content clear of a notch, a rounded corner and the
+   home indicator. Without the bottom inset the drawer's last call to
+   action sat underneath the indicator on a notched phone.
+   ------------------------------------------------------------------ */
+
+.mobile-drawer {
+  padding-inline: max(var(--gutter), env(safe-area-inset-left), env(safe-area-inset-right));
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
+}
+
+.footer-mobile {
+  padding: 64px max(var(--gutter), env(safe-area-inset-left), env(safe-area-inset-right))
+    calc(32px + env(safe-area-inset-bottom));
+}
+
+.site-header {
+  padding-inline: max(var(--gutter), env(safe-area-inset-left), env(safe-area-inset-right));
+}
+
+/* The hero and announcement bands are inset from the window rather
+   than sitting in the content column — 20px and 12px respectively,
+   which is the desktop composition and is kept. On a phone that read
+   as two more competing gutters next to the sections' 24px, so below
+   640px they simply take the page gutter.
+
+   The hero is also allowed to grow past its 700px on a phone: pinned
+   to a height it was clipping its own bottom line at 320px. */
+.hero-band {
+  margin: 12px var(--gutter) 0;
+}
+
+.announce-bar {
+  margin: 12px var(--gutter) 0;
+}
+
+.contact-links a {
+  padding-block: 12px;
+}
+
+@media (min-width: 640px) {
+  .contact-links {
+    gap: 4px;
+  }
+  .contact-links a {
+    padding-block: 0;
+  }
+}
+
+/* Standing links that are the only way back or forward from where the
+   reader is: each gets a real target on touch and returns to its
+   printed size on a pointer device. */
+.back-link {
+  padding-block: 14px;
+  margin-bottom: 10px;
+}
+
+.announce-bar > a {
+  padding-block: 12px;
+}
+
+@media (min-width: 640px) {
+  .back-link {
+    padding-block: 0;
+    margin-bottom: 24px;
+  }
+  .announce-bar > a {
+    padding-block: 0;
+  }
+}
+
+/* A pure spacer between two bands. It was a fixed 160px, which is a
+   quarter of a phone screen of nothing. */
+.band-gap {
+  height: 64px;
+}
+
+@media (min-width: 900px) {
+  .band-gap {
+    height: 160px;
+  }
+}
+
+/* 48px of padding inside a 272px-wide card left 176px for the content
+   and 112px inside the nested card. The design's 48px returns as soon
+   as there is room for it. */
+.practice-panel {
+  padding: 24px;
+}
+
+.practice-panel__card {
+  padding: 20px;
+}
+
+@media (min-width: 640px) {
+  .practice-panel {
+    padding: 32px;
+  }
+  .practice-panel__card {
+    padding: 32px;
+  }
+}
+
+@media (min-width: 900px) {
+  .practice-panel {
+    padding: 48px;
+  }
+}
+
+/* 900px is where the multi-column grids stop collapsing — the line
+   between the mobile behaviour and the desktop composition — so the
+   two inset bands change over there too, rather than at 640 where a
+   768px tablet would still have shown a 20px hero next to 32px
+   sections. */
+@media (min-width: 900px) {
+  .hero-band {
+    margin-inline: 20px;
+    height: 700px;
+  }
+  .announce-bar {
+    margin-inline: 12px;
+  }
+}
+
 @media (max-width: 1023px) {
   .header-nav {
     display: none !important;
@@ -1167,11 +1586,34 @@ select.field {
   .site-header {
     height: 64px;
   }
+  /* The header is 64px here, not 72px. Everything derived from this
+     token — scroll-padding for anchor links, the sticky contents
+     column, section scroll-margin — was landing 8px out on a phone. */
+  :root {
+    --header-h: 64px;
+  }
   .footer-desktop {
     display: none;
   }
   .footer-mobile {
     display: block;
+  }
+  /* The hamburger is the only way into the navigation on a phone, so
+     it gets a full 44px target. The 40px circle is kept: the extra
+     reach comes from the hit area, so nothing in the header moves. */
+  .header-burger.icon-btn-round {
+    position: relative;
+  }
+  .header-burger.icon-btn-round::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+  }
+  /* The wordmark is the way home. The header is a fixed-height flex
+     row that centres its children, so padding here grows the target
+     without moving the mark or the bar. */
+  .site-header > a {
+    padding-block: 6px;
   }
 }
 
@@ -1228,15 +1670,36 @@ select.field {
   .article-grid {
     grid-template-columns: 1fr !important;
   }
-  .article-gutter,
-  .article-toc {
+  /* An empty spacer column with nothing to space. */
+  .article-gutter {
     display: none;
+  }
+  /* The contents list used to be dropped here. It is the one thing on
+     the page that gets *more* useful as the column narrows and the
+     article gets longer, so instead of hiding it, it moves above the
+     article and stops being sticky — a lead-in rather than a sidebar.
+     It sits after the article in the DOM, which is the right reading
+     order for a sidebar, so `order` does the move rather than a second
+     copy of the markup. */
+  .article-toc {
+    order: -1;
+    position: static !important;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--stone);
   }
   .dest-hero {
     height: 420px !important;
   }
+  /* The inset photograph was hidden because it is positioned into the
+     hero's left margin, where on a phone it would hang off the screen.
+     It stays an inset — it just tucks into the opposite corner, inside
+     the frame, at a size the frame can hold. */
   .dest-hero__inset {
-    display: none;
+    inset-inline-start: auto !important;
+    inset-inline-end: 12px !important;
+    bottom: 12px !important;
+    width: 116px !important;
+    height: 116px !important;
   }
   .service-hero {
     margin-inline: 0 !important;
@@ -1466,49 +1929,78 @@ select.field {
 /* Media frame — wraps an ImageSlot that should zoom under the cursor. */
 .hover-media {
   transition:
-    transform 0.4s ease,
-    box-shadow 0.4s ease;
+    transform var(--dur-slow) var(--ease-premium),
+    box-shadow var(--dur-slow) var(--ease-premium);
 }
 .hover-media .image-slot,
 .hover-media .image-slot img {
-  transition: transform 0.6s ease;
+  transition: transform var(--dur-zoom) var(--ease-premium);
 }
-.hover-media:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  .hover-media:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 60px rgba(25, 31, 29, 0.16);
+  }
+  .hover-media:hover .image-slot img {
+    transform: scale(1.04);
+  }
+  .hover-media:hover .image-slot__caption {
+    color: var(--ink);
+  }
+}
+.hover-media:is(:focus-visible, :has(:focus-visible)) {
   transform: translateY(-4px);
   box-shadow: 0 24px 60px rgba(25, 31, 29, 0.16);
 }
-.hover-media:hover .image-slot img {
+.hover-media:is(:focus-visible, :has(:focus-visible)) .image-slot img {
   transform: scale(1.04);
 }
-.hover-media:hover .image-slot__caption {
+.hover-media:is(:focus-visible, :has(:focus-visible)) .image-slot__caption {
   color: var(--ink);
 }
 
 /* Photo cards lift and deepen their scrim alongside the existing zoom. */
 .photo-card {
   transition:
-    transform 0.4s ease,
-    box-shadow 0.4s ease;
+    transform var(--dur-slow) var(--ease-premium),
+    box-shadow var(--dur-slow) var(--ease-premium);
 }
 .photo-card .card-scrim,
 .photo-card .pill-frosted,
 .photo-card .card-body {
   transition:
-    background 0.3s ease,
-    opacity 0.3s ease,
-    transform 0.4s ease;
+    background var(--dur-hover) var(--ease-soft),
+    opacity var(--dur-hover) var(--ease-soft),
+    transform var(--dur-slow) var(--ease-premium);
 }
-.photo-card:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  .photo-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 28px 64px rgba(25, 31, 29, 0.22);
+  }
+  .photo-card:hover .card-scrim {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.82) 100%);
+  }
+  .photo-card:hover .card-body {
+    transform: translateY(-4px);
+  }
+  .photo-card:hover .pill-frosted {
+    background: rgba(255, 255, 255, 0.34);
+  }
+}
+.photo-card:is(:focus-visible, :has(:focus-visible)) {
   transform: translateY(-6px);
   box-shadow: 0 28px 64px rgba(25, 31, 29, 0.22);
 }
-.photo-card:hover .card-scrim {
+.photo-card:is(:focus-visible, :has(:focus-visible)) .card-scrim {
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.82) 100%);
 }
-.photo-card:hover .card-body {
+.photo-card:is(:focus-visible, :has(:focus-visible)) .card-body {
   transform: translateY(-4px);
 }
-.photo-card:hover .pill-frosted {
+.photo-card:is(:focus-visible, :has(:focus-visible)) .pill-frosted {
   background: rgba(255, 255, 255, 0.34);
 }
 .photo-card:focus-visible {
@@ -1519,83 +2011,134 @@ select.field {
 /* Standards cards — the ruled "What we hold ourselves to" row. */
 .standards-card {
   transition:
-    transform 0.3s ease,
-    border-color 0.3s ease;
+    transform var(--dur-hover) var(--ease-soft),
+    border-color var(--dur-hover) var(--ease-soft);
 }
 .standards-card__badge,
 .standards-card__num,
 .standards-card__title {
   transition:
-    background 0.3s ease,
-    color 0.3s ease,
-    transform 0.3s ease;
+    background var(--dur-hover) var(--ease-soft),
+    color var(--dur-hover) var(--ease-soft),
+    transform var(--dur-hover) var(--ease-soft);
 }
-.standards-card:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  .standards-card:hover {
+    transform: translateY(-6px);
+    border-top-color: var(--forest);
+  }
+  .standards-card:hover .standards-card__badge {
+    background: var(--mint-hover);
+    transform: translateY(-2px) scale(1.06);
+  }
+  .standards-card:hover .standards-card__num {
+    color: var(--ink);
+  }
+  .standards-card:hover .standards-card__title {
+    color: var(--forest);
+  }
+}
+.standards-card:is(:focus-visible, :has(:focus-visible)) {
   transform: translateY(-6px);
   border-top-color: var(--forest);
 }
-.standards-card:hover .standards-card__badge {
+.standards-card:is(:focus-visible, :has(:focus-visible)) .standards-card__badge {
   background: var(--mint-hover);
   transform: translateY(-2px) scale(1.06);
 }
-.standards-card:hover .standards-card__num {
+.standards-card:is(:focus-visible, :has(:focus-visible)) .standards-card__num {
   color: var(--ink);
 }
-.standards-card:hover .standards-card__title {
+.standards-card:is(:focus-visible, :has(:focus-visible)) .standards-card__title {
   color: var(--forest);
 }
 
 /* Team portraits — hover on the whole tile, linked or not. */
 .team-card {
-  transition: transform 0.4s ease;
+  transition: transform var(--dur-slow) var(--ease-premium);
 }
 .team-card__media {
   transition:
-    transform 0.4s ease,
-    box-shadow 0.4s ease;
+    transform var(--dur-slow) var(--ease-premium),
+    box-shadow var(--dur-slow) var(--ease-premium);
 }
 .team-card .image-slot img {
-  transition: transform 0.6s ease;
+  transition: transform var(--dur-zoom) var(--ease-premium);
 }
-.team-card:hover .team-card__media {
+
+@media (hover: hover) and (pointer: fine) {
+  .team-card:hover .team-card__media {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 60px rgba(25, 31, 29, 0.18);
+  }
+  .team-card:hover .image-slot img {
+    transform: scale(1.04);
+  }
+  .team-card:hover .card-scrim {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.82) 100%);
+  }
+}
+.team-card:is(:focus-visible, :has(:focus-visible)) .team-card__media {
   transform: translateY(-4px);
   box-shadow: 0 24px 60px rgba(25, 31, 29, 0.18);
 }
-.team-card:hover .image-slot img {
+.team-card:is(:focus-visible, :has(:focus-visible)) .image-slot img {
   transform: scale(1.04);
 }
-.team-card:hover .card-scrim {
+.team-card:is(:focus-visible, :has(:focus-visible)) .card-scrim {
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.82) 100%);
 }
 
 /* Credential stats — each column answers the cursor on its own. */
 .credential-item {
   transition:
-    transform 0.3s ease,
-    opacity 0.3s ease;
+    transform var(--dur-hover) var(--ease-soft),
+    opacity var(--dur-hover) var(--ease-soft);
 }
 .credential-item svg,
 .credential-item .stat-num {
   transition:
-    transform 0.3s ease,
-    color 0.3s ease;
+    transform var(--dur-hover) var(--ease-soft),
+    color var(--dur-hover) var(--ease-soft);
 }
-.credential-item:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  .credential-item:hover {
+    transform: translateY(-4px);
+  }
+  .credential-item:hover svg {
+    transform: scale(1.08);
+  }
+  .credential-item:hover .stat-num {
+    color: var(--forest);
+  }
+}
+.credential-item:is(:focus-visible, :has(:focus-visible)) {
   transform: translateY(-4px);
 }
-.credential-item:hover svg {
+.credential-item:is(:focus-visible, :has(:focus-visible)) svg {
   transform: scale(1.08);
 }
-.credential-item:hover .stat-num {
+.credential-item:is(:focus-visible, :has(:focus-visible)) .stat-num {
   color: var(--forest);
 }
 
 /* Chapter number in the story carousel tracks the active slide. */
 .story-num {
-  transition: color 0.3s ease;
+  transition: color var(--dur-hover) var(--ease-soft);
 }
-.story-figure:hover ~ div .story-num,
-.story-num:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  .story-figure:hover ~ div .story-num,
+  .story-num:hover {
+    color: var(--accent);
+  }
+}
+.story-figure:focus-visible ~ div .story-num,
+.story-num:focus-visible,
+.story-figure:has(:focus-visible) ~ div .story-num,
+.story-num:has(:focus-visible) {
   color: var(--accent);
 }
 
@@ -1620,16 +2163,20 @@ select.field {
   .story-num {
     transition: none;
   }
-  .hover-media:hover,
-  .photo-card:hover,
-  .photo-card:hover .card-body,
-  .standards-card:hover,
-  .standards-card:hover .standards-card__badge,
-  .team-card:hover .team-card__media,
-  .credential-item:hover,
-  .credential-item:hover svg,
-  .hover-media:hover .image-slot img,
-  .team-card:hover .image-slot img {
+  /* Every pointer lift and photo zoom is cancelled in whichever state
+     asked for it — cursor or keyboard. Colour shifts are left alone:
+     they carry meaning and cost no movement. */
+  .hover-media:is(:hover, :focus-visible, :has(:focus-visible)),
+  .hover-media:is(:hover, :focus-visible, :has(:focus-visible)) .image-slot img,
+  .photo-card:is(:hover, :focus-visible, :has(:focus-visible)),
+  .photo-card:is(:hover, :focus-visible, :has(:focus-visible)) .card-body,
+  .photo-card:is(:hover, :focus-visible, :has(:focus-visible)) .photo-card__media,
+  .standards-card:is(:hover, :focus-visible, :has(:focus-visible)),
+  .standards-card:is(:hover, :focus-visible, :has(:focus-visible)) .standards-card__badge,
+  .team-card:is(:hover, :focus-visible, :has(:focus-visible)) .team-card__media,
+  .team-card:is(:hover, :focus-visible, :has(:focus-visible)) .image-slot img,
+  .credential-item:is(:hover, :focus-visible, :has(:focus-visible)),
+  .credential-item:is(:hover, :focus-visible, :has(:focus-visible)) svg {
     transform: none;
   }
 }
@@ -1658,9 +2205,15 @@ select.field {
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
   text-decoration-color: var(--sand-mid);
-  transition: text-decoration-color 0.2s ease;
+  transition: text-decoration-color var(--dur-micro) var(--ease-soft);
 }
-.legal-meta a:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  .legal-meta a:hover {
+    text-decoration-color: var(--ink);
+  }
+}
+.legal-meta a:is(:focus-visible, :has(:focus-visible)) {
   text-decoration-color: var(--ink);
 }
 
@@ -1691,18 +2244,25 @@ select.field {
 .legal-toc__link {
   display: flex;
   gap: 10px;
-  padding: 7px 0;
+  padding: 13px 0;
   font-size: 13px;
   line-height: 1.4;
   color: var(--muted-slot);
   text-wrap: pretty;
   transition:
-    color 0.2s ease,
-    opacity 0.2s ease;
+    color var(--dur-micro) var(--ease-soft),
+    opacity var(--dur-micro) var(--ease-soft);
 }
-.legal-toc__link:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  .legal-toc__link:hover {
+    color: var(--ink);
+  }
+}
+.legal-toc__link:is(:focus-visible, :has(:focus-visible)) {
   color: var(--ink);
 }
+
 .legal-toc__link.is-current {
   color: var(--ink);
   font-weight: 500;
@@ -1715,10 +2275,19 @@ select.field {
   font-size: 11px;
   line-height: 1.7;
   color: var(--sand-mid);
-  transition: color 0.2s ease;
+  transition: color var(--dur-micro) var(--ease-soft);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .legal-toc__link.is-current .legal-toc__num,
+  .legal-toc__link:hover .legal-toc__num {
+    color: var(--accent);
+  }
 }
 .legal-toc__link.is-current .legal-toc__num,
-.legal-toc__link:hover .legal-toc__num {
+.legal-toc__link:focus-visible .legal-toc__num,
+.legal-toc__link.is-current .legal-toc__num,
+.legal-toc__link:has(:focus-visible) .legal-toc__num {
   color: var(--accent);
 }
 
@@ -1760,7 +2329,7 @@ select.field {
 
 .legal-p {
   margin: 0 0 16px;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.7;
   color: var(--muted);
   text-wrap: pretty;
@@ -1780,7 +2349,7 @@ select.field {
 .legal-list li {
   position: relative;
   padding-inline-start: 22px;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.7;
   color: var(--muted);
   text-wrap: pretty;
@@ -1816,9 +2385,15 @@ select.field {
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
   text-decoration-color: var(--sand-mid);
-  transition: text-decoration-color 0.2s ease;
+  transition: text-decoration-color var(--dur-micro) var(--ease-soft);
 }
-.legal-note__contact a:hover {
+
+@media (hover: hover) and (pointer: fine) {
+  .legal-note__contact a:hover {
+    text-decoration-color: var(--ink);
+  }
+}
+.legal-note__contact a:is(:focus-visible, :has(:focus-visible)) {
   text-decoration-color: var(--ink);
 }
 
@@ -1830,6 +2405,32 @@ select.field {
   .legal-body {
     max-width: none;
     gap: 56px;
+  }
+}
+
+/* The document's own links — the "last reviewed" meta line and the
+   contact block at the foot — are small standing text. On touch they
+   get a target; with a cursor they stay as set. */
+.legal-meta a,
+.legal-note__contact a {
+  display: inline-block;
+  padding-block: 14px;
+}
+
+/* As a sidebar the contents list is read with a cursor, so it returns
+   to the design's tighter row spacing, and the inline links with it. */
+@media (min-width: 901px) {
+  .legal-p,
+  .legal-list li {
+    font-size: 15px;
+  }
+  .legal-toc__link {
+    padding: 7px 0;
+  }
+  .legal-meta a,
+  .legal-note__contact a {
+    display: inline;
+    padding-block: 0;
   }
 }
 

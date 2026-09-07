@@ -57,7 +57,7 @@ export default function ServicesPage() {
             <div
               key={pr.id}
               id={pr.id}
-              className="grid-collapse"
+              className="grid-collapse practice-panel"
               style={{
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr",
@@ -65,7 +65,6 @@ export default function ServicesPage() {
                 alignItems: "start",
                 background: "var(--sand)",
                 borderRadius: 16,
-                padding: 48,
                 scrollMarginTop: 96,
               }}
             >
@@ -90,7 +89,7 @@ export default function ServicesPage() {
                 </Link>
               </div>
 
-              <div style={{ background: "var(--white)", borderRadius: 12, padding: 32 }}>
+              <div className="practice-panel__card" style={{ background: "var(--white)", borderRadius: 12 }}>
                 <div className="kicker" style={{ marginBottom: 20 }}>
                   {t("What's included")}
                 </div>

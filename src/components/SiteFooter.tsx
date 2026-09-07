@@ -115,7 +115,9 @@ export default function SiteFooter() {
       </div>
 
       {/* ---- Mobile ---- */}
-      <div className="footer-mobile" style={{ padding: "64px 24px 32px" }}>
+      {/* Padding lives in globals.css so it can track --gutter and the
+          device's safe-area insets. */}
+      <div className="footer-mobile">
         <div style={{ display: "flex", flexDirection: "column", borderTop: "1px solid rgba(255,255,255,0.2)" }}>
           {FOOTER_COLUMNS.map((c, i) => {
             const isOpen = open === i;

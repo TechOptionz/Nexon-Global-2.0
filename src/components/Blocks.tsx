@@ -38,7 +38,7 @@ export function DestinationCard({
   const { t } = useLang();
   return (
     <Link href={d.href} className="photo-card" style={{ height }}>
-      <ImageSlot placeholder={d.photo} className="photo-card__media" />
+      <ImageSlot placeholder={d.photo} className="photo-card__media" sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" />
       <div className="card-scrim" />
       <div className="card-body">
         <span className="pill-frosted">{t(d.type)}</span>
@@ -305,7 +305,7 @@ export function TeamGrid({ height = 480, linked = true }: { height?: number; lin
                 color: "var(--muted-slot)",
               }}
             >
-              <ImageSlot placeholder={`portrait — ${m.name}`} />
+              <ImageSlot placeholder={`portrait — ${m.name}`} sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" />
               <div className="card-scrim card-scrim--low" />
               <div className="card-body">
                 <div className="card-title-32">{m.name}</div>

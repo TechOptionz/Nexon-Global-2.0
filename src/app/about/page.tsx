@@ -155,6 +155,8 @@ export default function AboutPage() {
             <ImageSlot
               placeholder="photo collage — families travelling"
               src="/assets/airport-collage.jpg"
+              sizes="(max-width: 1200px) 100vw, 1200px"
+              eager
             />
           </div>
         </div>
@@ -190,7 +192,7 @@ export default function AboutPage() {
                 background: "var(--sand)",
               }}
             >
-              <ImageSlot placeholder={ch.photo} />
+              <ImageSlot placeholder={ch.photo} sizes="(max-width: 900px) 100vw, 50vw" />
             </div>
             <div>
               <div
@@ -257,7 +259,7 @@ export default function AboutPage() {
                 className="photo-card"
                 style={{ flex: "0 0 calc((100% - 48px)/3)", minWidth: 260, height: 480 }}
               >
-                <ImageSlot placeholder={au.photo} className="photo-card__media" />
+                <ImageSlot placeholder={au.photo} className="photo-card__media" sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" />
                 <div className="card-scrim" />
                 <div className="card-body">
                   <span className="pill-frosted">{t(au.who)}</span>

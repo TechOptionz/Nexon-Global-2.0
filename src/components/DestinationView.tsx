@@ -68,7 +68,7 @@ export default function DestinationView({ slug }: { slug: string }) {
                 background: "var(--sand)",
               }}
             >
-              <ImageSlot placeholder={d.photoHero} />
+              <ImageSlot placeholder={d.photoHero} sizes="(max-width: 1200px) 100vw, 1200px" eager />
             </div>
             <div
               className="dest-hero__inset"
@@ -84,7 +84,7 @@ export default function DestinationView({ slug }: { slug: string }) {
                 boxShadow: "0 24px 48px rgba(25,31,29,0.12)",
               }}
             >
-              <ImageSlot placeholder={d.photoSmall} />
+              <ImageSlot placeholder={d.photoSmall} sizes="280px" eager />
             </div>
           </div>
         </div>
@@ -256,7 +256,7 @@ export default function DestinationView({ slug }: { slug: string }) {
               background: "var(--sand)",
             }}
           >
-            <ImageSlot placeholder={d.photoWhy} />
+            <ImageSlot placeholder={d.photoWhy} sizes="(max-width: 900px) 100vw, 50vw" />
           </div>
 
           <div style={{ paddingTop: 8 }}>

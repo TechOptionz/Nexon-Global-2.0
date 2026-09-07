@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useLang } from "@/lib/i18n";
 import { useSmoothScroll } from "./motion/SmoothScroll";
+import { useLastValue, usePresence } from "./motion/usePresence";
 import { MENUS, TILE_BG, type NavKey } from "@/data/site";
 import ImageSlot from "./ImageSlot";
 import { ChevronDown, Close, Menu, Search } from "./Icons";
@@ -15,6 +16,15 @@ const WORDMARK = "NEXON".split("");
    panel doesn't dismiss it mid-travel, short enough to feel immediate. */
 const CLOSE_DELAY = 140;
 
+/* How long the panel and the drawer take to leave. Matches
+   --dur-exit in globals.css; the two must not drift apart. */
+const EXIT_MS = 220;
+
+/* Everything the keyboard can reach, used to cycle focus inside the
+   open drawer. */
+const FOCUSABLE =
+  'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
 type Props = { active?: NavKey };
 
 export default function SiteHeader({ active }: Props) {
@@ -25,6 +35,15 @@ export default function SiteHeader({ active }: Props) {
   const [group, setGroup] = useState<string | null>(null);
   const smooth = useSmoothScroll();
 
+  const menu = MENUS.find((m) => m.key === open) ?? null;
+
+  /* Both overlays outlive the state that opened them, just long enough
+     to animate out. `useLastValue` keeps the panel's own content on
+     screen while it goes, so it fades rather than emptying first. */
+  const mega = usePresence(menu !== null, EXIT_MS);
+  const shownMenu = useLastValue(menu);
+  const drawer = usePresence(menuOpen, EXIT_MS);
+
   // Hairline appears under the header once the page scrolls.
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -33,17 +52,125 @@ export default function SiteHeader({ active }: Props) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  /* Lock the page behind the mobile drawer. The smooth-scroll runtime
-     is paused with it, so the drawer scrolls natively and the page
-     underneath cannot drift. */
+  /* Lock the page behind the mobile drawer. Keyed on the drawer's
+     presence rather than on `menuOpen`, so the lock outlasts the
+     closing animation — the page must not start moving under a drawer
+     that is still on screen.
+
+     `overflow: hidden` alone does not hold on iOS Safari, and the
+     smooth-scroll runtime is skipped entirely under reduced motion, so
+     neither can be relied on to do this. Pinning the body and offsetting
+     it by the current scroll position works everywhere, and is the only
+     lock that survives with scripting-driven scrolling switched off.
+     The drawer itself is `position: fixed`; a fixed ancestor does not
+     become its containing block, so it stays pinned to the viewport. */
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
-    if (menuOpen) smooth?.stop();
-    else smooth?.start();
-    return () => {
-      document.body.style.overflow = "";
+    if (!drawer.present) return;
+
+    const body = document.body;
+    const y = window.scrollY;
+    const from = window.location.pathname;
+    const prev = {
+      position: body.style.position,
+      top: body.style.top,
+      width: body.style.width,
+      overflow: body.style.overflow,
     };
-  }, [menuOpen, smooth]);
+
+    body.style.position = "fixed";
+    body.style.top = `-${y}px`;
+    body.style.width = "100%";
+    body.style.overflow = "hidden";
+    smooth?.stop();
+
+    return () => {
+      body.style.position = prev.position;
+      body.style.top = prev.top;
+      body.style.width = prev.width;
+      body.style.overflow = prev.overflow;
+      smooth?.start();
+
+      /* Only put the reader back where they were if this is the same
+         page. When the drawer closes because a navigation unmounted it,
+         the new route owns the scroll position and must keep its own. */
+      if (window.location.pathname !== from) return;
+
+      /* A pinned body is out of flow, so while the drawer was up the
+         document had no height to scroll through. Restoring the styles
+         is not enough on its own: without forcing layout first, the
+         scroll is clamped to the height the page had a moment ago and
+         the reader lands part way up. Reading a layout property flushes
+         that, and the second pass on the next frame catches the smooth
+         -scroll runtime re-syncing itself after it restarts. */
+      void body.offsetHeight;
+      window.scrollTo(0, y);
+      requestAnimationFrame(() => window.scrollTo(0, y));
+    };
+  }, [drawer.present, smooth]);
+
+  /* Escape closes whichever overlay is open, and the drawer keeps the
+     keyboard inside itself while it is up: it covers the whole screen,
+     so tabbing to the page behind it would move focus somewhere the
+     reader cannot see. Focus returns to the control that opened it. */
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const openerRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (!drawer.present) return;
+
+    const el = drawerRef.current;
+    el?.querySelector<HTMLElement>("[data-drawer-close]")?.focus();
+
+    const focusable = () =>
+      Array.from(el?.querySelectorAll<HTMLElement>(FOCUSABLE) ?? []).filter(
+        (n) => n.offsetParent !== null && !n.closest("[inert]"),
+      );
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setMenuOpen(false);
+        return;
+      }
+      if (e.key !== "Tab" || !el) return;
+      const items = focusable();
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (!el.contains(document.activeElement)) {
+        e.preventDefault();
+        first.focus();
+      } else if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      openerRef.current?.focus();
+    };
+  }, [drawer.present]);
+
+  /* Escape also dismisses the desktop mega-menu, which until now could
+     only be closed by moving the pointer away.
+
+     This closes the panel and leaves the mouse-out timer alone. Letting
+     a pending timer run costs nothing — it calls the same setter with
+     the same value — whereas clearing it here would mean touching the
+     ref from an effect declared above the functions that own it. */
+  useEffect(() => {
+    if (!mega.present) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(null);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [mega.present]);
 
   /* The scrim is fixed to the whole viewport and lives *inside* this
      subtree, so the wrapper's mouseleave only fires when the pointer
@@ -71,7 +198,6 @@ export default function SiteHeader({ active }: Props) {
 
   useEffect(() => cancelClose, []);
 
-  const menu = MENUS.find((m) => m.key === open) ?? null;
   const hairline = scrolled ? "var(--stone)" : "transparent";
   const ar = lang === "ar";
 
@@ -127,9 +253,10 @@ export default function SiteHeader({ active }: Props) {
       onMouseLeave={closeNow}
     >
       {/* Scrim behind the open mega-menu */}
-      {menu && (
+      {mega.present && (
         <div
           className="mega-scrim"
+          data-leaving={mega.leaving ? "" : undefined}
           onClick={closeNow}
           onMouseEnter={scheduleClose}
           onMouseLeave={cancelClose}
@@ -197,8 +324,12 @@ export default function SiteHeader({ active }: Props) {
           <button
             className="icon-btn-round header-burger"
             aria-label="Menu"
+            aria-expanded={menuOpen}
             type="button"
-            onClick={() => setMenuOpen(true)}
+            onClick={(e) => {
+              openerRef.current = e.currentTarget;
+              setMenuOpen(true);
+            }}
           >
             <Menu />
           </button>
@@ -206,11 +337,13 @@ export default function SiteHeader({ active }: Props) {
       </div>
 
       {/* Mega-menu panel */}
-      {menu && (
-        <div className="mega-panel">
+      {mega.present && shownMenu && (
+        /* On its way out it is scenery: not clickable, not focusable,
+           not announced. `inert` covers all three. */
+        <div className="mega-panel" data-leaving={mega.leaving ? "" : undefined} inert={mega.leaving}>
           <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
             <div className="mega-tiles">
-              {menu.tiles.map((tile, i) => {
+              {shownMenu.tiles.map((tile, i) => {
                 const body = (
                   <>
                     <div className="serif" style={{ fontSize: 28, lineHeight: 1.05, marginBottom: 8 }}>
@@ -281,15 +414,15 @@ export default function SiteHeader({ active }: Props) {
 
             {/* The link columns share one card, sized and styled to sit with
                 the tiles above rather than as loose text under them. */}
-            {menu.columns.length > 0 && (
+            {shownMenu.columns.length > 0 && (
               <div
                 className="mega-cols-card"
                 style={{
-                  background: TILE_BG[menu.tiles.length][0],
-                  gridTemplateColumns: `repeat(${menu.columns.length}, minmax(0, 1fr))`,
+                  background: TILE_BG[shownMenu.tiles.length][0],
+                  gridTemplateColumns: `repeat(${shownMenu.columns.length}, minmax(0, 1fr))`,
                 }}
               >
-                {menu.columns.map((col) => (
+                {shownMenu.columns.map((col) => (
                   <div key={col.eyebrow}>
                     <div className="kicker" style={{ marginBottom: 12 }}>
                       {t(col.eyebrow)}
@@ -308,17 +441,17 @@ export default function SiteHeader({ active }: Props) {
           </div>
 
           <Link
-            href={menu.card.href}
+            href={shownMenu.card.href}
             className="photo-card"
             style={{ minHeight: 316, borderRadius: 12 }}
           >
-            <ImageSlot placeholder={menu.photo} />
+            <ImageSlot placeholder={shownMenu.photo} sizes="360px" />
             <div className="card-scrim card-scrim--menu" />
             <div style={{ position: "absolute", insetInline: 20, bottom: 20, color: "#fff", pointerEvents: "none" }}>
               <div className="serif" style={{ fontSize: 28, lineHeight: 1.05, marginBottom: 8, textWrap: "balance" }}>
-                {t(menu.card.title)}
+                {t(shownMenu.card.title)}
               </div>
-              <div style={{ fontSize: 13, lineHeight: 1.5, marginBottom: 16 }}>{t(menu.card.desc)}</div>
+              <div style={{ fontSize: 13, lineHeight: 1.5, marginBottom: 16 }}>{t(shownMenu.card.desc)}</div>
               <div
                 style={{
                   display: "flex",
@@ -332,7 +465,7 @@ export default function SiteHeader({ active }: Props) {
                   fontWeight: 600,
                 }}
               >
-                {t(menu.card.button)}
+                {t(shownMenu.card.button)}
               </div>
             </div>
           </Link>
@@ -340,10 +473,16 @@ export default function SiteHeader({ active }: Props) {
       )}
 
       {/* Mobile drawer */}
-      {menuOpen && (
+      {drawer.present && (
         <div
+          ref={drawerRef}
           dir={dir}
           className="mobile-drawer"
+          role="dialog"
+          aria-modal="true"
+          aria-label={t("Menu")}
+          data-leaving={drawer.leaving ? "" : undefined}
+          inert={drawer.leaving}
           data-lenis-prevent
           style={{
             position: "fixed",
@@ -352,7 +491,6 @@ export default function SiteHeader({ active }: Props) {
             zIndex: 100,
             display: "flex",
             flexDirection: "column",
-            padding: "0 24px 24px",
             overflow: "auto",
           }}
         >
@@ -370,6 +508,7 @@ export default function SiteHeader({ active }: Props) {
               className="icon-btn-round"
               style={{ width: 44, height: 44 }}
               aria-label="Close menu"
+              data-drawer-close
               type="button"
               onClick={() => setMenuOpen(false)}
             >
@@ -380,12 +519,17 @@ export default function SiteHeader({ active }: Props) {
           <div style={{ display: "flex", flexDirection: "column", borderTop: "1px solid var(--stone)", marginTop: 8 }}>
             {MENUS.map((m, mi) => {
               const isOpen = group === m.key;
+              /* The panel's promotional card is a link too, and the
+                 drawer is the only place it can appear on a phone — so
+                 it joins the list rather than being dropped with the
+                 photograph it sat on. */
               const links = [
                 ...m.tiles.flatMap((x) => [
                   { label: x.title, href: x.href },
                   ...(x.items ?? []),
                 ]),
                 ...m.columns.flatMap((c) => c.links),
+                { label: m.card.button, href: m.card.href },
               ];
               return (
                 <div

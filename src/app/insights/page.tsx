@@ -53,7 +53,7 @@ export default function InsightsPage() {
             }}
           >
             <div style={{ position: "relative", minHeight: 480, color: "var(--muted-slot)" }}>
-              <ImageSlot placeholder={featured.photo} />
+              <ImageSlot placeholder={featured.photo} sizes="(max-width: 900px) 100vw, 50vw" eager />
             </div>
             <div
               className="featured-card__body"
@@ -99,7 +99,7 @@ export default function InsightsPage() {
         >
           {rest.map((a) => (
             <Link key={a.slug} href={a.href} className="photo-card" style={{ height: 480 }}>
-              <ImageSlot placeholder={a.photo} className="photo-card__media" />
+              <ImageSlot placeholder={a.photo} className="photo-card__media" sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" />
               <div className="card-scrim" />
               <div className="card-body">
                 <span className="pill-frosted">

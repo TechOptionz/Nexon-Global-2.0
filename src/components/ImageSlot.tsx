@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import Image from "next/image";
 import { getSlotImage } from "@/lib/slot-images";
 
 type Props = {
@@ -10,6 +11,27 @@ type Props = {
   radius?: number;
   /** Renders in normal flow instead of filling a positioned parent. */
   inFlow?: boolean;
+  /**
+   * How wide the slot actually renders, so the browser can pick the smallest
+   * usable file from the generated srcset. Defaults to full viewport width,
+   * which is never too small — pass a tighter hint for cards and grids.
+   */
+  sizes?: string;
+  /**
+   * Above-the-fold slots load eagerly; everything else stays lazy so the
+   * first screen isn't competing with images further down the page.
+   */
+  eager?: boolean;
+  /**
+   * Where the subject sits in the frame, as an `object-position` value.
+   *
+   * The card slots are portrait and the photographs are 16:9, so a card
+   * shows roughly the middle 40% of its picture and the rest is cropped
+   * away. Centre is the right guess often enough to be the default, but
+   * a photograph whose subject sits off-centre needs to say so — e.g.
+   * `focal="70% 40%"`.
+   */
+  focal?: string;
   className?: string;
   style?: CSSProperties;
 };
@@ -19,6 +41,10 @@ type Props = {
  * Checks for a mapped image in `SLOT_IMAGES` or an explicitly provided `src`.
  * If found, renders the photograph. If absent, renders the elegant sand
  * placeholder with its art-direction caption.
+ *
+ * Photographs go through `next/image`, which serves AVIF/WebP at the width the
+ * slot actually needs instead of shipping the full-size original to every
+ * viewport.
  */
 export default function ImageSlot({
   placeholder,
@@ -26,6 +52,9 @@ export default function ImageSlot({
   shape = "rect",
   radius,
   inFlow = false,
+  sizes = "100vw",
+  eager = false,
+  focal,
   className = "",
   style,
 }: Props) {
@@ -47,9 +76,17 @@ export default function ImageSlot({
     >
       {activeSrc ? (
         /* Slots are decorative art direction sized entirely by their
-           container, so a plain <img> is the right primitive here. */
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={activeSrc} alt={placeholder} loading="lazy" />
+           container, so `fill` is the right primitive here. */
+        <Image
+          src={activeSrc}
+          alt={placeholder}
+          fill
+          sizes={sizes}
+          quality={72}
+          loading={eager ? "eager" : "lazy"}
+          fetchPriority={eager ? "high" : "auto"}
+          style={focal ? { objectPosition: focal } : undefined}
+        />
       ) : (
         <span className="image-slot__caption">{placeholder}</span>
       )}
