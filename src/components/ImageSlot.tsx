@@ -82,7 +82,7 @@ export default function ImageSlot({
           alt={placeholder}
           fill
           sizes={sizes}
-          quality={72}
+          quality={90}
           loading={eager ? "eager" : "lazy"}
           fetchPriority={eager ? "high" : "auto"}
           style={focal ? { objectPosition: focal } : undefined}
