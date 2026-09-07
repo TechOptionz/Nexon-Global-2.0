@@ -7,6 +7,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SplitText from "@/components/motion/SplitText";
 import SiteFooter from "@/components/SiteFooter";
 import CtaBand from "@/components/CtaBand";
+import FlightPath from "@/components/FlightPath";
 import InsightsRow from "@/components/InsightsRow";
 import TestimonialBand from "@/components/TestimonialBand";
 import ImageSlot from "@/components/ImageSlot";
@@ -22,6 +23,10 @@ import {
   ShieldIcon,
   WaveBg,
 } from "@/components/Icons";
+
+/* The route leaves from the office it was written in, and runs west
+   through the programs the practice was built around. */
+const HERO_ROUTE = ["UAE", "Türkiye", "Greece", "Portugal"];
 
 const CHAPTERS = [
   {
@@ -118,29 +123,34 @@ export default function AboutPage() {
 
       <section style={{ padding: "128px 0 0" }}>
         <div className="container">
-          <span className="eyebrow hero-1" data-hero>
-            {t("Why NEXON")}
-          </span>
-          <SplitText
-            as="h1"
-            className="h1-96"
-            delay={170}
-            stagger={45}
-            style={{ maxWidth: 1100 }}
-            text={t("Built in Dubai on a simple promise: honest migration advice.")}
-          />
-          <p className="lede hero-4" data-hero style={{ maxWidth: 560, margin: "0 0 32px" }}>
-            {t(
-              "NEXON Global Immigration Services exists because too many families receive vague timelines, hidden fees and programs they were never going to qualify for. We set out to do the opposite.",
-            )}
-          </p>
-          <div className="hero-5" data-hero style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <Link href="/contact" className="btn btn--primary">
-              {t("Book a Consultation")}
-            </Link>
-            <Link href="/how-it-works" className="btn btn--secondary">
-              {t("How It Works")}
-            </Link>
+          {/* Relative so the route map can sit in the blank column
+              beside the lede without touching the copy's layout. */}
+          <div style={{ position: "relative" }}>
+            <span className="eyebrow hero-1" data-hero>
+              {t("Why NEXON")}
+            </span>
+            <SplitText
+              as="h1"
+              className="h1-96"
+              delay={170}
+              stagger={45}
+              style={{ maxWidth: 1100 }}
+              text={t("Built in Dubai on a simple promise: honest migration advice.")}
+            />
+            <p className="lede hero-4" data-hero style={{ maxWidth: 560, margin: "0 0 32px" }}>
+              {t(
+                "NEXON Global Immigration Services exists because too many families receive vague timelines, hidden fees and programs they were never going to qualify for. We set out to do the opposite.",
+              )}
+            </p>
+            <div className="hero-5" data-hero style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              <Link href="/contact" className="btn btn--primary">
+                {t("Book a Consultation")}
+              </Link>
+              <Link href="/how-it-works" className="btn btn--secondary">
+                {t("How It Works")}
+              </Link>
+            </div>
+            <FlightPath className="flight-path--hero" stops={HERO_ROUTE.map(t)} />
           </div>
           <div
             className="hover-media"

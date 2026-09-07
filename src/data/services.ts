@@ -17,6 +17,9 @@ export type Service = {
   filterCta: string;
   /** Destination slugs shown in the programs grid. */
   programs: string[];
+  /** Stops on the hero route map: the countries this service covers, in
+      an order that reads as a journey. */
+  route: string[];
   included: [IconName, string][];
   processTitle: string;
   steps: [string, string][];
@@ -47,6 +50,7 @@ export const SERVICES: Record<string, Service> = {
     filterHref: "/destinations?type=citizenship",
     filterCta: "Compare all citizenship programs",
     programs: ["grenada", "stkitts", "antigua", "turkiye"],
+    route: ["Grenada", "St Kitts & Nevis", "Antigua & Barbuda", "Türkiye"],
     included: [
       ["compare", "Program comparison across all authorised CBI jurisdictions"],
       ["shield", "Pre-submission due-diligence screening"],
@@ -103,6 +107,7 @@ export const SERVICES: Record<string, Service> = {
     filterHref: "/destinations?type=residency",
     filterCta: "Compare all residency programs",
     programs: ["portugal", "greece", "cyprus", "malta", "uae", "usa"],
+    route: ["Portugal", "Greece", "Malta", "UAE"],
     included: [
       ["compare", "Portugal, Greece, Cyprus, Malta, UAE and US programs"],
       ["fund", "Qualifying-investment selection and verification"],
@@ -159,6 +164,7 @@ export const SERVICES: Record<string, Service> = {
     filterHref: "/destinations?type=skilled",
     filterCta: "Compare all skilled routes",
     programs: ["canada", "australia"],
+    route: ["United Kingdom", "Canada", "Australia"],
     included: [
       ["points", "Points assessment and score-improvement plan"],
       ["route", "Express Entry, PNP, SkillSelect and UK Skilled Worker routes"],

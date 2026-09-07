@@ -11,6 +11,7 @@ import CtaBand from "./CtaBand";
 import FaqBlock from "./FaqBlock";
 import InsightsRow from "./InsightsRow";
 import TestimonialBand from "./TestimonialBand";
+import FlightPath from "./FlightPath";
 import ImageSlot from "./ImageSlot";
 import Reveal from "./Reveal";
 import { useTrack } from "./useTrack";
@@ -29,6 +30,8 @@ export default function ServiceView({ slug }: { slug: string }) {
   const { ref: trackRef, prev: trackPrev, next: trackNext } = useTrack();
   const sv: Service = SERVICES[slug];
 
+  const stops = sv.route.map(t);
+
   return (
     <div className="artboard">
       <SiteHeader active="services" />
@@ -36,27 +39,32 @@ export default function ServiceView({ slug }: { slug: string }) {
       {/* ---- Header, with the hero photo overlapping the tint ---- */}
       <section style={{ background: sv.tint, padding: "128px 0 0" }}>
         <div className="container">
-          <span className="eyebrow hero-1" data-hero>
-            {t(sv.tag)}
-          </span>
-          <SplitText
-            as="h1"
-            className="h1-page"
-            delay={170}
-            stagger={45}
-            style={{ maxWidth: 1000 }}
-            text={t(sv.title)}
-          />
-          <p className="lede hero-4" data-hero style={{ maxWidth: 560, margin: "0 0 32px" }}>
-            {t(sv.intro)}
-          </p>
-          <div className="hero-5" data-hero style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <Link href="/contact" className="btn btn--primary">
-              {t("Book a Consultation")}
-            </Link>
-            <Link href="#programs" className="btn btn--secondary">
-              {t(sv.programsCta)}
-            </Link>
+          {/* Relative so the flight path can sit in the blank column
+              beside the lede without touching the copy's layout. */}
+          <div style={{ position: "relative" }}>
+            <span className="eyebrow hero-1" data-hero>
+              {t(sv.tag)}
+            </span>
+            <SplitText
+              as="h1"
+              className="h1-page"
+              delay={170}
+              stagger={45}
+              style={{ maxWidth: 1000 }}
+              text={t(sv.title)}
+            />
+            <p className="lede hero-4" data-hero style={{ maxWidth: 560, margin: "0 0 32px" }}>
+              {t(sv.intro)}
+            </p>
+            <div className="hero-5" data-hero style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              <Link href="/contact" className="btn btn--primary">
+                {t("Book a Consultation")}
+              </Link>
+              <Link href="#programs" className="btn btn--secondary">
+                {t(sv.programsCta)}
+              </Link>
+            </div>
+            <FlightPath className="flight-path--hero" stops={stops} />
           </div>
           <div
             className="service-hero"

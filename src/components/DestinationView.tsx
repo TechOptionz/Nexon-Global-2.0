@@ -10,6 +10,7 @@ import SiteFooter from "./SiteFooter";
 import CtaBand from "./CtaBand";
 import FaqBlock from "./FaqBlock";
 import TestimonialBand from "./TestimonialBand";
+import FlightPath from "./FlightPath";
 import ImageSlot from "./ImageSlot";
 import Reveal from "./Reveal";
 import { DestinationCard, PromisesForest, StatsRow } from "./Blocks";
@@ -54,6 +55,7 @@ export default function DestinationView({ slug }: { slug: string }) {
             <Link href="/contact" className="btn btn--primary hero-5" data-hero>
               {t(enquire)}
             </Link>
+            <FlightPath className="flight-path--band" stops={d.route.map(t)} />
           </div>
 
           <div

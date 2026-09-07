@@ -7,7 +7,12 @@ import SiteHeader from "@/components/SiteHeader";
 import SplitText from "@/components/motion/SplitText";
 import SiteFooter from "@/components/SiteFooter";
 import CtaBand from "@/components/CtaBand";
+import FlightPath from "@/components/FlightPath";
 import { DestinationCard, RequirementsNote } from "@/components/Blocks";
+
+/* The hero route runs west to east across the range on offer, rather
+   than repeating any one service's own itinerary. */
+const HERO_ROUTE = ["Portugal", "Malta", "UAE", "Australia"];
 
 const FILTERS = ["All", "Citizenship", "Residency", "Skilled"] as const;
 type Filter = (typeof FILTERS)[number];
@@ -40,22 +45,27 @@ export default function DestinationsPage() {
 
       <section className="section-pad" style={{ background: "var(--sky)", padding: "128px 0" }}>
         <div className="container">
-          <span className="eyebrow hero-1" data-hero>
-            {t("Destinations & programs")}
-          </span>
-          <SplitText
-            as="h1"
-            className="h1-page"
-            delay={170}
-            stagger={45}
-            style={{ maxWidth: 1000 }}
-            text={t("Where would you like to belong?")}
-          />
-          <p className="lede hero-4" data-hero style={{ maxWidth: 560 }}>
-            {t(
-              "Twelve government-authorised routes across citizenship, residency and skilled migration. Every figure below is the official minimum — we confirm current requirements before you commit.",
-            )}
-          </p>
+          {/* Relative so the route map can sit in the blank column
+              beside the lede without touching the copy's layout. */}
+          <div style={{ position: "relative" }}>
+            <span className="eyebrow hero-1" data-hero>
+              {t("Destinations & programs")}
+            </span>
+            <SplitText
+              as="h1"
+              className="h1-page"
+              delay={170}
+              stagger={45}
+              style={{ maxWidth: 1000 }}
+              text={t("Where would you like to belong?")}
+            />
+            <p className="lede hero-4" data-hero style={{ maxWidth: 560 }}>
+              {t(
+                "Twelve government-authorised routes across citizenship, residency and skilled migration. Every figure below is the official minimum — we confirm current requirements before you commit.",
+              )}
+            </p>
+            <FlightPath className="flight-path--hero" stops={HERO_ROUTE.map(t)} />
+          </div>
         </div>
       </section>
 

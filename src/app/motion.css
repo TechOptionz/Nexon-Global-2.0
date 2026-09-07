@@ -956,6 +956,149 @@ html.lenis body {
 }
 
 /* ------------------------------------------------------------------
+   Flight path
+
+   One loop, one clock: the plane, the wipe that reveals its trail and
+   the group's fade all run the same duration and the same keyframe
+   percentages, so the mark always ends exactly under the nose.
+
+     0 -> 68%   the plane climbs the arc, the trail appears behind it
+     68 -> 88%  it lands; the completed route holds
+     88 -> 100% the route fades out and the loop starts over
+
+   The plane's `offset-path` is set in the component so the arc is
+   written once; only the distance along it is animated here.
+   ------------------------------------------------------------------ */
+
+@keyframes flight-fly {
+  0% {
+    offset-distance: 0%;
+  }
+  68%,
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+/* The two wipes cover different lengths of path — the one uncovering
+   the names runs on past both ends — so each is given the offsets that
+   put its front where the other's is. The destination is not uncovered
+   this way at all — see flight-land below — so neither wipe has to run
+   on past the end of the route. */
+@keyframes flight-wipe {
+  0% {
+    stroke-dashoffset: var(--wipe-from, 1);
+  }
+  68%,
+  100% {
+    stroke-dashoffset: var(--wipe-to, 0);
+  }
+}
+
+/* The destination arrives with the plane. It fades up over the final
+   approach and is whole on touchdown, rather than being wiped in — the
+   flight eases into its last stop, and a wipe there would spend over a
+   second crawling across the one name the eye is waiting for. */
+@keyframes flight-land {
+  0%,
+  58% {
+    opacity: 0;
+  }
+  68%,
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Fades the whole route in at the top of the loop and out at the end,
+   so the restart is never seen. */
+@keyframes flight-cycle {
+  0%,
+  2% {
+    opacity: 0;
+  }
+  10%,
+  90% {
+    opacity: 1;
+  }
+  98%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* The plane leaves as it arrives; the trail it drew stays a moment. */
+@keyframes flight-plane {
+  0%,
+  3% {
+    opacity: 0;
+  }
+  9%,
+  62% {
+    opacity: 1;
+  }
+  70%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Touchdown: a single ring at the destination as the plane reaches it. */
+@keyframes flight-arrive {
+  0%,
+  66% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  72% {
+    opacity: 0.9;
+  }
+  84%,
+  100% {
+    opacity: 0;
+    transform: scale(2.6);
+  }
+}
+
+.flight-path__group {
+  opacity: 0;
+  animation: flight-cycle var(--flight-dur, 11s) linear infinite;
+}
+
+.flight-path__wipe {
+  stroke-dasharray: 1;
+  stroke-dashoffset: var(--wipe-from, 1);
+  animation: flight-wipe var(--flight-dur, 11s) var(--ease-inout) infinite;
+}
+
+.flight-path__plane {
+  opacity: 0;
+  offset-rotate: auto;
+  animation: flight-plane var(--flight-dur, 11s) linear infinite;
+}
+
+/* Without motion-path support the plane would sit in the corner, so the
+   flight itself is only switched on where the browser can fly it. */
+@supports (offset-path: path("M 0 0 L 1 1")) {
+  .flight-path__plane {
+    animation:
+      flight-fly var(--flight-dur, 11s) var(--ease-inout) infinite,
+      flight-plane var(--flight-dur, 11s) linear infinite;
+  }
+}
+
+.flight-path__stop--end {
+  opacity: 0;
+  animation: flight-land var(--flight-dur, 11s) var(--ease-soft) infinite;
+}
+
+.flight-path__pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: flight-arrive var(--flight-dur, 11s) var(--ease-soft) infinite;
+}
+
+/* ------------------------------------------------------------------
    Reduced motion — everything non-essential is switched off, and
    nothing is left hidden.
    ------------------------------------------------------------------ */
@@ -1009,5 +1152,29 @@ html.lenis body {
   [data-parallax] img,
   [data-parallax] video {
     animation: none !important;
+  }
+
+  /* The route is a drawing, not a flight: it is shown complete, with
+     the plane parked at its destination and nothing moving. */
+  .flight-path__group,
+  .flight-path__wipe,
+  .flight-path__plane,
+  .flight-path__stop--end,
+  .flight-path__pulse {
+    animation: none !important;
+  }
+  .flight-path__group,
+  .flight-path__plane,
+  .flight-path__stop--end {
+    opacity: 1 !important;
+  }
+  .flight-path__wipe {
+    stroke-dashoffset: 0 !important;
+  }
+  .flight-path__plane {
+    offset-distance: 100%;
+  }
+  .flight-path__pulse {
+    opacity: 0 !important;
   }
 }

@@ -7,6 +7,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SplitText from "@/components/motion/SplitText";
 import SiteFooter from "@/components/SiteFooter";
 import CtaBand from "@/components/CtaBand";
+import FlightPath from "@/components/FlightPath";
 import FaqBlock from "@/components/FaqBlock";
 import InsightsRow from "@/components/InsightsRow";
 import TestimonialBand from "@/components/TestimonialBand";
@@ -14,6 +15,10 @@ import ImageSlot from "@/components/ImageSlot";
 import { useTrack } from "@/components/useTrack";
 import { FeatureRow, Marquee, PracticesGrid } from "@/components/Blocks";
 import { ArrowLeft, ArrowRight, ClockIcon, DocIcon, ShieldIcon } from "@/components/Icons";
+
+/* A corporate relocation run: the Gulf free zones out to the markets
+   teams are most often moved between. */
+const HERO_ROUTE = ["Singapore", "UAE", "United Kingdom", "United States"];
 
 export default function ForBusinessPage() {
   const { t } = useLang();
@@ -25,25 +30,30 @@ export default function ForBusinessPage() {
 
       <section style={{ background: "var(--sky)", padding: "128px 0 0" }}>
         <div className="container">
-          <span className="eyebrow hero-1" data-hero>
-            {t("For business")}
-          </span>
-          <SplitText
-            as="h1"
-            className="h1-page"
-            delay={170}
-            stagger={45}
-            style={{ maxWidth: 1000 }}
-            text={t("Corporate & Global Mobility")}
-          />
-          <p className="lede hero-4" data-hero style={{ maxWidth: 560, margin: "0 0 32px" }}>
-            {t(
-              "Relocation of founders, executives and whole teams. Company setup, work permits and dependent visas handled end to end, with UAE free-zone expertise.",
-            )}
-          </p>
-          <Link href="/contact" className="btn btn--primary hero-5" data-hero>
-            {t("Book a Consultation")}
-          </Link>
+          {/* Relative so the route map can sit in the blank column
+              beside the lede without touching the copy's layout. */}
+          <div style={{ position: "relative" }}>
+            <span className="eyebrow hero-1" data-hero>
+              {t("For business")}
+            </span>
+            <SplitText
+              as="h1"
+              className="h1-page"
+              delay={170}
+              stagger={45}
+              style={{ maxWidth: 1000 }}
+              text={t("Corporate & Global Mobility")}
+            />
+            <p className="lede hero-4" data-hero style={{ maxWidth: 560, margin: "0 0 32px" }}>
+              {t(
+                "Relocation of founders, executives and whole teams. Company setup, work permits and dependent visas handled end to end, with UAE free-zone expertise.",
+              )}
+            </p>
+            <Link href="/contact" className="btn btn--primary hero-5" data-hero>
+              {t("Book a Consultation")}
+            </Link>
+            <FlightPath className="flight-path--hero" stops={HERO_ROUTE.map(t)} />
+          </div>
           <div
             className="service-hero"
             style={{

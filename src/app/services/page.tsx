@@ -8,8 +8,13 @@ import SiteHeader from "@/components/SiteHeader";
 import SplitText from "@/components/motion/SplitText";
 import SiteFooter from "@/components/SiteFooter";
 import CtaBand from "@/components/CtaBand";
+import FlightPath from "@/components/FlightPath";
 import TestimonialBand from "@/components/TestimonialBand";
 import { ArrowRight, Check, PeopleIcon } from "@/components/Icons";
+
+/* One stop from each practice — citizenship, the investor routes and
+   skilled migration — running west to east. */
+const HERO_ROUTE = ["Grenada", "United States", "Canada", "Malta"];
 
 export default function ServicesPage() {
   const { t } = useLang();
@@ -20,29 +25,34 @@ export default function ServicesPage() {
 
       <section className="section-pad" style={{ padding: "128px 0 96px" }}>
         <div className="container">
-          <span className="eyebrow hero-1" data-hero>
-            {t("Services")}
-          </span>
-          <SplitText
-            as="h1"
-            className="h1-page"
-            delay={170}
-            stagger={45}
-            style={{ maxWidth: 1100 }}
-            text={t("Four practices. One clear path abroad.")}
-          />
-          <p className="lede hero-4" data-hero style={{ maxWidth: 560, margin: "0 0 32px" }}>
-            {t(
-              "Every engagement begins with an honest assessment of your options. We only recommend programs you genuinely qualify for.",
-            )}
-          </p>
-          <div className="hero-5" data-hero style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <Link href="/#eligibility" className="btn btn--primary">
-              {t("Check Your Eligibility")}
-            </Link>
-            <Link href="/contact" className="btn btn--secondary">
-              {t("Speak to an Expert")}
-            </Link>
+          {/* Relative so the route map can sit in the blank column
+              beside the lede without touching the copy's layout. */}
+          <div style={{ position: "relative" }}>
+            <span className="eyebrow hero-1" data-hero>
+              {t("Services")}
+            </span>
+            <SplitText
+              as="h1"
+              className="h1-page"
+              delay={170}
+              stagger={45}
+              style={{ maxWidth: 1100 }}
+              text={t("Four practices. One clear path abroad.")}
+            />
+            <p className="lede hero-4" data-hero style={{ maxWidth: 560, margin: "0 0 32px" }}>
+              {t(
+                "Every engagement begins with an honest assessment of your options. We only recommend programs you genuinely qualify for.",
+              )}
+            </p>
+            <div className="hero-5" data-hero style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              <Link href="/#eligibility" className="btn btn--primary">
+                {t("Check Your Eligibility")}
+              </Link>
+              <Link href="/contact" className="btn btn--secondary">
+                {t("Speak to an Expert")}
+              </Link>
+            </div>
+            <FlightPath className="flight-path--hero" stops={HERO_ROUTE.map(t)} />
           </div>
         </div>
       </section>

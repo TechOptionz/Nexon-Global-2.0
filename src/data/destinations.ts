@@ -32,6 +32,10 @@ export type Destination = DestinationSummary & {
   photoHero: string;
   photoSmall: string;
   photoWhy: string;
+  /** Approach route drawn in the hero: neighbouring countries and the
+      regional hubs a client would actually route through, ending at
+      this destination. Four stops is what the graphic reads best at. */
+  route: string[];
   stats: [string, string][];
   routesTitle: string;
   routesNote: string;
@@ -100,6 +104,7 @@ export const DESTINATIONS: Record<string, Destination> = {
     photoHero: "Lisbon / Porto skyline",
     photoSmall: "Pena Palace at Sintra",
     photoWhy: "Porto riverside at golden hour",
+    route: ["Ireland", "France", "Spain", "Portugal"],
     stats: [
       ["Minimum investment", "€250,000"],
       ["Time to residency", "6–8 months"],
@@ -176,6 +181,7 @@ export const DESTINATIONS: Record<string, Destination> = {
     photoHero: "Athens rooftops and the Acropolis",
     photoSmall: "whitewashed alley on a Greek island",
     photoWhy: "Santorini at golden hour",
+    route: ["Italy", "Albania", "Bulgaria", "Greece"],
     stats: [
       ["Minimum investment", "€250,000"],
       ["Time to residency", "3–4 months"],
@@ -253,6 +259,7 @@ export const DESTINATIONS: Record<string, Destination> = {
     photoHero: "Limassol seafront at dusk",
     photoSmall: "Paphos harbour and castle",
     photoWhy: "Cyprus coastline near Ayia Napa",
+    route: ["Italy", "Greece", "Türkiye", "Cyprus"],
     stats: [
       ["Minimum investment", "€300,000"],
       ["Time to residency", "3–4 months"],
@@ -330,6 +337,7 @@ export const DESTINATIONS: Record<string, Destination> = {
     photoHero: "Valletta harbour and city walls",
     photoSmall: "Valletta street with wooden balconies",
     photoWhy: "Gozo coastline",
+    route: ["Spain", "France", "Italy", "Malta"],
     stats: [
       ["Indicative total cost", "From €150,000"],
       ["Time to residency", "6–8 months"],
@@ -408,6 +416,7 @@ export const DESTINATIONS: Record<string, Destination> = {
     photoHero: "Dubai skyline at dusk",
     photoSmall: "Dubai Marina at dusk",
     photoWhy: "Abu Dhabi corniche",
+    route: ["Saudi Arabia", "Qatar", "Oman", "UAE"],
     stats: [
       ["Minimum investment", "AED 2,000,000"],
       ["Time to approval", "2–4 weeks"],
@@ -491,6 +500,7 @@ export const DESTINATIONS: Record<string, Destination> = {
     photoHero: "New York street at dusk",
     photoSmall: "American suburban street",
     photoWhy: "San Francisco bay",
+    route: ["United Kingdom", "Iceland", "Canada", "United States"],
     stats: [
       ["Minimum investment", "$800,000"],
       ["Time to green card", "24–36 months"],
@@ -574,6 +584,7 @@ export const DESTINATIONS: Record<string, Destination> = {
     photoHero: "Grenada coastline and Grand Anse beach",
     photoSmall: "St George’s harbour",
     photoWhy: "Grenada spice plantation",
+    route: ["St Kitts & Nevis", "Antigua & Barbuda", "Barbados", "Grenada"],
     stats: [
       ["Minimum contribution", "$235,000"],
       ["Time to passport", "6–9 months"],
@@ -650,6 +661,7 @@ export const DESTINATIONS: Record<string, Destination> = {
     photoHero: "St Kitts harbour and Brimstone Hill",
     photoSmall: "Nevis beach at sunset",
     photoWhy: "Basseterre waterfront",
+    route: ["Grenada", "Barbados", "Antigua & Barbuda", "St Kitts & Nevis"],
     stats: [
       ["Minimum contribution", "$250,000"],
       ["Time to passport", "4–6 months"],
@@ -727,6 +739,7 @@ export const DESTINATIONS: Record<string, Destination> = {
     photoHero: "Antigua beach and turquoise water",
     photoSmall: "Nelson’s Dockyard",
     photoWhy: "Shirley Heights lookout",
+    route: ["Grenada", "St Lucia", "St Kitts & Nevis", "Antigua & Barbuda"],
     stats: [
       ["Minimum contribution", "$230,000"],
       ["Time to passport", "6–9 months"],
@@ -804,6 +817,7 @@ export const DESTINATIONS: Record<string, Destination> = {
     photoHero: "Istanbul skyline over the Bosphorus",
     photoSmall: "a street in Istanbul’s old city",
     photoWhy: "Bodrum coastline",
+    route: ["Greece", "Bulgaria", "Georgia", "Türkiye"],
     stats: [
       ["Minimum investment", "$400,000"],
       ["Time to citizenship", "4–6 months"],
@@ -881,6 +895,7 @@ export const DESTINATIONS: Record<string, Destination> = {
     photoHero: "Toronto waterfront skyline",
     photoSmall: "Old Montréal cobblestone street",
     photoWhy: "Vancouver harbour and mountains",
+    route: ["United Kingdom", "Iceland", "Greenland", "Canada"],
     stats: [
       ["Investment required", "None"],
       ["Time to PR", "6–12 months"],
@@ -959,6 +974,7 @@ export const DESTINATIONS: Record<string, Destination> = {
     photoHero: "Sydney harbour and Opera House",
     photoSmall: "Melbourne laneway",
     photoWhy: "Great Ocean Road",
+    route: ["UAE", "India", "Singapore", "Australia"],
     stats: [
       ["Investment required", "None"],
       ["Time to PR", "8–14 months"],

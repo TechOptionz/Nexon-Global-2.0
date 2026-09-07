@@ -1302,6 +1302,147 @@ select.field {
 }
 
 /* ------------------------------------------------------------------
+   Flight path
+
+   The route diagram that fills the empty half of a page hero: the
+   itinerary drawn faintly ahead of the plane, the darker dashed trail
+   and the named stops behind it. Geometry and colour only — motion.css
+   flies it.
+
+   It is absolutely positioned and never affects layout, so the copy
+   column beside it is unchanged. `inset-inline-start` keeps it clear
+   of the 560px lede column; the `max-width` plus the auto start margin
+   parks it against the container's outer edge on wide screens.
+   ------------------------------------------------------------------ */
+
+.flight-path {
+  pointer-events: none;
+  color: var(--forest);
+}
+
+.flight-path svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  font-family: inherit;
+}
+
+/* ---- Ahead of the plane: the itinerary, not yet flown ---- */
+
+.flight-path__route {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.25;
+  stroke-dasharray: 1.5 9;
+  stroke-linecap: round;
+  opacity: 0.2;
+}
+
+.flight-path__ahead {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
+  opacity: 0.22;
+}
+
+/* ---- Behind it: the mark it leaves, and the stops it has made ---- */
+
+.flight-path__trail {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-dasharray: 6 8;
+  stroke-linecap: round;
+  opacity: 0.62;
+}
+
+/* Stops the plane has called at are filled; the hollow rings above are
+   the ones still ahead of it. */
+.flight-path__ring {
+  fill: currentColor;
+  opacity: 0.8;
+}
+
+/* The destination reads as the arrival, not as one more waypoint. */
+.flight-path__stop--end .flight-path__ring {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  opacity: 1;
+}
+
+.flight-path__core {
+  fill: currentColor;
+}
+
+/* The hairline that ties a name to its stop. */
+.flight-path__tick {
+  stroke: currentColor;
+  stroke-width: 1;
+  opacity: 0.3;
+}
+
+.flight-path__label {
+  fill: currentColor;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+
+.flight-path__stop--end .flight-path__label {
+  opacity: 1;
+}
+
+/* ---- The plane, and the ring it sets down inside ---- */
+
+.flight-path__plane {
+  fill: currentColor;
+}
+
+.flight-path__pulse {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  opacity: 0;
+}
+
+/* Placement in a page hero: the blank column to the side of the lede
+   and the buttons, sitting on their baseline. */
+.flight-path--hero {
+  position: absolute;
+  inset-inline: 600px 0;
+  bottom: 0;
+  max-width: 900px;
+  margin-inline: auto 0;
+}
+
+/* On a destination page the copy sits beside a tall photograph, so the
+   route runs along the foot of the copy column instead — in flow, in
+   the slack the photograph leaves below the button. */
+.flight-path--band {
+  margin-top: 56px;
+  max-width: 760px;
+}
+
+/* Both are hidden once their column is too narrow to hold a legible
+   route: the copy takes the full width, and there is nothing left to
+   draw in. The band's column is the narrower of the two. */
+@media (max-width: 1240px) {
+  .flight-path--hero {
+    display: none;
+  }
+}
+
+@media (max-width: 1300px) {
+  .flight-path--band {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------
    Arabic / RTL
    ------------------------------------------------------------------ */
 
@@ -1339,6 +1480,19 @@ select.field {
 [dir="rtl"] .nav-link__active {
   left: 22px;
   right: 4px;
+}
+
+/* The route reads with the text: in Arabic the plane departs from the
+   right-hand edge and climbs to the left. Mirroring the drawing would
+   mirror the names with it, so each one is turned back about its own
+   anchor — which is where it already sits. */
+[dir="rtl"] .flight-path svg {
+  transform: scaleX(-1);
+}
+[dir="rtl"] .flight-path__label {
+  transform: scaleX(-1);
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
 /* Arabic renders in the sans stack — Instrument Serif has no Arabic
