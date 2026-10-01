@@ -7,7 +7,7 @@ import { useSmoothScroll } from "./motion/SmoothScroll";
 import { useLastValue, usePresence } from "./motion/usePresence";
 import { MENUS, TILE_BG, type NavKey } from "@/data/site";
 import ImageSlot from "./ImageSlot";
-import { ChevronDown, Close, Menu, Search } from "./Icons";
+import { ChevronDown, Close, Menu } from "./Icons";
 
 const WORDMARK = "NEXON".split("");
 
@@ -213,6 +213,8 @@ export default function SiteHeader({ active }: Props) {
         width: "fit-content",
         lineHeight: 1,
         color: "var(--ink)",
+        // The letters are separate flex items; keep them left-to-right in Arabic.
+        direction: "ltr",
       }}
     >
       <span
@@ -306,10 +308,6 @@ export default function SiteHeader({ active }: Props) {
           className="header-actions"
           style={{ marginInlineStart: "auto", display: "flex", alignItems: "center", gap: 12 }}
         >
-          <button className="icon-btn-round" aria-label="Search" type="button">
-            <Search />
-          </button>
-
           <div className="lang-switch" role="group" aria-label="Language">
             <button
               type="button"

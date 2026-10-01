@@ -1125,8 +1125,11 @@ select.field {
   color: var(--white);
 }
 
+/* One flex item per letter, so the row would lay out right-to-left in
+   Arabic and spell the Latin mark backwards. */
 .wordmark-row {
   display: flex;
+  direction: ltr;
   justify-content: space-between;
   font-weight: 600;
   text-transform: uppercase;
@@ -1727,8 +1730,7 @@ select.field {
   .header-burger {
     display: inline-flex;
   }
-  .lang-switch,
-  .icon-btn-round[aria-label="Search"] {
+  .lang-switch {
     display: none;
   }
   .header-burger.icon-btn-round {
