@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Instrument_Serif } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { LangProvider } from "@/lib/i18n";
 import ScrollMotion from "@/components/motion/ScrollMotion";
 import SmoothScroll from "@/components/motion/SmoothScroll";
@@ -56,6 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {children}
           </SmoothScroll>
         </LangProvider>
+        <Analytics />
       </body>
     </html>
   );
