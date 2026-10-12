@@ -42,75 +42,77 @@ export default function DestinationsPage() {
   return (
     <div className="artboard">
       <SiteHeader active="destinations" />
+      <main>
 
-      <section className="section-pad" style={{ background: "var(--sky)", padding: "128px 0" }}>
-        <div className="container">
-          {/* Relative so the route map can sit in the blank column
-              beside the lede without touching the copy's layout. */}
-          <div style={{ position: "relative" }}>
-            <span className="eyebrow hero-1" data-hero>
-              {t("Destinations & programs")}
-            </span>
-            <SplitText
-              as="h1"
-              className="h1-page"
-              delay={170}
-              stagger={45}
-              style={{ maxWidth: 1000 }}
-              text={t("Where would you like to belong?")}
-            />
-            <p className="lede hero-4" data-hero style={{ maxWidth: 560 }}>
-              {t(
-                "Twelve government-authorised routes across citizenship, residency and skilled migration. Every figure below is the official minimum — we confirm current requirements before you commit.",
-              )}
-            </p>
-            <FlightPath className="flight-path--hero" stops={HERO_ROUTE.map(t)} />
+        <section className="section-pad" style={{ background: "var(--sky)", padding: "128px 0" }}>
+          <div className="container">
+            {/* Relative so the route map can sit in the blank column
+                beside the lede without touching the copy's layout. */}
+            <div style={{ position: "relative" }}>
+              <span className="eyebrow hero-1" data-hero>
+                {t("Destinations & programs")}
+              </span>
+              <SplitText
+                as="h1"
+                className="h1-page"
+                delay={170}
+                stagger={45}
+                style={{ maxWidth: 1000 }}
+                text={t("Where would you like to belong?")}
+              />
+              <p className="lede hero-4" data-hero style={{ maxWidth: 560 }}>
+                {t(
+                  "Twelve government-authorised routes across citizenship, residency and skilled migration. Every figure below is the official minimum — we confirm current requirements before you commit.",
+                )}
+              </p>
+              <FlightPath className="flight-path--hero" stops={HERO_ROUTE.map(t)} />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="section-pad" style={{ padding: "64px 0 128px" }}>
-        <div className="container">
-          <div style={{ display: "flex", gap: 12, marginBottom: 40, flexWrap: "wrap" }}>
-            {FILTERS.map((f) => (
-              <button
-                key={f}
-                type="button"
-                onClick={() => setFilter(f)}
-                aria-pressed={filter === f}
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  minHeight: 44,
-                  padding: "0 20px",
-                  border: "1px solid var(--ink)",
-                  borderRadius: 8,
-                  background: filter === f ? "var(--ink)" : "var(--white)",
-                  color: filter === f ? "var(--white)" : "var(--ink)",
-                  fontSize: 14,
-                  fontWeight: 600,
-                  cursor: "pointer",
-                }}
-              >
-                {t(f)}
-              </button>
-            ))}
+        <section className="section-pad" style={{ padding: "64px 0 128px" }}>
+          <div className="container">
+            <div style={{ display: "flex", gap: 12, marginBottom: 40, flexWrap: "wrap" }}>
+              {FILTERS.map((f) => (
+                <button
+                  key={f}
+                  type="button"
+                  onClick={() => setFilter(f)}
+                  aria-pressed={filter === f}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    minHeight: 44,
+                    padding: "0 20px",
+                    border: "1px solid var(--ink)",
+                    borderRadius: 8,
+                    background: filter === f ? "var(--ink)" : "var(--white)",
+                    color: filter === f ? "var(--white)" : "var(--ink)",
+                    fontSize: 14,
+                    fontWeight: 600,
+                    cursor: "pointer",
+                  }}
+                >
+                  {t(f)}
+                </button>
+              ))}
+            </div>
+
+            <div
+              className="grid-collapse"
+              style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 24 }}
+            >
+              {shown.map((d) => (
+                <DestinationCard key={d.slug} d={d} showCta note={d.indexNote} />
+              ))}
+            </div>
+
+            <RequirementsNote />
           </div>
+        </section>
 
-          <div
-            className="grid-collapse"
-            style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 24 }}
-          >
-            {shown.map((d) => (
-              <DestinationCard key={d.slug} d={d} showCta note={d.indexNote} />
-            ))}
-          </div>
-
-          <RequirementsNote />
-        </div>
-      </section>
-
-      <CtaBand title="Can't decide between two programs?" button="Book a Consultation" />
+        <CtaBand title="Can't decide between two programs?" button="Book a Consultation" />
+      </main>
       <SiteFooter />
     </div>
   );

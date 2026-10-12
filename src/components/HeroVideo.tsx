@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 
 type Props = {
   src: string;
-  /** First frame, shown until the video is ready and whenever it is paused. */
+  /** First frame, shown until the video is ready. This is the page's largest
+   *  contentful paint, so it is rendered as a preloaded `next/image`
+   *  rather than a `poster` attribute, which the preload scanner ignores. */
   poster: string;
   className?: string;
 };
@@ -26,6 +29,13 @@ function whenIdle(fn: () => void): () => void {
  * The hero's moving backdrop. Purely decorative — muted, looping and hidden
  * from assistive tech — so it carries no controls and no caption track.
  * Under `prefers-reduced-motion` it holds on the poster frame instead.
+ *
+ * The poster is a positioned `next/image` underneath the video element:
+ * it is what the visitor sees until the loop is attached and playing, and
+ * it stays put whenever playback is refused. Because it goes through
+ * `next/image` with `preload`, the browser gets a preload hint for the
+ * right rendition before it has parsed this far — which is what makes it
+ * paint early instead of waiting on hydration.
  *
  * The file is attached from JavaScript rather than through a `src` attribute:
  * a `<video autoplay>` in the markup starts downloading during the initial
@@ -67,9 +77,18 @@ export default function HeroVideo({ src, poster, className = "" }: Props) {
 
   return (
     <div className={`hero-video ${className}`.trim()}>
+      <Image
+        src={poster}
+        alt=""
+        fill
+        preload
+        fetchPriority="high"
+        sizes="100vw"
+        quality={90}
+        className="hero-video__poster"
+      />
       <video
         ref={ref}
-        poster={poster}
         muted
         loop
         playsInline

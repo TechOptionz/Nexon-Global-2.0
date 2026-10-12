@@ -28,79 +28,81 @@ export default function FaqsPage() {
   return (
     <div className="artboard">
       <SiteHeader active="resources" />
+      <main>
 
-      <section className="section-pad" style={{ padding: "128px 0 96px" }}>
-        <div className="container" style={{ textAlign: "center" }}>
-          <span className="eyebrow hero-1" data-hero>
-            {t("FAQs")}
-          </span>
-          <SplitText
-            as="h1"
-            className="h1-page"
-            delay={170}
-            stagger={45}
-            style={{ margin: "24px auto", maxWidth: 1000 }}
-            text={t("Questions, answered plainly.")}
-          />
-          <p className="lede hero-4" data-hero style={{ maxWidth: 560, margin: "0 auto" }}>
-            {t(
-              "If your question isn't here, a consultant will answer it on a free call — in English or Arabic.",
-            )}
-          </p>
-        </div>
-      </section>
+        <section className="section-pad" style={{ padding: "128px 0 96px" }}>
+          <div className="container" style={{ textAlign: "center" }}>
+            <span className="eyebrow hero-1" data-hero>
+              {t("FAQs")}
+            </span>
+            <SplitText
+              as="h1"
+              className="h1-page"
+              delay={170}
+              stagger={45}
+              style={{ margin: "24px auto", maxWidth: 1000 }}
+              text={t("Questions, answered plainly.")}
+            />
+            <p className="lede hero-4" data-hero style={{ maxWidth: 560, margin: "0 auto" }}>
+              {t(
+                "If your question isn't here, a consultant will answer it on a free call — in English or Arabic.",
+              )}
+            </p>
+          </div>
+        </section>
 
-      <section className="section-pad" style={{ padding: "0 0 128px" }}>
-        <div
-          style={{
-            width: "min(980px, 100% - 48px)",
-            margin: "0 auto",
-            display: "flex",
-            flexDirection: "column",
-            gap: 64,
-          }}
-        >
-          {FAQ_GROUPS.map((grp, gi) => (
-            <div key={grp.title}>
-              <h2 className="h2-40" style={{ marginBottom: 24 }}>
-                {t(grp.title)}
-              </h2>
-              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                {grp.items.map((f, i) => {
-                  const key = `g${gi}-${i}`;
-                  const isOpen = open === key;
-                  return (
-                    <div key={key} id={`faq-${key}`} className="faq-row" style={{ scrollMarginTop: 120 }}>
-                      <button
-                        type="button"
-                        className="faq-trigger"
-                        aria-expanded={isOpen}
-                        onClick={() => setOpen(isOpen ? null : key)}
-                      >
-                        <span>{t(f.q)}</span>
-                        <span
-                          className="faq-icon"
-                          style={{ transform: isOpen ? "rotate(45deg)" : "rotate(0deg)" }}
+        <section className="section-pad" style={{ padding: "0 0 128px" }}>
+          <div
+            style={{
+              width: "min(980px, 100% - 48px)",
+              margin: "0 auto",
+              display: "flex",
+              flexDirection: "column",
+              gap: 64,
+            }}
+          >
+            {FAQ_GROUPS.map((grp, gi) => (
+              <div key={grp.title}>
+                <h2 className="h2-40" style={{ marginBottom: 24 }}>
+                  {t(grp.title)}
+                </h2>
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  {grp.items.map((f, i) => {
+                    const key = `g${gi}-${i}`;
+                    const isOpen = open === key;
+                    return (
+                      <div key={key} id={`faq-${key}`} className="faq-row" style={{ scrollMarginTop: 120 }}>
+                        <button
+                          type="button"
+                          className="faq-trigger"
+                          aria-expanded={isOpen}
+                          onClick={() => setOpen(isOpen ? null : key)}
                         >
-                          <Plus />
-                        </span>
-                      </button>
-                      {/* Kept mounted so the row can grow rather than jump. */}
-                      <div className={`acc-panel${isOpen ? " is-open" : ""}`} inert={!isOpen}>
-                        <div className="acc-inner">
-                          <p className="faq-answer">{t(f.a)}</p>
+                          <span>{t(f.q)}</span>
+                          <span
+                            className="faq-icon"
+                            style={{ transform: isOpen ? "rotate(45deg)" : "rotate(0deg)" }}
+                          >
+                            <Plus />
+                          </span>
+                        </button>
+                        {/* Kept mounted so the row can grow rather than jump. */}
+                        <div className={`acc-panel${isOpen ? " is-open" : ""}`} inert={!isOpen}>
+                          <div className="acc-inner">
+                            <p className="faq-answer">{t(f.a)}</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      </section>
+            ))}
+          </div>
+        </section>
 
-      <CtaBand title="Still have a question?" button="Book a Consultation" />
+        <CtaBand title="Still have a question?" button="Book a Consultation" />
+      </main>
       <SiteFooter />
     </div>
   );

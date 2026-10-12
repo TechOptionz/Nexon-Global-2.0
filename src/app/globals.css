@@ -1243,7 +1243,14 @@ select.field {
   background: var(--forest);
 }
 
+.hero-video__poster {
+  object-fit: cover;
+}
+
+/* Positioned so it paints over the poster underneath it; the element is
+   transparent until a frame is decoded, so the poster shows through. */
 .hero-video video {
+  position: relative;
   width: 100%;
   height: 100%;
   object-fit: cover;

@@ -26,275 +26,277 @@ export default function DestinationView({ slug }: { slug: string }) {
   return (
     <div className="artboard">
       <SiteHeader active="destinations" />
+      <main>
 
-      {/* ---- Header ---- */}
-      <section className="section-pad" style={{ padding: "96px 0 0" }}>
-        <div
-          className="container grid-collapse"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 560px",
-            gap: 96,
-            alignItems: "center",
-          }}
-        >
-          <div>
-            <span className="eyebrow hero-1" data-hero>
-              {t(d.tag)}
-            </span>
-            <SplitText
-              as="h1"
-              className={d.heroSize === 104 ? "h1-page" : "h1-96"}
-              delay={170}
-              stagger={45}
-              text={t(d.title)}
-            />
-            <p className="lede hero-4" data-hero style={{ maxWidth: 520, margin: "0 0 32px" }}>
-              {t(d.intro)}
-            </p>
-            <Link href="/contact" className="btn btn--primary hero-5" data-hero>
-              {t(enquire)}
-            </Link>
-            <FlightPath className="flight-path--band" stops={d.route.map(t)} />
-          </div>
-
+        {/* ---- Header ---- */}
+        <section className="section-pad" style={{ padding: "96px 0 0" }}>
           <div
-            className="dest-hero"
-            data-hero-media
-            data-parallax
+            className="container grid-collapse"
             style={{
-              position: "relative",
-              height: 620,
-              borderRadius: 16,
-              overflow: "hidden",
-              background: "var(--sand)",
+              display: "grid",
+              gridTemplateColumns: "1fr 560px",
+              gap: 96,
+              alignItems: "center",
             }}
           >
-            <ImageSlot placeholder={d.photoHero} sizes="(max-width: 1200px) 100vw, 1200px" eager />
+            <div>
+              <span className="eyebrow hero-1" data-hero>
+                {t(d.tag)}
+              </span>
+              <SplitText
+                as="h1"
+                className={d.heroSize === 104 ? "h1-page" : "h1-96"}
+                delay={170}
+                stagger={45}
+                text={t(d.title)}
+              />
+              <p className="lede hero-4" data-hero style={{ maxWidth: 520, margin: "0 0 32px" }}>
+                {t(d.intro)}
+              </p>
+              <Link href="/contact" className="btn btn--primary hero-5" data-hero>
+                {t(enquire)}
+              </Link>
+              <FlightPath className="flight-path--band" stops={d.route.map(t)} />
+            </div>
+
+            <div
+              className="dest-hero"
+              data-hero-media
+              data-parallax
+              style={{
+                position: "relative",
+                height: 620,
+                borderRadius: 16,
+                overflow: "hidden",
+                background: "var(--sand)",
+              }}
+            >
+              <ImageSlot placeholder={d.photoHero} sizes="(max-width: 1200px) 100vw, 1200px" eager />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ---- Key numbers ---- */}
-      <section className="section-pad" style={{ padding: "96px 0 128px" }}>
-        <div className="container">
-          <StatsRow stats={d.stats} />
-        </div>
-      </section>
-
-      {/* ---- Qualifying routes ---- */}
-      <section className="section-pad" style={{ background: "var(--mint)", padding: "128px 0" }}>
-        <div className="container">
-          <div style={{ textAlign: "center", maxWidth: 760, margin: "0 auto 56px" }}>
-            <h2 className="h2-64" style={{ marginBottom: 20 }}>
-              {t(d.routesTitle)}
-            </h2>
-            <p className="body-14">{t(d.routesNote)}</p>
+        {/* ---- Key numbers ---- */}
+        <section className="section-pad" style={{ padding: "96px 0 128px" }}>
+          <div className="container">
+            <StatsRow stats={d.stats} />
           </div>
+        </section>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            {d.groups.map((g, i) => {
-              const isOpen = group === i;
-              return (
-                <div key={g.title} style={{ background: "var(--white)", borderRadius: 16, padding: 8 }}>
-                  <button
-                    type="button"
-                    aria-expanded={isOpen}
-                    onClick={() => setGroup(isOpen ? -1 : i)}
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      gap: 16,
-                      background: "none",
-                      border: 0,
-                      padding: 24,
-                      textAlign: "start",
-                      color: "var(--ink)",
-                      cursor: "pointer",
-                    }}
-                  >
-                    <span>
-                      <span style={{ display: "block", fontSize: 18, fontWeight: 600, lineHeight: 1.3 }}>
-                        {t(g.title)}
-                      </span>
-                      <span
-                        style={{ display: "block", fontSize: 13, color: "var(--muted)", marginTop: 4 }}
-                      >
-                        {t(g.subtitle)}
-                      </span>
-                    </span>
-                    <span
+        {/* ---- Qualifying routes ---- */}
+        <section className="section-pad" style={{ background: "var(--mint)", padding: "128px 0" }}>
+          <div className="container">
+            <div style={{ textAlign: "center", maxWidth: 760, margin: "0 auto 56px" }}>
+              <h2 className="h2-64" style={{ marginBottom: 20 }}>
+                {t(d.routesTitle)}
+              </h2>
+              <p className="body-14">{t(d.routesNote)}</p>
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              {d.groups.map((g, i) => {
+                const isOpen = group === i;
+                return (
+                  <div key={g.title} style={{ background: "var(--white)", borderRadius: 16, padding: 8 }}>
+                    <button
+                      type="button"
+                      aria-expanded={isOpen}
+                      onClick={() => setGroup(isOpen ? -1 : i)}
                       style={{
-                        width: 40,
-                        height: 40,
-                        flex: "none",
-                        border: "1px solid var(--stone)",
-                        borderRadius: "50%",
-                        display: "inline-flex",
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "space-between",
                         alignItems: "center",
-                        justifyContent: "center",
-                        transition: "transform 0.25s ease",
-                        transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
+                        gap: 16,
+                        background: "none",
+                        border: 0,
+                        padding: 24,
+                        textAlign: "start",
+                        color: "var(--ink)",
+                        cursor: "pointer",
                       }}
                     >
-                      <Plus size={18} />
-                    </span>
-                  </button>
+                      <span>
+                        <span style={{ display: "block", fontSize: 18, fontWeight: 600, lineHeight: 1.3 }}>
+                          {t(g.title)}
+                        </span>
+                        <span
+                          style={{ display: "block", fontSize: 13, color: "var(--muted)", marginTop: 4 }}
+                        >
+                          {t(g.subtitle)}
+                        </span>
+                      </span>
+                      <span
+                        style={{
+                          width: 40,
+                          height: 40,
+                          flex: "none",
+                          border: "1px solid var(--stone)",
+                          borderRadius: "50%",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          transition: "transform 0.25s ease",
+                          transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
+                        }}
+                      >
+                        <Plus size={18} />
+                      </span>
+                    </button>
 
-                  {isOpen && (
-                    <div
-                      className="grid-collapse"
-                      style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}
-                    >
-                      <RouteCard
-                        route={g.a}
-                        amountLabel={d.amountLabel}
-                        included={d.included}
-                        enquire={enquire}
-                      />
-                      <RouteCard
-                        route={g.b}
-                        amountLabel={d.amountLabel}
-                        included={d.included}
-                        enquire={enquire}
-                        dark
-                      />
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ---- Who can apply ---- */}
-      <section className="section-pad" style={{ padding: "128px 0" }}>
-        <div
-          className="container grid-collapse"
-          style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 96, alignItems: "start" }}
-        >
-          <div>
-            <h2 className="h2-48" style={{ marginBottom: 16 }}>
-              {t("Who can apply")}
-            </h2>
-            <p className="lede" style={{ maxWidth: 480 }}>
-              {t(`A ${d.short} specialist replies within one business day with current requirements and a fee schedule.`)}
-            </p>
-          </div>
-
-          <div
-            style={{
-              background: "var(--white)",
-              border: "1px solid var(--stone)",
-              borderRadius: 12,
-              overflow: "hidden",
-            }}
-          >
-            {d.eligibility.map((e) => (
-              <div
-                key={e}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 16,
-                  minHeight: 56,
-                  padding: "12px 24px",
-                  borderTop: "1px solid var(--stone)",
-                  marginTop: -1,
-                  fontSize: 15,
-                  lineHeight: 1.4,
-                }}
-              >
-                <PassportIcon size={20} />
-                <span style={{ flex: 1 }}>{t(e)}</span>
-                <Check />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <TestimonialBand variant={d.testimonial} tone="forest" />
-
-      {/* ---- Why this destination ---- */}
-      <section className="section-pad" style={{ padding: "160px 0" }}>
-        <div
-          className="container grid-collapse"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "560px 1fr",
-            gap: 96,
-            alignItems: "start",
-          }}
-        >
-          <div
-            className="sticky-media"
-            style={{
-              position: "sticky",
-              top: 104,
-              height: 640,
-              borderRadius: 16,
-              overflow: "hidden",
-              background: "var(--sand)",
-            }}
-          >
-            <ImageSlot placeholder={d.photoWhy} sizes="(max-width: 900px) 100vw, 1200px" />
-          </div>
-
-          <div style={{ paddingTop: 8 }}>
-            <h2 className="h2-64" style={{ marginBottom: 24 }}>
-              {t(`Why ${d.short}`)}
-            </h2>
-            <p className="lede" style={{ margin: "0 0 48px", maxWidth: 560 }}>
-              {t(d.why)}
-            </p>
-            <div style={{ display: "flex", flexDirection: "column", gap: 32, marginBottom: 48 }}>
-              {d.benefits.map(([icon, text], i) => (
-                <Reveal
-                  key={text}
-                  delay={i * 120}
-                  style={{ display: "flex", gap: 16, alignItems: "flex-start" }}
-                >
-                  <span style={{ flex: "none" }}>
-                    <Icon name={icon} />
-                  </span>
-                  <div className="feature-title" style={{ maxWidth: 560 }}>
-                    {t(text)}
+                    {isOpen && (
+                      <div
+                        className="grid-collapse"
+                        style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}
+                      >
+                        <RouteCard
+                          route={g.a}
+                          amountLabel={d.amountLabel}
+                          included={d.included}
+                          enquire={enquire}
+                        />
+                        <RouteCard
+                          route={g.b}
+                          amountLabel={d.amountLabel}
+                          included={d.included}
+                          enquire={enquire}
+                          dark
+                        />
+                      </div>
+                    )}
                   </div>
-                </Reveal>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ---- Who can apply ---- */}
+        <section className="section-pad" style={{ padding: "128px 0" }}>
+          <div
+            className="container grid-collapse"
+            style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 96, alignItems: "start" }}
+          >
+            <div>
+              <h2 className="h2-48" style={{ marginBottom: 16 }}>
+                {t("Who can apply")}
+              </h2>
+              <p className="lede" style={{ maxWidth: 480 }}>
+                {t(`A ${d.short} specialist replies within one business day with current requirements and a fee schedule.`)}
+              </p>
+            </div>
+
+            <div
+              style={{
+                background: "var(--white)",
+                border: "1px solid var(--stone)",
+                borderRadius: 12,
+                overflow: "hidden",
+              }}
+            >
+              {d.eligibility.map((e) => (
+                <div
+                  key={e}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 16,
+                    minHeight: 56,
+                    padding: "12px 24px",
+                    borderTop: "1px solid var(--stone)",
+                    marginTop: -1,
+                    fontSize: 15,
+                    lineHeight: 1.4,
+                  }}
+                >
+                  <PassportIcon size={20} />
+                  <span style={{ flex: 1 }}>{t(e)}</span>
+                  <Check />
+                </div>
               ))}
             </div>
-            <Link href="/contact" className="btn btn--primary">
-              {t(enquire)}
-            </Link>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <PromisesForest />
-      <FaqBlock set={d.faq} />
+        <TestimonialBand variant={d.testimonial} tone="forest" />
 
-      {/* ---- Related destinations ---- */}
-      <section className="section-pad" style={{ padding: "0 0 128px" }}>
-        <div className="container">
-          <h2 className="h2-64" style={{ marginBottom: 48, maxWidth: 760 }}>
-            {t("Where would you like to belong?")}
-          </h2>
+        {/* ---- Why this destination ---- */}
+        <section className="section-pad" style={{ padding: "160px 0" }}>
           <div
-            className="grid-collapse"
-            style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 24 }}
+            className="container grid-collapse"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "560px 1fr",
+              gap: 96,
+              alignItems: "start",
+            }}
           >
-            {d.related.map((k) => (
-              <DestinationCard key={k} d={DESTINATIONS[k]} height={480} />
-            ))}
-          </div>
-        </div>
-      </section>
+            <div
+              className="sticky-media"
+              style={{
+                position: "sticky",
+                top: 104,
+                height: 640,
+                borderRadius: 16,
+                overflow: "hidden",
+                background: "var(--sand)",
+              }}
+            >
+              <ImageSlot placeholder={d.photoWhy} sizes="(max-width: 900px) 100vw, 1200px" />
+            </div>
 
-      <CtaBand title="Can't decide between two programs?" button="Book a Consultation" />
+            <div style={{ paddingTop: 8 }}>
+              <h2 className="h2-64" style={{ marginBottom: 24 }}>
+                {t(`Why ${d.short}`)}
+              </h2>
+              <p className="lede" style={{ margin: "0 0 48px", maxWidth: 560 }}>
+                {t(d.why)}
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 32, marginBottom: 48 }}>
+                {d.benefits.map(([icon, text], i) => (
+                  <Reveal
+                    key={text}
+                    delay={i * 120}
+                    style={{ display: "flex", gap: 16, alignItems: "flex-start" }}
+                  >
+                    <span style={{ flex: "none" }}>
+                      <Icon name={icon} />
+                    </span>
+                    <div className="feature-title" style={{ maxWidth: 560 }}>
+                      {t(text)}
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+              <Link href="/contact" className="btn btn--primary">
+                {t(enquire)}
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        <PromisesForest />
+        <FaqBlock set={d.faq} />
+
+        {/* ---- Related destinations ---- */}
+        <section className="section-pad" style={{ padding: "0 0 128px" }}>
+          <div className="container">
+            <h2 className="h2-64" style={{ marginBottom: 48, maxWidth: 760 }}>
+              {t("Where would you like to belong?")}
+            </h2>
+            <div
+              className="grid-collapse"
+              style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 24 }}
+            >
+              {d.related.map((k) => (
+                <DestinationCard key={k} d={DESTINATIONS[k]} height={480} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <CtaBand title="Can't decide between two programs?" button="Book a Consultation" />
+      </main>
       <SiteFooter />
     </div>
   );

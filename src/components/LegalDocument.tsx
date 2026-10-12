@@ -80,113 +80,115 @@ export default function LegalDocument({ doc, siblingHref, siblingLabel }: Props)
   return (
     <div className="artboard">
       <SiteHeader />
+      <main>
 
-      {/* ---- Hero ---- */}
-      <section className="section-pad" style={{ background: "var(--sand)", padding: "128px 0 96px" }}>
-        <div className="container">
-          <span className="eyebrow hero-1" data-hero>
-            {t(doc.eyebrow)}
-          </span>
-          <SplitText
-            as="h1"
-            className="h1-page"
-            delay={170}
-            stagger={45}
-            style={{ maxWidth: 1100 }}
-            text={t(doc.title)}
-          />
-          <p className="lede hero-4" data-hero style={{ maxWidth: 640, margin: "0 0 32px" }}>
-            {t(doc.lede)}
-          </p>
-          <div className="legal-meta hero-5" data-hero>
-            <span>
-              {t("Last updated")} · {t(doc.updated)}
+        {/* ---- Hero ---- */}
+        <section className="section-pad" style={{ background: "var(--sand)", padding: "128px 0 96px" }}>
+          <div className="container">
+            <span className="eyebrow hero-1" data-hero>
+              {t(doc.eyebrow)}
             </span>
-            <span aria-hidden>·</span>
-            <Link href={siblingHref}>{t(siblingLabel)}</Link>
+            <SplitText
+              as="h1"
+              className="h1-page"
+              delay={170}
+              stagger={45}
+              style={{ maxWidth: 1100 }}
+              text={t(doc.title)}
+            />
+            <p className="lede hero-4" data-hero style={{ maxWidth: 640, margin: "0 0 32px" }}>
+              {t(doc.lede)}
+            </p>
+            <div className="legal-meta hero-5" data-hero>
+              <span>
+                {t("Last updated")} · {t(doc.updated)}
+              </span>
+              <span aria-hidden>·</span>
+              <Link href={siblingHref}>{t(siblingLabel)}</Link>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ---- Contents + document ---- */}
-      <section className="section-pad" style={{ padding: "96px 0 128px" }}>
-        <div
-          className="container grid-collapse"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "minmax(220px, 280px) minmax(0, 1fr)",
-            gap: 96,
-            alignItems: "start",
-          }}
-        >
-          <nav className="legal-toc" aria-label={t("On this page")}>
-            <div className="legal-toc__heading">{t("On this page")}</div>
-            <ol className="legal-toc__list">
+        {/* ---- Contents + document ---- */}
+        <section className="section-pad" style={{ padding: "96px 0 128px" }}>
+          <div
+            className="container grid-collapse"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "minmax(220px, 280px) minmax(0, 1fr)",
+              gap: 96,
+              alignItems: "start",
+            }}
+          >
+            <nav className="legal-toc" aria-label={t("On this page")}>
+              <div className="legal-toc__heading">{t("On this page")}</div>
+              <ol className="legal-toc__list">
+                {doc.sections.map((s, i) => (
+                  <li key={s.id}>
+                    <a
+                      href={`#${s.id}`}
+                      className={`legal-toc__link${current === s.id ? " is-current" : ""}`}
+                      aria-current={current === s.id ? "true" : undefined}
+                    >
+                      <span className="legal-toc__num">{String(i + 1).padStart(2, "0")}</span>
+                      <span>{t(s.title)}</span>
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+
+            <div className="legal-body">
               {doc.sections.map((s, i) => (
-                <li key={s.id}>
-                  <a
-                    href={`#${s.id}`}
-                    className={`legal-toc__link${current === s.id ? " is-current" : ""}`}
-                    aria-current={current === s.id ? "true" : undefined}
-                  >
-                    <span className="legal-toc__num">{String(i + 1).padStart(2, "0")}</span>
-                    <span>{t(s.title)}</span>
-                  </a>
-                </li>
-              ))}
-            </ol>
-          </nav>
-
-          <div className="legal-body">
-            {doc.sections.map((s, i) => (
-              <Reveal key={s.id} variant="up" className="legal-section">
-                <span className="legal-section__num">{String(i + 1).padStart(2, "0")}</span>
-                <h2 id={s.id} className="h2-40 legal-section__title">
-                  {t(s.title)}
-                </h2>
-                {s.blocks.map((b, bi) => {
-                  if (b.kind === "h3") {
+                <Reveal key={s.id} variant="up" className="legal-section">
+                  <span className="legal-section__num">{String(i + 1).padStart(2, "0")}</span>
+                  <h2 id={s.id} className="h2-40 legal-section__title">
+                    {t(s.title)}
+                  </h2>
+                  {s.blocks.map((b, bi) => {
+                    if (b.kind === "h3") {
+                      return (
+                        <h3 key={bi} className="legal-h3">
+                          {t(b.text)}
+                        </h3>
+                      );
+                    }
+                    if (b.kind === "list") {
+                      return (
+                        <ul key={bi} className="legal-list">
+                          {b.items.map((item) => (
+                            <li key={item}>{t(item)}</li>
+                          ))}
+                        </ul>
+                      );
+                    }
                     return (
-                      <h3 key={bi} className="legal-h3">
+                      <p key={bi} className="legal-p">
                         {t(b.text)}
-                      </h3>
+                      </p>
                     );
-                  }
-                  if (b.kind === "list") {
-                    return (
-                      <ul key={bi} className="legal-list">
-                        {b.items.map((item) => (
-                          <li key={item}>{t(item)}</li>
-                        ))}
-                      </ul>
-                    );
-                  }
-                  return (
-                    <p key={bi} className="legal-p">
-                      {t(b.text)}
-                    </p>
-                  );
-                })}
+                  })}
+                </Reveal>
+              ))}
+
+              <Reveal variant="up" className="legal-note">
+                <p className="legal-p" style={{ margin: 0 }}>
+                  {t(
+                    "This page is written for clarity, not to cover us. If any part of it is unclear, ask your consultant and you will get a straight answer in writing.",
+                  )}
+                </p>
+                <div className="legal-note__contact">
+                  <a href={SITE.emailHref}>{SITE.email}</a>
+                  <span aria-hidden>·</span>
+                  <a href={SITE.phoneHref}>{SITE.phone}</a>
+                </div>
               </Reveal>
-            ))}
-
-            <Reveal variant="up" className="legal-note">
-              <p className="legal-p" style={{ margin: 0 }}>
-                {t(
-                  "This page is written for clarity, not to cover us. If any part of it is unclear, ask your consultant and you will get a straight answer in writing.",
-                )}
-              </p>
-              <div className="legal-note__contact">
-                <a href={SITE.emailHref}>{SITE.email}</a>
-                <span aria-hidden>·</span>
-                <a href={SITE.phoneHref}>{SITE.phone}</a>
-              </div>
-            </Reveal>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <CtaBand title="Still have a question?" button="Book a Consultation" />
+        <CtaBand title="Still have a question?" button="Book a Consultation" />
+      </main>
       <SiteFooter />
     </div>
   );

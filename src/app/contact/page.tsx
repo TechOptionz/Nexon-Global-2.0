@@ -32,182 +32,184 @@ export default function ContactPage() {
   return (
     <div className="artboard">
       <SiteHeader active="contact" />
+      <main>
 
-      <section className="section-pad" style={{ padding: "128px 0 160px" }}>
-        <div
-          className="container grid-collapse"
-          style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 96, alignItems: "start" }}
-        >
-          {/* ---- Details ---- */}
-          <div>
-            <SplitText
-              as="h1"
-              className="h2-64"
-              delay={120}
-              stagger={45}
-              style={{ marginBottom: 24, maxWidth: 520 }}
-              text={t("Talk to a consultant this week.")}
-            />
-            <p className="lede hero-4" data-hero style={{ margin: "0 0 24px", maxWidth: 480 }}>
-              {t(
-                "Thirty minutes, free of charge, in English or Arabic. We reply to every enquiry within one business day.",
-              )}
-            </p>
-            <p className="body-14" style={{ margin: "0 0 48px", maxWidth: 480, lineHeight: 1.5 }}>
-              {t("Prefer WhatsApp?")}{" "}
-              <a href={SITE.whatsappHref} className="inline-link">
-                {t("Message us")}
-              </a>{" "}
-              {t(
-                "and a consultant — not a bot — replies during office hours, usually within the hour.",
-              )}
-            </p>
+        <section className="section-pad" style={{ padding: "128px 0 160px" }}>
+          <div
+            className="container grid-collapse"
+            style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 96, alignItems: "start" }}
+          >
+            {/* ---- Details ---- */}
+            <div>
+              <SplitText
+                as="h1"
+                className="h2-64"
+                delay={120}
+                stagger={45}
+                style={{ marginBottom: 24, maxWidth: 520 }}
+                text={t("Talk to a consultant this week.")}
+              />
+              <p className="lede hero-4" data-hero style={{ margin: "0 0 24px", maxWidth: 480 }}>
+                {t(
+                  "Thirty minutes, free of charge, in English or Arabic. We reply to every enquiry within one business day.",
+                )}
+              </p>
+              <p className="body-14" style={{ margin: "0 0 48px", maxWidth: 480, lineHeight: 1.5 }}>
+                {t("Prefer WhatsApp?")}{" "}
+                <a href={SITE.whatsappHref} className="inline-link">
+                  {t("Message us")}
+                </a>{" "}
+                {t(
+                  "and a consultant — not a bot — replies during office hours, usually within the hour.",
+                )}
+              </p>
 
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: 20, fontSize: 15, lineHeight: 1.5 }}
-            >
-              <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-                <span style={{ flex: "none", marginTop: 2 }}>
-                  <PinIcon />
-                </span>
-                <span>{t(SITE.address)}</span>
-              </div>
-              <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-                <span style={{ flex: "none", marginTop: 2 }}>
-                  <ClockIcon size={20} />
-                </span>
-                <span>{t(SITE.hours)}</span>
-              </div>
-              <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-                <span style={{ flex: "none", marginTop: 2 }}>
-                  <ChatIcon size={20} />
-                </span>
-                {/* Each of these is something you tap to place a call
-                    or open a message, so they carry their own target. */}
-                <span className="contact-links" style={{ display: "flex", flexDirection: "column" }}>
-                  <a href={SITE.phoneHref} style={{ color: "var(--ink)" }}>
-                    {SITE.phone}
-                  </a>
-                  <a href={SITE.whatsappHref} style={{ color: "var(--ink)" }}>
-                    {t(SITE.whatsapp)}
-                  </a>
-                  <a href={SITE.emailHref} style={{ color: "var(--ink)" }}>
-                    {SITE.email}
-                  </a>
-                </span>
+              <div
+                style={{ display: "flex", flexDirection: "column", gap: 20, fontSize: 15, lineHeight: 1.5 }}
+              >
+                <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                  <span style={{ flex: "none", marginTop: 2 }}>
+                    <PinIcon />
+                  </span>
+                  <span>{t(SITE.address)}</span>
+                </div>
+                <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                  <span style={{ flex: "none", marginTop: 2 }}>
+                    <ClockIcon size={20} />
+                  </span>
+                  <span>{t(SITE.hours)}</span>
+                </div>
+                <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                  <span style={{ flex: "none", marginTop: 2 }}>
+                    <ChatIcon size={20} />
+                  </span>
+                  {/* Each of these is something you tap to place a call
+                      or open a message, so they carry their own target. */}
+                  <span className="contact-links" style={{ display: "flex", flexDirection: "column" }}>
+                    <a href={SITE.phoneHref} style={{ color: "var(--ink)" }}>
+                      {SITE.phone}
+                    </a>
+                    <a href={SITE.whatsappHref} style={{ color: "var(--ink)" }}>
+                      {t(SITE.whatsapp)}
+                    </a>
+                    <a href={SITE.emailHref} style={{ color: "var(--ink)" }}>
+                      {SITE.email}
+                    </a>
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* ---- Form ---- */}
-          <div>
-            {sent ? (
-              <div
-                style={{
-                  background: "var(--mint)",
-                  borderRadius: 16,
-                  padding: "64px 48px",
-                  textAlign: "center",
-                }}
-              >
-                <div className="serif" style={{ fontSize: 40, lineHeight: 1.05, marginBottom: 16 }}>
-                  {t("Request received.")}
-                </div>
-                <p
-                  style={{
-                    fontSize: 15,
-                    lineHeight: 1.55,
-                    color: "var(--muted)",
-                    margin: "0 auto",
-                    maxWidth: 420,
-                  }}
-                >
-                  {t(
-                    "A consultant will contact you within one business day to schedule your consultation.",
-                  )}
-                </p>
-              </div>
-            ) : (
-              <form
-                onSubmit={onSubmit}
-                className="contact-form"
-                style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}
-              >
-                <label className="field-label">
-                  <span>
-                    {t("Full name")} <span style={{ color: "var(--muted)", fontWeight: 400 }}>*</span>
-                  </span>
-                  <input
-                    required
-                    type="text"
-                    name="name"
-                    autoComplete="name"
-                    className="field"
-                    placeholder={t("Your full name")}
-                  />
-                </label>
-
-                <label className="field-label">
-                  <span>
-                    {t("Email")} <span style={{ color: "var(--muted)", fontWeight: 400 }}>*</span>
-                  </span>
-                  <input
-                    required
-                    type="email"
-                    name="email"
-                    autoComplete="email"
-                    inputMode="email"
-                    className="field"
-                    placeholder="name@example.com"
-                  />
-                </label>
-
-                <label className="field-label">
-                  <span>{t("Phone / WhatsApp")}</span>
-                  <input
-                    type="tel"
-                    name="tel"
-                    autoComplete="tel"
-                    inputMode="tel"
-                    className="field"
-                    placeholder="+971 50 000 0000"
-                  />
-                </label>
-
-                <SelectField label={t("I'm interested in")} options={PRACTICE_OPTIONS} />
-                <SelectField label={t("Preferred meeting")} options={MEETING_OPTIONS} />
-                <SelectField label={t("Preferred language")} options={LANGUAGE_OPTIONS} />
-
-                <label className="field-label" style={{ gridColumn: "1 / -1" }}>
-                  <span>{t("Message")}</span>
-                  <textarea
-                    rows={5}
-                    className="field"
-                    placeholder={t("Tell us briefly about your situation (optional)")}
-                  />
-                </label>
-
+            {/* ---- Form ---- */}
+            <div>
+              {sent ? (
                 <div
                   style={{
-                    gridColumn: "1 / -1",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 12,
+                    background: "var(--mint)",
+                    borderRadius: 16,
+                    padding: "64px 48px",
+                    textAlign: "center",
                   }}
                 >
-                  <button type="submit" className="btn btn--primary" style={{ alignSelf: "flex-start" }}>
-                    {t("Book my free consultation")}
-                  </button>
-                  <div style={{ fontSize: 12, color: "var(--muted)" }}>
-                    {t("Your details stay private and are never shared.")}
+                  <div className="serif" style={{ fontSize: 40, lineHeight: 1.05, marginBottom: 16 }}>
+                    {t("Request received.")}
                   </div>
+                  <p
+                    style={{
+                      fontSize: 15,
+                      lineHeight: 1.55,
+                      color: "var(--muted)",
+                      margin: "0 auto",
+                      maxWidth: 420,
+                    }}
+                  >
+                    {t(
+                      "A consultant will contact you within one business day to schedule your consultation.",
+                    )}
+                  </p>
                 </div>
-              </form>
-            )}
-          </div>
-        </div>
-      </section>
+              ) : (
+                <form
+                  onSubmit={onSubmit}
+                  className="contact-form"
+                  style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}
+                >
+                  <label className="field-label">
+                    <span>
+                      {t("Full name")} <span style={{ color: "var(--muted)", fontWeight: 400 }}>*</span>
+                    </span>
+                    <input
+                      required
+                      type="text"
+                      name="name"
+                      autoComplete="name"
+                      className="field"
+                      placeholder={t("Your full name")}
+                    />
+                  </label>
 
+                  <label className="field-label">
+                    <span>
+                      {t("Email")} <span style={{ color: "var(--muted)", fontWeight: 400 }}>*</span>
+                    </span>
+                    <input
+                      required
+                      type="email"
+                      name="email"
+                      autoComplete="email"
+                      inputMode="email"
+                      className="field"
+                      placeholder="name@example.com"
+                    />
+                  </label>
+
+                  <label className="field-label">
+                    <span>{t("Phone / WhatsApp")}</span>
+                    <input
+                      type="tel"
+                      name="tel"
+                      autoComplete="tel"
+                      inputMode="tel"
+                      className="field"
+                      placeholder="+971 50 000 0000"
+                    />
+                  </label>
+
+                  <SelectField label={t("I'm interested in")} options={PRACTICE_OPTIONS} />
+                  <SelectField label={t("Preferred meeting")} options={MEETING_OPTIONS} />
+                  <SelectField label={t("Preferred language")} options={LANGUAGE_OPTIONS} />
+
+                  <label className="field-label" style={{ gridColumn: "1 / -1" }}>
+                    <span>{t("Message")}</span>
+                    <textarea
+                      rows={5}
+                      className="field"
+                      placeholder={t("Tell us briefly about your situation (optional)")}
+                    />
+                  </label>
+
+                  <div
+                    style={{
+                      gridColumn: "1 / -1",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 12,
+                    }}
+                  >
+                    <button type="submit" className="btn btn--primary" style={{ alignSelf: "flex-start" }}>
+                      {t("Book my free consultation")}
+                    </button>
+                    <div style={{ fontSize: 12, color: "var(--muted)" }}>
+                      {t("Your details stay private and are never shared.")}
+                    </div>
+                  </div>
+                </form>
+              )}
+            </div>
+          </div>
+        </section>
+
+      </main>
       <SiteFooter />
     </div>
   );

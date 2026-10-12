@@ -4,6 +4,8 @@ export const SITE = {
   name: "NEXON",
   fullName: "NEXON Global Immigration",
   legalName: "NEXON Global Immigration Services",
+  /** Canonical origin, used for canonical URLs, Open Graph, the sitemap and robots. */
+  url: "https://www.nexonglobalimmigration.com",
   address: "Business Bay, Dubai, United Arab Emirates",
   hours: "Sunday–Friday, 9:00–18:00 GST",
   phone: "+971 4 000 0000",

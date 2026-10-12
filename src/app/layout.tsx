@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Instrument_Serif } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { LangProvider } from "@/lib/i18n";
+import { SITE } from "@/data/site";
 import ScrollMotion from "@/components/motion/ScrollMotion";
 import SmoothScroll from "@/components/motion/SmoothScroll";
 import "./globals.css";
@@ -25,13 +26,59 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
+  /* Absolute base for every relative URL below (canonical, og:url, og:image). */
+  metadataBase: new URL(SITE.url),
   title: {
-    default: "NEXON Global Immigration",
+    /* The homepage title: core service and location alongside the brand,
+       kept inside the 50–60 characters a results page shows in full. */
+    default: "NEXON Global Immigration | Residency & Citizenship, Dubai",
     template: "%s · NEXON Global Immigration",
   },
   description:
     "NEXON Global Immigration Services — residency, citizenship and global mobility consultancy in Dubai, UAE.",
+  /* "./" resolves against the current route, so every page declares
+     itself — not the homepage — as its canonical URL. */
+  alternates: { canonical: "./" },
+  openGraph: {
+    type: "website",
+    siteName: SITE.fullName,
+    locale: "en_US",
+    url: "./",
+    images: [
+      {
+        url: "/assets/hero-poster.jpg",
+        width: 2560,
+        height: 1440,
+        alt: "NEXON Global Immigration — residency and citizenship consultancy, Dubai",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/assets/hero-poster.jpg"],
+  },
 };
+
+/* Organization structured data, emitted once from the root layout so every
+   page carries the same entity. Serialised with `<` escaped: JSON inside a
+   script element must never be able to close that element. */
+const ORGANIZATION_JSON_LD = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE.fullName,
+  legalName: SITE.legalName,
+  url: SITE.url,
+  logo: `${SITE.url}/assets/logo.svg`,
+  description: SITE.licence,
+  email: SITE.email,
+  telephone: SITE.phone,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Business Bay",
+    addressLocality: "Dubai",
+    addressCountry: "AE",
+  },
+}).replace(/</g, "\\u003c");
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -49,6 +96,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <noscript>
           <style>{NO_JS_CSS}</style>
         </noscript>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: ORGANIZATION_JSON_LD }}
+        />
       </head>
       <body>
         <LangProvider>

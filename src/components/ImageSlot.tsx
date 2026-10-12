@@ -18,8 +18,9 @@ type Props = {
    */
   sizes?: string;
   /**
-   * Above-the-fold slots load eagerly; everything else stays lazy so the
-   * first screen isn't competing with images further down the page.
+   * Above-the-fold slots are preloaded at high priority (`next/image`
+   * `preload`); everything else stays lazy so the first screen isn't
+   * competing with images further down the page.
    */
   eager?: boolean;
   /**
@@ -83,8 +84,8 @@ export default function ImageSlot({
           fill
           sizes={sizes}
           quality={90}
-          loading={eager ? "eager" : "lazy"}
-          fetchPriority={eager ? "high" : "auto"}
+          preload={eager}
+          fetchPriority={eager ? "high" : undefined}
           style={focal ? { objectPosition: focal } : undefined}
         />
       ) : (
